@@ -77,13 +77,15 @@ body{font-family:var(--sans);background:#ffffff;color:#111;overflow-x:hidden;fon
 .proj-row::-webkit-scrollbar-track{background:transparent}
 .proj-row::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:100px}
 .proj-row::-webkit-scrollbar-thumb:hover{background:#9ca3af}
-.proj-card{flex:0 0 280px;max-width:280px;scroll-snap-align:start;display:flex;flex-direction:column;gap:16px;text-decoration:none;color:inherit;transition:transform .4s cubic-bezier(.25,.46,.45,.94)}
-.proj-card:hover{transform:scale(1.02)}
-.proj-img{aspect-ratio:3/4;border-radius:8px;overflow:hidden;background:#f0f0f0;width:100%}
+.proj-card{flex:0 0 280px;max-width:280px;scroll-snap-align:start;display:flex;flex-direction:column;gap:14px;text-decoration:none;color:inherit;cursor:pointer}
+.proj-img{aspect-ratio:1/1;border-radius:12px;overflow:hidden;background:#f0f0f0;width:100%;transition:transform .5s cubic-bezier(.25,.46,.45,.94),box-shadow .5s}
 .proj-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.25,.46,.45,.94)}
-.proj-card:hover .proj-img img{transform:scale(1.04)}
-.proj-name{font-family:var(--sans);font-size:20px;font-weight:600;letter-spacing:-.005em;color:#111;margin:4px 0 0}
-.proj-loc{font-family:var(--sans);font-size:13px;letter-spacing:.02em;color:#888;font-weight:400;line-height:1.4}
+.proj-card:hover .proj-img{transform:translateY(-4px);box-shadow:0 14px 32px rgba(0,0,0,.12)}
+.proj-card:hover .proj-img img{transform:scale(1.02)}
+.proj-card:focus-visible{outline:none}
+.proj-card:focus-visible .proj-img{box-shadow:0 0 0 2px var(--gold),0 14px 32px rgba(0,0,0,.12)}
+.proj-name{font-family:var(--sans);font-size:18px;font-weight:700;letter-spacing:-.005em;color:#111;margin:0;line-height:1.25}
+.proj-loc{font-family:var(--sans);font-size:12px;letter-spacing:.02em;color:#888;font-weight:400;line-height:1.45}
 
 /* ── FOOTER (unified) ── */
 .site-footer{background:#0d0d0d;color:#fff;font-family:var(--sans)}
@@ -124,34 +126,6 @@ body{font-family:var(--sans);background:#ffffff;color:#111;overflow-x:hidden;fon
   .footer-bottom{flex-direction:column;gap:14px;padding:24px;text-align:center}
 }
 
-/* ── PROJECT DETAIL MODAL ── */
-.proj-card{cursor:pointer}
-.proj-modal{position:fixed;inset:0;z-index:9000;background:#fff;opacity:0;visibility:hidden;transform:translateY(100%);transition:transform .4s ease,opacity .35s ease,visibility 0s linear .4s;overflow-y:auto;overflow-x:hidden}
-.proj-modal.open{opacity:1;visibility:visible;transform:translateY(0);transition:transform .4s ease,opacity .35s ease,visibility 0s}
-.proj-modal-close{position:absolute;top:24px;right:28px;background:none;border:none;font-family:var(--sans);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#111;cursor:pointer;padding:8px 14px;z-index:2;font-weight:500;display:inline-flex;align-items:center;gap:10px;transition:color .3s;border-radius:4px}
-.proj-modal-close:hover{color:var(--gold)}
-.proj-modal-close .pmc-x{font-size:20px;line-height:1;letter-spacing:0;font-weight:400;display:inline-block;transform:translateY(-1px)}
-.proj-modal-inner{max-width:1200px;margin:0 auto;padding:88px 48px 48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:stretch;min-height:100vh}
-.proj-modal-img{position:relative;border-radius:8px;overflow:hidden;background:#f0f0f0;min-height:500px;height:calc(100vh - 136px);max-height:820px}
-.proj-modal-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.proj-modal-body{display:flex;flex-direction:column;justify-content:center;padding:12px 0}
-.proj-modal-eye{font-family:var(--sans);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:18px}
-.proj-modal-title{font-family:var(--serif);font-size:clamp(40px,5vw,64px);font-weight:400;line-height:1;letter-spacing:-.015em;color:#111;margin:0 0 18px}
-.proj-modal-loc{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(0,0,0,.5);font-weight:400;margin:0 0 28px}
-.proj-modal-desc{font-family:var(--serif);font-size:19px;line-height:1.65;color:#333;font-weight:400;margin:0 0 40px;max-width:520px}
-.proj-modal-cta{display:inline-flex;align-items:center;gap:14px;align-self:flex-start;padding:16px 34px;background:transparent;border:1.5px solid #111;color:#111;font-family:var(--sans);font-size:11px;letter-spacing:.24em;text-transform:uppercase;font-weight:500;text-decoration:none;cursor:pointer;transition:background .3s,color .3s,transform .3s}
-.proj-modal-cta:hover{background:#111;color:#fff;transform:translateY(-2px)}
-.proj-modal-cta .pmc-arrow{transition:transform .3s}
-.proj-modal-cta:hover .pmc-arrow{transform:translateX(4px)}
-body.proj-modal-open{overflow:hidden}
-@media (max-width:820px){
-  .proj-modal-inner{grid-template-columns:1fr;padding:72px 24px 40px;gap:24px;min-height:auto}
-  .proj-modal-img{min-height:260px;height:auto;aspect-ratio:4/3;max-height:60vh}
-  .proj-modal-body{padding:4px 0}
-  .proj-modal-title{font-size:clamp(32px,8vw,44px)}
-  .proj-modal-desc{font-size:16px;margin-bottom:28px}
-  .proj-modal-close{top:14px;right:16px}
-}
 </style>
 <meta name="autofill" content="off">
 </head>
@@ -160,30 +134,30 @@ body.proj-modal-open{overflow:hidden}
 <!-- MOBILE MENU -->
 <div class="mob-menu" id="mobMenu">
   <a href="propiedades.html" onclick="closeMob()">Propiedades</a>
-  <a href="index (2).html#svc" onclick="closeMob()">Servicios</a>
+  <a href="index.html#svc" onclick="closeMob()">Servicios</a>
   <a href="equipo.html" onclick="closeMob()">Equipo</a>
   <a href="nosotros.html" onclick="closeMob()">Nosotros</a>
   <a href="blog.html" onclick="closeMob()">Blog</a>
-  <a href="index (2).html#cta" class="mob-action" onclick="closeMob()">Agendar visita</a>
+  <a href="index.html#cta" class="mob-action" onclick="closeMob()">Agendar visita</a>
 </div>
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="index (2).html" class="nav-logo">
+  <a href="index.html" class="nav-logo">
     <img src="assets/logo.png" class="nav-logo-img" alt="Montana Realty">
   </a>
   <div class="nav-center">
     <ul class="nav-links">
       <li><a href="propiedades.html">Propiedades</a></li>
-      <li><a href="index (2).html#svc">Servicios</a></li>
+      <li><a href="index.html#svc">Servicios</a></li>
       <li><a href="equipo.html">Equipo</a></li>
       <li><a href="nosotros.html" class="active">Nosotros</a></li>
       <li><a href="blog.html">Blog</a></li>
     </ul>
   </div>
   <div class="nav-right">
-    <a href="index (2).html#cta" class="nav-sub">Contacto</a>
-    <a href="index (2).html#cta" class="nav-action">Agendar visita</a>
+    <a href="admin-login.html" class="nav-sub">Administración</a>
+    <a href="index.html#cta" class="nav-action">Agendar visita</a>
   </div>
   <button class="nav-ham" id="navHam" onclick="toggleMob()">
     <span></span><span></span><span></span>
@@ -218,31 +192,46 @@ body.proj-modal-open{overflow:hidden}
     <h2 class="proj-title">Nuestros <em>Proyectos</em></h2>
   </div>
   <div class="proj-row">
-    <article class="proj-card">
-      <div class="proj-img"><img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1000&q=85" alt="Torre MR 900" loading="lazy"></div>
+    <a class="proj-card" href="propiedades/torre-mr-900.html" aria-label="Ver Torre MR 900 en Valle Oriente">
+      <div class="proj-img"><img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1000&q=85" alt="Fachada de Torre MR 900 en Valle Oriente, San Pedro Garza García" loading="lazy"></div>
       <h3 class="proj-name">Torre MR 900</h3>
       <span class="proj-loc">Valle Oriente, San Pedro Garza García</span>
-    </article>
-    <article class="proj-card">
-      <div class="proj-img"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1000&q=85" alt="Torre LBL" loading="lazy"></div>
+    </a>
+    <a class="proj-card" href="propiedades/torre-mr-855.html" aria-label="Ver Torre MR 855 en Colonia del Valle">
+      <div class="proj-img"><img src="https://images.unsplash.com/photo-1551361415-69c87624334f?w=1000&q=85" alt="Fachada de Torre MR 855 en Colonia del Valle, San Pedro Garza García" loading="lazy"></div>
+      <h3 class="proj-name">Torre MR 855</h3>
+      <span class="proj-loc">Colonia del Valle, San Pedro Garza García</span>
+    </a>
+    <a class="proj-card" href="propiedades/torre-lbl.html" aria-label="Ver Torre LBL en Centrito Valle">
+      <div class="proj-img"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1000&q=85" alt="Fachada de Torre LBL en Centrito Valle, San Pedro Garza García" loading="lazy"></div>
       <h3 class="proj-name">Torre LBL</h3>
-      <span class="proj-loc">Del Valle, San Pedro</span>
-    </article>
-    <article class="proj-card">
-      <div class="proj-img"><img src="https://images.unsplash.com/photo-1464146072230-91cabc968266?w=1000&q=85" alt="Torre MR 901" loading="lazy"></div>
+      <span class="proj-loc">Centrito Valle, San Pedro Garza García</span>
+    </a>
+    <a class="proj-card" href="propiedades/torre-mr-901.html" aria-label="Ver Torre MR 901 en Colonia del Valle">
+      <div class="proj-img"><img src="https://images.unsplash.com/photo-1464146072230-91cabc968266?w=1000&q=85" alt="Fachada de Torre MR 901 en Colonia del Valle, San Pedro Garza García" loading="lazy"></div>
       <h3 class="proj-name">Torre MR 901</h3>
-      <span class="proj-loc">Valle Oriente, San Pedro</span>
-    </article>
-    <article class="proj-card">
-      <div class="proj-img"><img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=1000&q=85" alt="Torre MR 787" loading="lazy"></div>
+      <span class="proj-loc">Colonia del Valle, San Pedro Garza García</span>
+    </a>
+    <a class="proj-card" href="propiedades/torre-mr-500.html" aria-label="Ver Torre MR 500 en Colonia del Valle">
+      <div class="proj-img"><img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1000&q=85" alt="Fachada de Torre MR 500 en Colonia del Valle, San Pedro Garza García" loading="lazy"></div>
+      <h3 class="proj-name">Torre MR 500</h3>
+      <span class="proj-loc">Colonia del Valle, San Pedro Garza García</span>
+    </a>
+    <a class="proj-card" href="propiedades/torre-mr-1055.html" aria-label="Ver Torre MR 1055 en Colonia Country">
+      <div class="proj-img"><img src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=1000&q=85" alt="Fachada de Torre MR 1055 en Colonia Country, Monterrey" loading="lazy"></div>
+      <h3 class="proj-name">Torre MR 1055</h3>
+      <span class="proj-loc">Colonia Country, Monterrey</span>
+    </a>
+    <a class="proj-card" href="propiedades/torre-mr-787.html" aria-label="Ver Torre MR 787 en Cumbres 2do. Sector">
+      <div class="proj-img"><img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=1000&q=85" alt="Fachada de Torre MR 787 en Cumbres 2do. Sector, Monterrey" loading="lazy"></div>
       <h3 class="proj-name">Torre MR 787</h3>
-      <span class="proj-loc">San Agustín, San Pedro</span>
-    </article>
-    <article class="proj-card">
-      <div class="proj-img"><img src="https://images.unsplash.com/photo-1449844908441-8829872d2607?w=1000&q=85" alt="Torre MR 600" loading="lazy"></div>
+      <span class="proj-loc">Cumbres 2do. Sector, Monterrey</span>
+    </a>
+    <a class="proj-card" href="propiedades/torre-mr-600.html" aria-label="Ver Torre MR 600 en esquina Simón Bolívar y Ruiz Cortines">
+      <div class="proj-img"><img src="https://images.unsplash.com/photo-1449844908441-8829872d2607?w=1000&q=85" alt="Fachada de Torre MR 600 en esquina Av. Simón Bolívar y Av. Ruiz Cortines" loading="lazy"></div>
       <h3 class="proj-name">Torre MR 600</h3>
-      <span class="proj-loc">Colinas de San Jerónimo</span>
-    </article>
+      <span class="proj-loc">Av. Simón Bolívar y Av. Ruiz Cortines</span>
+    </a>
   </div>
 </section>
 
@@ -273,18 +262,18 @@ body.proj-modal-open{overflow:hidden}
     </div>
     <div class="footer-col">
       <span class="footer-col-title">Servicios</span>
-      <a href="index (2).html#svc">Comprar</a>
-      <a href="index (2).html#svc">Vender</a>
-      <a href="index (2).html#svc">Rentar</a>
-      <a href="index (2).html#cta">Hipoteca</a>
-      <a href="index (2).html#cta">Valuación</a>
+      <a href="index.html#svc">Comprar</a>
+      <a href="index.html#svc">Vender</a>
+      <a href="index.html#svc">Rentar</a>
+      <a href="index.html#cta">Hipoteca</a>
+      <a href="index.html#cta">Valuación</a>
     </div>
     <div class="footer-col">
       <span class="footer-col-title">Empresa</span>
       <a href="nosotros.html">Nosotros</a>
       <a href="equipo.html">Equipo</a>
       <a href="blog.html">Blog</a>
-      <a href="index (2).html#cta">Contacto</a>
+      <a href="index.html#cta">Contacto</a>
     </div>
   </div>
   <div class="footer-bottom">
@@ -317,106 +306,6 @@ document.querySelectorAll('input').forEach(input => {
   input.setAttribute('data-lpignore', 'true');
   input.setAttribute('data-form-type', 'other');
 });
-</script>
-
-<!-- PROJECT DETAIL MODAL -->
-<div class="proj-modal" id="projModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="projModalTitle">
-  <button type="button" class="proj-modal-close" id="projModalClose" aria-label="Cerrar">
-    <span class="pmc-x" aria-hidden="true">&#10005;</span>
-    <span>Volver</span>
-  </button>
-  <div class="proj-modal-inner">
-    <div class="proj-modal-img"><img id="projModalImg" src="" alt=""></div>
-    <div class="proj-modal-body">
-      <span class="proj-modal-eye">Proyecto</span>
-      <h2 class="proj-modal-title" id="projModalTitle"></h2>
-      <span class="proj-modal-loc" id="projModalLoc"></span>
-      <p class="proj-modal-desc" id="projModalDesc"></p>
-      <a class="proj-modal-cta" id="projModalCta" href="#" target="_blank" rel="noopener">
-        Contáctanos <span class="pmc-arrow" aria-hidden="true">→</span>
-      </a>
-    </div>
-  </div>
-</div>
-
-<script>
-// Project detail modal — opens on click of any .proj-card
-(function(){
-  const PHONE = '528123532365';
-  const PROJECTS = {
-    'Torre MR 900': {
-      title: 'TORRE MR 900',
-      loc: 'Valle Oriente, San Pedro Garza García',
-      desc: 'MR900 es la combinación perfecta de diseño contemporáneo y exclusividad. Con ubicaciones privilegiadas, acabados de primer nivel y amenidades de clase mundial, este desarrollo eleva el estándar de vida en San Pedro. Un espacio diseñado para quienes buscan confort, estilo y una inversión segura.'
-    },
-    'Torre LBL': {
-      title: 'TORRE LBL',
-      loc: 'Del Valle, San Pedro',
-      desc: 'Torre LBL es un exclusivo desarrollo de usos mixtos en Centrito Valle, San Pedro Garza García. Ofrece departamentos de lujo, oficinas y locales comerciales con diseño moderno, vistas panorámicas y una ubicación privilegiada.'
-    },
-    'Torre MR 901': {
-      title: 'TORRE MR 901',
-      loc: 'Valle Oriente, San Pedro',
-      desc: 'Esta torre boutique de lujo integra dos niveles de locales comerciales, seis departamentos exclusivos y un penthouse de dos niveles. Con una ubicación estratégica y arquitectura de vanguardia, MR 901 redefine la vida urbana en San Pedro.'
-    },
-    'Torre MR 787': {
-      title: 'TORRE MR 787',
-      loc: 'San Agustín, San Pedro',
-      desc: 'Torre MR787 es una plaza icónica en Cumbres 2do. Sector, Monterrey, con un diseño vanguardista y materiales de alta calidad; ofrece 2 niveles de locales comerciales, un nivel de unidades Home/Office y un nivel de lofts residenciales.'
-    },
-    'Torre MR 600': {
-      title: 'TORRE MR 600',
-      loc: 'Colinas de San Jerónimo',
-      desc: 'Torre MR 600 es un desarrollo comercial diseñado por el Arq. Luis Azcúnaga, que refleja los más altos estándares de calidad y acabados de la marca MR. Cuenta con 12 locales comerciales y 6 lofts, distribuidos en 3 niveles. Su diseño moderno y ubicación estratégica en la esquina de Av. Simón Bolívar y Av. Ruiz.'
-    }
-  };
-
-  const modal = document.getElementById('projModal');
-  const closeBtn = document.getElementById('projModalClose');
-  const imgEl = document.getElementById('projModalImg');
-  const titleEl = document.getElementById('projModalTitle');
-  const locEl = document.getElementById('projModalLoc');
-  const descEl = document.getElementById('projModalDesc');
-  const ctaEl = document.getElementById('projModalCta');
-  if(!modal) return;
-
-  function open(card){
-    const name = card.querySelector('.proj-name')?.textContent.trim() || '';
-    const data = PROJECTS[name];
-    if(!data) return;
-    const cardImg = card.querySelector('.proj-img img');
-    imgEl.src = cardImg ? cardImg.src : '';
-    imgEl.alt = data.title;
-    titleEl.textContent = data.title;
-    locEl.textContent = data.loc;
-    descEl.textContent = data.desc;
-    const msg = encodeURIComponent(`Hola, me interesa información sobre ${data.title.replace('TORRE ','Torre ')}`);
-    ctaEl.href = `https://wa.me/${PHONE}?text=${msg}`;
-    modal.classList.add('open');
-    modal.setAttribute('aria-hidden','false');
-    document.body.classList.add('proj-modal-open');
-    modal.scrollTop = 0;
-  }
-  function close(){
-    modal.classList.remove('open');
-    modal.setAttribute('aria-hidden','true');
-    document.body.classList.remove('proj-modal-open');
-  }
-
-  document.querySelectorAll('.proj-card').forEach(card=>{
-    card.addEventListener('click',()=>open(card));
-    card.setAttribute('role','button');
-    card.setAttribute('tabindex','0');
-    card.addEventListener('keydown',e=>{
-      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(card); }
-    });
-  });
-  closeBtn.addEventListener('click',close);
-  modal.addEventListener('click',e=>{ if(e.target===modal) close(); });
-  document.addEventListener('keydown',e=>{
-    if(e.key==='Escape' && modal.classList.contains('open')) close();
-  });
-})();
 </script>
 
 <script>

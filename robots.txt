@@ -1,0 +1,50 @@
+# Montana Realty Co. — robots.txt
+# https://montana-realty-co.com
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /admin.html
+Disallow: /admin-login.html
+Disallow: /api/
+Disallow: /db/
+Disallow: /coverage/
+Disallow: /node_modules/
+Disallow: /tests/
+
+# AI / LLM crawlers — explicitly allowed (AEO)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Sitemap
+Sitemap: https://montana-realty-co.com/sitemap.xml

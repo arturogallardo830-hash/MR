@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel · Blog — Montana Realty Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<div class="app">
+
+  <aside class="sb" id="sb">
+    <div class="sb-logo">
+      <img src="../assets/logo.png" alt="Montana Realty Co">
+      <span class="tag">Administración</span>
+    </div>
+
+    <nav class="sb-nav">
+      <div class="sb-nav-section">Principal</div>
+      <a class="sb-link" href="../admin.html">
+        <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3zM13 21h8V11h-8zM3 21h8v-6H3zM13 9h8V3h-8z"/></svg>
+        Dashboard
+      </a>
+      <div class="sb-nav-section">Contenido</div>
+      <a class="sb-link active" href="blog.html">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+        Blog
+      </a>
+      <a class="sb-link" href="propiedades.html">
+        <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V21a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+        Propiedades
+      </a>
+      <a class="sb-link" href="equipo.html">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Equipo
+      </a>
+      <a class="sb-link" href="testimonios.html">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Testimonios
+      </a>
+      <div class="sb-nav-section">Análisis</div>
+      <a class="sb-link" href="kpis.html">
+        <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg>
+        KPIs
+      </a>
+      <div class="sb-nav-section">Sistema</div>
+      <a class="sb-link" href="configuracion.html">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Configuración
+      </a>
+      <button class="sb-link danger" id="logoutBtn" type="button">
+        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        Cerrar sesión
+      </button>
+    </nav>
+
+    <div class="sb-foot">v1.0 · 2026</div>
+  </aside>
+
+  <div class="sb-backdrop" id="sbBackdrop"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="ham" id="hamBtn" type="button" aria-label="Menú">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+        <div class="crumb">Panel · <b>Blog</b></div>
+      </div>
+      <div class="user-chip">
+        <div class="avatar" id="userAvatar">A</div>
+        <span id="userName">Administrador</span>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="sec-head">
+        <div>
+          <h1 class="sec-title">Gestión de <em>Blog</em></h1>
+          <p class="sec-sub">Crea, edita y publica artículos del blog de Montana Realty.</p>
+        </div>
+      </div>
+
+      <div class="coming-soon">
+        <div class="coming-soon-ico">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+        </div>
+        <h2><em>Próximamente</em></h2>
+        <p>El gestor de artículos estará disponible aquí. Podrás crear, editar y publicar entradas del blog directamente desde este panel.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  if(!sessionStorage.getItem('mr_admin_token')) window.location.replace('../admin-login.html');
+})();
+(function(){
+  var sb=document.getElementById('sb'),bd=document.getElementById('sbBackdrop'),hb=document.getElementById('hamBtn');
+  if(hb) hb.addEventListener('click',function(){sb.classList.add('open');bd.classList.add('show');});
+  if(bd) bd.addEventListener('click',function(){sb.classList.remove('open');bd.classList.remove('show');});
+})();
+(function(){
+  var b=document.getElementById('logoutBtn');
+  if(!b) return;
+  b.addEventListener('click',function(){
+    sessionStorage.removeItem('mr_admin_token');
+    sessionStorage.removeItem('mr_admin_user');
+    window.location.href='../admin-login.html';
+  });
+})();
+(function(){
+  var u=sessionStorage.getItem('mr_admin_user')||'admin';
+  var av=document.getElementById('userAvatar'),nm=document.getElementById('userName');
+  if(av) av.textContent=(u[0]||'A').toUpperCase();
+  if(nm) nm.textContent=u==='admin'?'Administrador':u;
+})();
+</script>
+</body>
+</html>

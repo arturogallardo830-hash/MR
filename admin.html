@@ -3,449 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Panel de Administración — Montana Realty Co.</title>
+<title>Panel · Dashboard — Montana Realty Co.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --sidebar:#1a1f2e;
-  --sidebar-alt:#151a27;
-  --bg:#f5f5f5;
-  --card:#ffffff;
-  --text:#1f2330;
-  --text-soft:#62687a;
-  --text-mute:#8b91a3;
-  --border:#e5e7ec;
-  --border-soft:#eef0f4;
-  --gold:#c9a96e;
-  --gold-d:#b8975c;
-  --serif:'Cormorant Garamond',Georgia,serif;
-  --sans:'Poppins',Helvetica,Arial,sans-serif;
-  --shadow-sm:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.03);
-  --shadow:0 4px 14px rgba(20,26,44,.06),0 2px 4px rgba(20,26,44,.04);
-  --shadow-lg:0 14px 40px rgba(20,26,44,.10);
-  --radius:12px;
-  --radius-sm:8px;
-}
-html,body{height:100%}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--sans);
-  font-weight:400;
-  font-size:14px;
-  line-height:1.5;
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
-}
-
-/* ═══ LAYOUT ═══ */
-.app{display:flex;min-height:100vh}
-
-/* ═══ SIDEBAR ═══ */
-.sb{
-  width:260px;flex-shrink:0;
-  background:var(--sidebar);
-  color:#fff;
-  display:flex;flex-direction:column;
-  position:sticky;top:0;
-  height:100vh;
-  z-index:50;
-}
-.sb-logo{
-  padding:28px 24px 22px;
-  border-bottom:1px solid rgba(255,255,255,.06);
-  display:flex;flex-direction:column;gap:6px;align-items:flex-start;
-}
-.sb-logo img{height:36px;width:auto;filter:brightness(0) invert(1);opacity:.95}
-.sb-logo .tag{
-  font-family:var(--serif);font-size:11px;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--gold);font-weight:500;font-style:italic;
-  margin-top:2px;
-}
-.sb-nav{flex:1;padding:18px 12px;overflow-y:auto}
-.sb-nav-section{
-  font-size:9px;letter-spacing:.24em;text-transform:uppercase;
-  color:rgba(255,255,255,.32);font-weight:500;
-  padding:18px 14px 10px;
-}
-.sb-link{
-  display:flex;align-items:center;gap:12px;
-  padding:11px 14px;border-radius:8px;
-  color:rgba(255,255,255,.62);
-  text-decoration:none;
-  font-size:13px;font-weight:400;
-  cursor:pointer;
-  transition:all .25s;
-  border:none;background:none;width:100%;text-align:left;
-  font-family:var(--sans);
-}
-.sb-link svg{width:18px;height:18px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.sb-link:hover{background:rgba(255,255,255,.05);color:#fff}
-.sb-link.active{background:rgba(201,169,110,.14);color:var(--gold);font-weight:500}
-.sb-link.danger:hover{background:rgba(220,53,69,.14);color:#ff8c95}
-.sb-foot{
-  padding:16px 18px;
-  border-top:1px solid rgba(255,255,255,.06);
-  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  color:rgba(255,255,255,.32);font-weight:500;
-}
-
-/* ═══ MAIN ═══ */
-.main{flex:1;min-width:0;display:flex;flex-direction:column}
-.topbar{
-  background:#fff;
-  border-bottom:1px solid var(--border);
-  padding:0 32px;
-  height:64px;
-  display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:30;
-}
-.topbar-left{display:flex;align-items:center;gap:14px}
-.ham{
-  display:none;background:none;border:none;cursor:pointer;
-  width:38px;height:38px;border-radius:8px;align-items:center;justify-content:center;
-  color:var(--text);
-}
-.ham:hover{background:var(--border-soft)}
-.ham svg{width:20px;height:20px}
-.crumb{
-  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--text-mute);font-weight:500;
-}
-.crumb b{color:var(--text);font-weight:600}
-.user-chip{
-  display:flex;align-items:center;gap:10px;
-  padding:6px 14px 6px 6px;
-  border-radius:100px;
-  background:var(--border-soft);
-  font-size:12px;font-weight:500;color:var(--text);
-}
-.user-chip .avatar{
-  width:32px;height:32px;border-radius:50%;
-  background:var(--gold);color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  font-weight:600;font-size:13px;letter-spacing:.04em;
-}
-
-.content{flex:1;padding:32px;max-width:100%;overflow-x:hidden}
-
-/* ═══ SECTION ═══ */
-.section{display:none;animation:fadein .4s ease}
-.section.active{display:block}
-@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:28px;flex-wrap:wrap}
-.sec-title{
-  font-family:var(--serif);font-size:38px;font-weight:500;
-  letter-spacing:-.01em;color:var(--text);line-height:1.1;
-}
-.sec-title em{font-style:italic;color:var(--gold)}
-.sec-sub{
-  font-size:13px;color:var(--text-soft);font-weight:400;
-  margin-top:6px;
-}
-
-/* ═══ CARDS ═══ */
-.card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:24px;
-  box-shadow:var(--shadow-sm);
-}
-.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px}
-.stat{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:22px 22px 20px;
-  display:flex;flex-direction:column;gap:10px;
-  position:relative;overflow:hidden;
-  transition:all .3s;
-}
-.stat:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
-.stat-icon{
-  width:42px;height:42px;border-radius:10px;
-  background:rgba(201,169,110,.14);color:var(--gold);
-  display:flex;align-items:center;justify-content:center;
-}
-.stat-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
-.stat-label{
-  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--text-mute);font-weight:600;
-}
-.stat-value{font-family:var(--serif);font-size:38px;font-weight:500;line-height:1;letter-spacing:-.01em;color:var(--text)}
-.stat-trend{font-size:11px;color:#22c55e;font-weight:500;display:flex;align-items:center;gap:4px}
-.stat-trend.down{color:#ef4444}
-
-.greet{
-  background:linear-gradient(135deg,#1a1f2e 0%,#2a3147 100%);
-  color:#fff;border-radius:var(--radius);padding:34px 36px;
-  margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:24px;
-  position:relative;overflow:hidden;
-}
-.greet::after{
-  content:'';position:absolute;top:-40%;right:-10%;width:60%;height:200%;
-  background:radial-gradient(closest-side,rgba(201,169,110,.18),transparent 70%);
-  pointer-events:none;
-}
-.greet-l{position:relative;z-index:1}
-.greet h2{font-family:var(--serif);font-size:34px;font-weight:500;letter-spacing:-.01em;line-height:1.05}
-.greet h2 em{font-style:italic;color:var(--gold)}
-.greet p{font-size:13px;color:rgba(255,255,255,.6);margin-top:6px;font-weight:300}
-.greet .btn{position:relative;z-index:1}
-
-/* ═══ BUTTONS ═══ */
-.btn{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:11px 20px;border-radius:8px;
-  font-family:var(--sans);font-size:11px;font-weight:600;
-  letter-spacing:.18em;text-transform:uppercase;
-  border:none;cursor:pointer;
-  transition:all .25s cubic-bezier(.25,.46,.45,.94);
-  text-decoration:none;
-  line-height:1;
-}
-.btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.btn-primary{background:var(--gold);color:#1a1f2e}
-.btn-primary:hover{background:var(--gold-d);transform:translateY(-1px);box-shadow:0 8px 20px rgba(201,169,110,.28)}
-.btn-dark{background:var(--sidebar);color:#fff}
-.btn-dark:hover{background:#252b3e;transform:translateY(-1px)}
-.btn-ghost{background:transparent;color:var(--text-soft);border:1px solid var(--border)}
-.btn-ghost:hover{background:var(--border-soft);color:var(--text)}
-.btn-danger{background:#fee;color:#dc2626;border:1px solid #fdd}
-.btn-danger:hover{background:#dc2626;color:#fff;border-color:#dc2626}
-.btn-sm{padding:7px 12px;font-size:10px;letter-spacing:.14em}
-.btn-icon{padding:8px;border-radius:6px;border:1px solid transparent;background:transparent;cursor:pointer;color:var(--text-soft);display:inline-flex;align-items:center;justify-content:center}
-.btn-icon:hover{background:var(--border-soft);color:var(--text)}
-.btn-icon.del:hover{background:#fee;color:#dc2626}
-.btn-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-
-/* ═══ TABLE ═══ */
-.table-wrap{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:var(--radius);overflow:hidden;
-  box-shadow:var(--shadow-sm);
-}
-.table-head{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:18px 22px;border-bottom:1px solid var(--border);
-  gap:14px;flex-wrap:wrap;
-}
-.table-head h3{font-size:15px;font-weight:600;color:var(--text)}
-.table-tools{display:flex;gap:10px;align-items:center}
-.search-input{
-  background:var(--bg);border:1px solid var(--border);border-radius:8px;
-  padding:9px 14px;font-size:12px;font-family:var(--sans);
-  width:220px;outline:none;transition:all .25s;color:var(--text);
-}
-.search-input:focus{border-color:var(--gold);background:#fff}
-.tbl{width:100%;border-collapse:collapse;font-size:13px}
-.tbl thead th{
-  background:#fafbfc;
-  text-align:left;
-  font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-  font-weight:600;color:var(--text-mute);
-  padding:13px 22px;border-bottom:1px solid var(--border);
-  white-space:nowrap;
-}
-.tbl tbody td{
-  padding:14px 22px;border-bottom:1px solid var(--border-soft);
-  vertical-align:middle;color:var(--text);
-}
-.tbl tbody tr{transition:background .2s}
-.tbl tbody tr:hover{background:#fafbfc}
-.tbl tbody tr:last-child td{border-bottom:none}
-.tbl .col-actions{text-align:right;width:120px}
-.tbl .thumb{
-  width:48px;height:36px;border-radius:6px;
-  background:var(--border-soft);object-fit:cover;
-  display:block;
-}
-.cell-strong{font-weight:600;color:var(--text)}
-.cell-soft{color:var(--text-soft);font-size:12px}
-
-.badge{
-  display:inline-flex;align-items:center;
-  padding:4px 10px;border-radius:100px;
-  font-size:10px;letter-spacing:.12em;text-transform:uppercase;
-  font-weight:600;
-}
-.badge-gold{background:rgba(201,169,110,.15);color:#9a7d44}
-.badge-green{background:#dcfce7;color:#15803d}
-.badge-gray{background:#e5e7eb;color:#4b5563}
-.badge-blue{background:#dbeafe;color:#1d4ed8}
-
-.empty-state{
-  padding:56px 22px;text-align:center;color:var(--text-mute);
-}
-.empty-state svg{width:48px;height:48px;stroke:currentColor;fill:none;stroke-width:1.4;margin:0 auto 14px;display:block;opacity:.5}
-.empty-state p{font-size:13px;font-weight:400}
-
-/* ═══ FORM ═══ */
-.form-row{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:18px}
-.form-row.full{grid-template-columns:1fr}
-.form-row.three{grid-template-columns:repeat(3,1fr)}
-.form-row.four{grid-template-columns:repeat(4,1fr)}
-.fld label{
-  display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--text-soft);margin-bottom:7px;font-weight:600;
-}
-.fld input,.fld select,.fld textarea{
-  width:100%;background:#fff;
-  border:1px solid var(--border);border-radius:8px;
-  padding:11px 14px;font-size:13px;
-  font-family:var(--sans);color:var(--text);
-  outline:none;transition:all .25s;
-  font-weight:400;
-}
-.fld input:focus,.fld select:focus,.fld textarea:focus{
-  border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,169,110,.10);
-}
-.fld textarea{resize:vertical;min-height:120px;line-height:1.6}
-.fld .editor{min-height:280px}
-.fld .help{font-size:11px;color:var(--text-mute);margin-top:6px}
-
-.toolbar{
-  display:flex;align-items:center;gap:4px;
-  padding:7px 8px;background:#fafbfc;
-  border:1px solid var(--border);border-bottom:none;
-  border-radius:8px 8px 0 0;flex-wrap:wrap;
-}
-.toolbar + textarea{border-top-left-radius:0;border-top-right-radius:0}
-.tb-btn{
-  background:none;border:none;cursor:pointer;
-  padding:6px 9px;border-radius:5px;
-  font-size:12px;font-weight:600;color:var(--text-soft);
-  font-family:var(--sans);
-  display:inline-flex;align-items:center;
-  transition:all .2s;
-}
-.tb-btn:hover{background:#fff;color:var(--text);box-shadow:0 0 0 1px var(--border)}
-.tb-btn.active{background:var(--gold);color:#fff}
-.tb-sep{width:1px;height:18px;background:var(--border);margin:0 4px}
-
-.toggle{display:inline-flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
-.toggle input{display:none}
-.toggle .track{
-  width:40px;height:22px;background:var(--border);border-radius:100px;
-  position:relative;transition:background .3s;
-}
-.toggle .track::before{
-  content:'';position:absolute;top:2px;left:2px;
-  width:18px;height:18px;background:#fff;border-radius:50%;
-  transition:transform .3s;box-shadow:0 1px 3px rgba(0,0,0,.18);
-}
-.toggle input:checked + .track{background:var(--gold)}
-.toggle input:checked + .track::before{transform:translateX(18px)}
-.toggle .lbl{font-size:12px;font-weight:500;color:var(--text)}
-
-.form-actions{
-  display:flex;justify-content:flex-end;gap:10px;
-  padding-top:18px;border-top:1px solid var(--border-soft);
-  margin-top:8px;
-}
-
-/* ═══ MODAL ═══ */
-.modal{
-  position:fixed;inset:0;background:rgba(20,26,44,.55);
-  z-index:1000;display:none;align-items:flex-start;justify-content:center;
-  padding:40px 20px;overflow-y:auto;
-  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
-}
-.modal.open{display:flex;animation:fadein .25s ease}
-.modal-card{
-  background:#fff;border-radius:var(--radius);
-  width:100%;max-width:780px;
-  box-shadow:0 30px 80px rgba(20,26,44,.30);
-  animation:slideup .3s cubic-bezier(.25,.46,.45,.94);
-  overflow:hidden;
-  margin:auto;
-}
-@keyframes slideup{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
-.modal-head{
-  padding:22px 28px;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-}
-.modal-head h2{font-family:var(--serif);font-size:24px;font-weight:500;letter-spacing:-.01em}
-.modal-head h2 em{font-style:italic;color:var(--gold)}
-.modal-close{
-  background:none;border:none;cursor:pointer;
-  width:32px;height:32px;border-radius:6px;
-  color:var(--text-mute);display:flex;align-items:center;justify-content:center;
-}
-.modal-close:hover{background:var(--border-soft);color:var(--text)}
-.modal-close svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
-.modal-body{padding:24px 28px}
-.modal-foot{
-  padding:18px 28px;border-top:1px solid var(--border);
-  display:flex;justify-content:flex-end;gap:10px;background:#fafbfc;
-}
-
-/* ═══ TOAST ═══ */
-.toast{
-  position:fixed;bottom:24px;right:24px;
-  background:var(--sidebar);color:#fff;
-  padding:14px 22px;border-radius:10px;
-  font-size:12px;font-weight:500;letter-spacing:.04em;
-  box-shadow:0 12px 36px rgba(20,26,44,.30);
-  z-index:2000;opacity:0;pointer-events:none;
-  transform:translateY(14px);
-  transition:all .35s cubic-bezier(.25,.46,.45,.94);
-  display:flex;align-items:center;gap:10px;
-}
-.toast.show{opacity:1;transform:none;pointer-events:auto}
-.toast svg{width:16px;height:16px;color:var(--gold)}
-
-/* ═══ KPI BARS ═══ */
-.kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.kpi-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
-.kpi-card h4{font-size:13px;font-weight:600;margin-bottom:18px;color:var(--text)}
-.bar-row{display:grid;grid-template-columns:140px 1fr 60px;align-items:center;gap:12px;margin-bottom:12px;font-size:12px}
-.bar-row .lbl{color:var(--text-soft);font-weight:500}
-.bar-row .val{text-align:right;font-weight:600;color:var(--text)}
-.bar{height:8px;background:var(--border-soft);border-radius:100px;overflow:hidden}
-.bar-fill{height:100%;background:linear-gradient(90deg,var(--gold) 0%,var(--gold-d) 100%);border-radius:100px;transition:width .9s cubic-bezier(.25,.46,.45,.94)}
-
-/* ═══ MOBILE ═══ */
-.sb-backdrop{
-  display:none;position:fixed;inset:0;background:rgba(20,26,44,.5);
-  z-index:40;
-}
-.sb-backdrop.show{display:block}
-
-@media(max-width:960px){
-  .stat-grid{grid-template-columns:repeat(2,1fr)}
-  .form-row.three,.form-row.four{grid-template-columns:1fr}
-  .kpi-grid{grid-template-columns:1fr}
-}
-@media(max-width:780px){
-  .sb{
-    position:fixed;top:0;left:0;
-    transform:translateX(-100%);
-    transition:transform .3s cubic-bezier(.25,.46,.45,.94);
-    height:100vh;
-  }
-  .sb.open{transform:none}
-  .ham{display:flex}
-  .content{padding:20px}
-  .greet{padding:24px;flex-direction:column;align-items:flex-start}
-  .greet h2{font-size:26px}
-  .form-row{grid-template-columns:1fr}
-  .stat-grid{grid-template-columns:1fr 1fr;gap:12px}
-  .stat{padding:18px}
-  .stat-value{font-size:30px}
-  .topbar{padding:0 18px}
-  .sec-title{font-size:28px}
-  .table-wrap{overflow-x:auto}
-  .tbl{min-width:560px}
-  .modal-card{margin:0 auto}
-  .user-chip span{display:none}
-  .user-chip{padding:0}
-}
-</style>
+<link rel="stylesheet" href="admin/admin.css">
 </head>
 <body>
 
@@ -460,41 +22,41 @@ body{
 
     <nav class="sb-nav">
       <div class="sb-nav-section">Principal</div>
-      <button class="sb-link active" data-go="dashboard">
+      <a class="sb-link active" href="admin.html">
         <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3zM13 21h8V11h-8zM3 21h8v-6H3zM13 9h8V3h-8z"/></svg>
         Dashboard
-      </button>
+      </a>
 
       <div class="sb-nav-section">Contenido</div>
-      <button class="sb-link" data-go="blog">
+      <a class="sb-link" href="admin/blog.html">
         <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
         Blog
-      </button>
-      <button class="sb-link" data-go="props">
+      </a>
+      <a class="sb-link" href="admin/propiedades.html">
         <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V21a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
         Propiedades
-      </button>
-      <button class="sb-link" data-go="team">
+      </a>
+      <a class="sb-link" href="admin/equipo.html">
         <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Equipo
-      </button>
-      <button class="sb-link" data-go="testimonials">
+      </a>
+      <a class="sb-link" href="admin/testimonios.html">
         <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         Testimonios
-      </button>
+      </a>
 
       <div class="sb-nav-section">Análisis</div>
-      <button class="sb-link" data-go="kpis">
+      <a class="sb-link" href="admin/kpis.html">
         <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg>
         KPIs
-      </button>
+      </a>
 
       <div class="sb-nav-section">Sistema</div>
-      <button class="sb-link" data-go="config">
+      <a class="sb-link" href="admin/configuracion.html">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         Configuración
-      </button>
-      <button class="sb-link danger" id="logoutBtn">
+      </a>
+      <button class="sb-link danger" id="logoutBtn" type="button">
         <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
         Cerrar sesión
       </button>
@@ -510,10 +72,10 @@ body{
 
     <header class="topbar">
       <div class="topbar-left">
-        <button class="ham" id="hamBtn" aria-label="Menú">
+        <button class="ham" id="hamBtn" type="button" aria-label="Menú">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
         </button>
-        <div class="crumb">Panel · <b id="crumbSection">Dashboard</b></div>
+        <div class="crumb">Panel · <b>Dashboard</b></div>
       </div>
       <div class="user-chip">
         <div class="avatar" id="userAvatar">A</div>
@@ -523,996 +85,128 @@ body{
 
     <div class="content">
 
-      <!-- ═══════════ DASHBOARD ═══════════ -->
-      <section class="section active" id="sec-dashboard">
-        <div class="greet">
-          <div class="greet-l">
-            <h2>Hola, <em>Administrador</em></h2>
-            <p>Bienvenido de nuevo. Esto es lo que pasa hoy en Montana Realty.</p>
-          </div>
-          <button class="btn btn-primary" data-go="blog">
-            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-            Crear artículo
-          </button>
+      <div class="greet">
+        <div class="greet-l">
+          <h2>Hola, <em>Administrador</em></h2>
+          <p>Bienvenido de nuevo. Esto es lo que pasa hoy en Montana Realty.</p>
         </div>
+        <a class="btn btn-primary" href="admin/blog.html">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Crear artículo
+        </a>
+      </div>
 
-        <div class="stat-grid">
-          <div class="stat">
-            <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V21a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
-            <span class="stat-label">Propiedades</span>
-            <span class="stat-value" id="ds-props">0</span>
-            <span class="stat-trend">↑ Activas en el sitio</span>
-          </div>
-          <div class="stat">
-            <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
-            <span class="stat-label">Artículos de Blog</span>
-            <span class="stat-value" id="ds-blogs">0</span>
-            <span class="stat-trend" id="ds-blogs-pub">↑ 0 publicados</span>
-          </div>
-          <div class="stat">
-            <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
-            <span class="stat-label">Equipo</span>
-            <span class="stat-value" id="ds-team">0</span>
-            <span class="stat-trend">↑ Miembros activos</span>
-          </div>
-          <div class="stat">
-            <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-            <span class="stat-label">Testimonios</span>
-            <span class="stat-value" id="ds-test">0</span>
-            <span class="stat-trend">↑ De clientes</span>
-          </div>
+      <div class="stat-grid">
+        <div class="stat">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V21a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+          <span class="stat-label">Propiedades</span>
+          <span class="stat-value" id="ds-props">0</span>
+          <span class="stat-trend">↑ Activas en el sitio</span>
         </div>
-
-        <div class="card">
-          <h3 style="font-size:15px;font-weight:600;margin-bottom:18px">Acciones rápidas</h3>
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
-            <button class="btn btn-ghost" data-go="blog" style="justify-content:flex-start">
-              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
-              Gestionar Blog
-            </button>
-            <button class="btn btn-ghost" data-go="props" style="justify-content:flex-start">
-              <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V21a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-              Gestionar Propiedades
-            </button>
-            <button class="btn btn-ghost" data-go="team" style="justify-content:flex-start">
-              <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/></svg>
-              Editar Equipo
-            </button>
-            <button class="btn btn-ghost" data-go="config" style="justify-content:flex-start">
-              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/></svg>
-              Configuración
-            </button>
-          </div>
+        <div class="stat">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+          <span class="stat-label">Artículos de Blog</span>
+          <span class="stat-value" id="ds-blogs">0</span>
+          <span class="stat-trend" id="ds-blogs-pub">↑ 0 publicados</span>
         </div>
-      </section>
-
-      <!-- ═══════════ BLOG ═══════════ -->
-      <section class="section" id="sec-blog">
-        <div class="sec-head">
-          <div>
-            <h1 class="sec-title">Gestión de <em>Blog</em></h1>
-            <p class="sec-sub">Crea, edita y publica artículos. Los cambios aparecen automáticamente en el sitio.</p>
-          </div>
-          <button class="btn btn-primary" id="newBlogBtn">
-            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-            Crear nuevo artículo
-          </button>
+        <div class="stat">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+          <span class="stat-label">Equipo</span>
+          <span class="stat-value" id="ds-team">0</span>
+          <span class="stat-trend">↑ Miembros activos</span>
         </div>
-
-        <div class="table-wrap">
-          <div class="table-head">
-            <h3>Artículos publicados</h3>
-            <div class="table-tools">
-              <input class="search-input" placeholder="Buscar artículo..." id="blogSearch">
-            </div>
-          </div>
-          <div id="blogTblWrap">
-            <table class="tbl">
-              <thead><tr>
-                <th>Título</th><th>Categoría</th><th>Fecha</th><th>Status</th><th class="col-actions">Acciones</th>
-              </tr></thead>
-              <tbody id="blogTbody"></tbody>
-            </table>
-          </div>
+        <div class="stat">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <span class="stat-label">Testimonios</span>
+          <span class="stat-value" id="ds-test">0</span>
+          <span class="stat-trend">↑ De clientes</span>
         </div>
-      </section>
+      </div>
 
-      <!-- ═══════════ PROPIEDADES ═══════════ -->
-      <section class="section" id="sec-props">
-        <div class="sec-head">
-          <div>
-            <h1 class="sec-title">Gestión de <em>Propiedades</em></h1>
-            <p class="sec-sub">Inventario inmobiliario disponible para venta y renta.</p>
-          </div>
-          <button class="btn btn-primary" id="newPropBtn">
-            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-            Agregar propiedad
-          </button>
+      <div class="card">
+        <h3 style="font-size:15px;font-weight:600;margin-bottom:18px">Acciones rápidas</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+          <a class="btn btn-ghost" href="admin/blog.html" style="justify-content:flex-start">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+            Gestionar Blog
+          </a>
+          <a class="btn btn-ghost" href="admin/propiedades.html" style="justify-content:flex-start">
+            <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V21a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            Gestionar Propiedades
+          </a>
+          <a class="btn btn-ghost" href="admin/equipo.html" style="justify-content:flex-start">
+            <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/></svg>
+            Editar Equipo
+          </a>
+          <a class="btn btn-ghost" href="admin/configuracion.html" style="justify-content:flex-start">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/></svg>
+            Configuración
+          </a>
         </div>
-
-        <div class="table-wrap">
-          <div class="table-head">
-            <h3>Inventario</h3>
-            <div class="table-tools">
-              <input class="search-input" placeholder="Buscar propiedad..." id="propSearch">
-            </div>
-          </div>
-          <table class="tbl">
-            <thead><tr>
-              <th></th><th>Nombre</th><th>Ubicación</th><th>Precio</th><th>Tipo</th><th>Status</th><th class="col-actions">Acciones</th>
-            </tr></thead>
-            <tbody id="propTbody"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- ═══════════ EQUIPO ═══════════ -->
-      <section class="section" id="sec-team">
-        <div class="sec-head">
-          <div>
-            <h1 class="sec-title">Nuestro <em>equipo</em></h1>
-            <p class="sec-sub">Asesores y miembros de Montana Realty Co.</p>
-          </div>
-          <button class="btn btn-primary" id="newTeamBtn">
-            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-            Agregar miembro
-          </button>
-        </div>
-
-        <div class="table-wrap">
-          <div class="table-head"><h3>Miembros</h3></div>
-          <table class="tbl">
-            <thead><tr>
-              <th></th><th>Nombre</th><th>Cargo</th><th>Bio</th><th class="col-actions">Acciones</th>
-            </tr></thead>
-            <tbody id="teamTbody"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- ═══════════ TESTIMONIOS ═══════════ -->
-      <section class="section" id="sec-testimonials">
-        <div class="sec-head">
-          <div>
-            <h1 class="sec-title">Testimonios de <em>clientes</em></h1>
-            <p class="sec-sub">Reseñas que aparecen en el sitio.</p>
-          </div>
-          <button class="btn btn-primary" id="newTestBtn">
-            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-            Agregar testimonio
-          </button>
-        </div>
-
-        <div class="table-wrap">
-          <div class="table-head"><h3>Reseñas</h3></div>
-          <table class="tbl">
-            <thead><tr>
-              <th></th><th>Cliente</th><th>Estrellas</th><th>Texto</th><th class="col-actions">Acciones</th>
-            </tr></thead>
-            <tbody id="testTbody"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- ═══════════ KPIs ═══════════ -->
-      <section class="section" id="sec-kpis">
-        <div class="sec-head">
-          <div>
-            <h1 class="sec-title">KPIs y <em>estadísticas</em></h1>
-            <p class="sec-sub">Resumen del contenido publicado.</p>
-          </div>
-        </div>
-
-        <div class="stat-grid">
-          <div class="stat">
-            <span class="stat-label">Propiedades en venta</span>
-            <span class="stat-value" id="kpi-venta">0</span>
-          </div>
-          <div class="stat">
-            <span class="stat-label">Propiedades en renta</span>
-            <span class="stat-value" id="kpi-renta">0</span>
-          </div>
-          <div class="stat">
-            <span class="stat-label">Artículos publicados</span>
-            <span class="stat-value" id="kpi-pub">0</span>
-          </div>
-          <div class="stat">
-            <span class="stat-label">Borradores</span>
-            <span class="stat-value" id="kpi-draft">0</span>
-          </div>
-        </div>
-
-        <div class="kpi-grid">
-          <div class="kpi-card">
-            <h4>Distribución por tipo de propiedad</h4>
-            <div id="kpi-types"></div>
-          </div>
-          <div class="kpi-card">
-            <h4>Distribución por categoría de blog</h4>
-            <div id="kpi-cats"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ═══════════ CONFIGURACIÓN ═══════════ -->
-      <section class="section" id="sec-config">
-        <div class="sec-head">
-          <div>
-            <h1 class="sec-title">Configuración <em>general</em></h1>
-            <p class="sec-sub">Datos de contacto, redes y credenciales del panel.</p>
-          </div>
-        </div>
-
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px" class="cfg-grid">
-          <div class="card">
-            <h3 style="font-size:15px;font-weight:600;margin-bottom:18px">Contacto y redes</h3>
-            <div class="form-row full"><div class="fld">
-              <label>WhatsApp principal</label>
-              <input type="text" id="cfg-wa" placeholder="528123532365">
-              <p class="help">Sólo dígitos, formato internacional sin "+".</p>
-            </div></div>
-            <div class="form-row full"><div class="fld">
-              <label>Email de contacto</label>
-              <input type="email" id="cfg-email" placeholder="contacto@montana-realty-co.com">
-            </div></div>
-            <div class="form-row"><div class="fld">
-              <label>Instagram URL</label>
-              <input type="text" id="cfg-ig" placeholder="https://www.instagram.com/montanarealtyco/">
-            </div><div class="fld">
-              <label>Facebook URL</label>
-              <input type="text" id="cfg-fb" placeholder="https://www.facebook.com/MRdesarrollos/">
-            </div></div>
-            <div class="form-row full"><div class="fld">
-              <label>Logo URL</label>
-              <input type="text" id="cfg-logo" placeholder="assets/logo.png">
-            </div></div>
-            <div class="form-actions">
-              <button class="btn btn-primary" id="saveCfgBtn">
-                <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
-                Guardar
-              </button>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3 style="font-size:15px;font-weight:600;margin-bottom:18px">Cambiar contraseña</h3>
-            <div class="form-row full"><div class="fld">
-              <label>Contraseña actual</label>
-              <input type="text" id="cfg-cur" style="-webkit-text-security:disc" autocomplete="off">
-            </div></div>
-            <div class="form-row full"><div class="fld">
-              <label>Nueva contraseña</label>
-              <input type="text" id="cfg-new" style="-webkit-text-security:disc" autocomplete="off">
-            </div></div>
-            <div class="form-row full"><div class="fld">
-              <label>Confirmar nueva contraseña</label>
-              <input type="text" id="cfg-new2" style="-webkit-text-security:disc" autocomplete="off">
-            </div></div>
-            <p class="help" style="margin-bottom:14px">Se guarda en este navegador. Restablece borrando localStorage.</p>
-            <div class="form-actions">
-              <button class="btn btn-dark" id="savePwdBtn">Actualizar</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:18px">
-          <h3 style="font-size:15px;font-weight:600;margin-bottom:8px">Datos del panel</h3>
-          <p class="help" style="margin-bottom:14px">Toda la información se guarda en el almacenamiento local de este navegador.</p>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn btn-ghost" id="exportBtn">
-              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-              Exportar JSON
-            </button>
-            <button class="btn btn-ghost" id="importBtn">
-              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
-              Importar JSON
-            </button>
-            <input type="file" id="importFile" accept="application/json" style="display:none">
-            <button class="btn btn-danger" id="resetBtn">Restablecer todo</button>
-          </div>
-        </div>
-      </section>
+      </div>
 
     </div>
-  </div>
-</div>
-
-<!-- ═══ MODALS ═══ -->
-<div class="modal" id="modal">
-  <div class="modal-card">
-    <div class="modal-head">
-      <h2 id="modalTitle">Editar</h2>
-      <button class="modal-close" id="modalClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
-    </div>
-    <div class="modal-body" id="modalBody"></div>
-    <div class="modal-foot" id="modalFoot"></div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-/* ═══════════════════════════════════════════════
-   AUTH GATE
-═══════════════════════════════════════════════ */
+/* ═══ AUTH GATE ═══ */
 (function(){
-  const t = sessionStorage.getItem('mr_admin_token');
+  var t = sessionStorage.getItem('mr_admin_token');
   if(!t){ window.location.replace('admin-login.html'); }
 })();
 
-/* ═══════════════════════════════════════════════
-   STORAGE & DEFAULTS
-═══════════════════════════════════════════════ */
-const STORE_KEY = 'mr_data_v1';
+/* ═══ MOBILE SIDEBAR ═══ */
+(function(){
+  var sb = document.getElementById('sb');
+  var bd = document.getElementById('sbBackdrop');
+  var hb = document.getElementById('hamBtn');
+  if(hb) hb.addEventListener('click', function(){ sb.classList.add('open'); bd.classList.add('show'); });
+  if(bd) bd.addEventListener('click', function(){ sb.classList.remove('open'); bd.classList.remove('show'); });
+})();
 
-const DEFAULT_BLOGS = [
-  {id:'b1',title:'Reporte Q1 2026: San Pedro Garza García',cat:'reporte',date:'2026-04-15',status:'published',img:'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1600&q=85',excerpt:'El mercado inmobiliario mantiene su dinamismo con un incremento del 12% en valores respecto al mismo período del año anterior.',content:'<p>El mercado inmobiliario mantiene su dinamismo con un incremento del 12% en valores respecto al mismo período del año anterior. Análisis por zona y segmento.</p>'},
-  {id:'b2',title:'Cómo negociar el precio de una propiedad de lujo',cat:'guia',date:'2026-03-20',status:'published',img:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1000&q=85',excerpt:'Estrategias probadas para obtener el mejor precio en el segmento premium sin perder la oportunidad de cierre.',content:'<p>Estrategias probadas para obtener el mejor precio en el segmento premium sin perder la oportunidad de cierre.</p>'},
-  {id:'b3',title:'Las 3 colonias con mayor ROI en San Pedro en 2026',cat:'inversion',date:'2026-02-10',status:'published',img:'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=1000&q=85',excerpt:'Análisis de las zonas con mayor apreciación histórica y proyección de crecimiento para los próximos 5 años.',content:'<p>Análisis de las zonas con mayor apreciación histórica y proyección de crecimiento para los próximos 5 años.</p>'},
-  {id:'b4',title:'Guía completa para comprar tu primera propiedad de lujo',cat:'guia',date:'2026-02-01',status:'published',img:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1000&q=85',excerpt:'Todo lo que necesitas saber antes de invertir: financiamiento, due diligence, escrituración y los errores más comunes.',content:'<p>Todo lo que necesitas saber antes de invertir.</p>'},
-  {id:'b5',title:'Tendencias de arquitectura residencial 2026',cat:'lifestyle',date:'2026-01-15',status:'published',img:'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1000&q=85',excerpt:'Los estilos que están definiendo las nuevas construcciones: materiales, volúmenes y la conexión con el paisaje.',content:'<p>Los estilos que están definiendo las nuevas construcciones.</p>'},
-  {id:'b6',title:'Inversión en departamentos vs casas: qué conviene más',cat:'inversion',date:'2026-01-05',status:'published',img:'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1000&q=85',excerpt:'Comparativa de rendimiento por tipo de inmueble, con datos de apreciación, renta y liquidez.',content:'<p>Comparativa de rendimiento por tipo de inmueble.</p>'}
-];
+/* ═══ LOGOUT ═══ */
+(function(){
+  var btn = document.getElementById('logoutBtn');
+  if(!btn) return;
+  btn.addEventListener('click', function(){
+    sessionStorage.removeItem('mr_admin_token');
+    sessionStorage.removeItem('mr_admin_user');
+    window.location.href = 'admin-login.html';
+  });
+})();
 
-const DEFAULT_PROPS = [
-  {id:'p1',name:'Residencia Lomas del Campestre',location:'Lomas del Campestre, San Pedro',price:'$45,000,000 MXN',beds:5,baths:6,m2:850,type:'casa',status:'venta',img:'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1200&q=85',desc:'Residencia de lujo con jardín privado, alberca y acabados de primera.'},
-  {id:'p2',name:'Penthouse Valle Oriente',location:'Valle Oriente, San Pedro',price:'$32,500,000 MXN',beds:4,baths:5,m2:520,type:'depto',status:'venta',img:'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=85',desc:'Penthouse con vistas panorámicas a la sierra y amenidades de clase mundial.'},
-  {id:'p3',name:'Casa Del Valle',location:'Del Valle, San Pedro',price:'$28,000,000 MXN',beds:4,baths:4,m2:620,type:'casa',status:'venta',img:'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=85',desc:'Casa familiar moderna con espacios amplios y diseño contemporáneo.'},
-  {id:'p4',name:'Departamento Cumbres Élite',location:'Cumbres, San Pedro',price:'$85,000 MXN/mes',beds:3,baths:3,m2:280,type:'depto',status:'renta',img:'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&q=85',desc:'Departamento totalmente amueblado con servicios incluidos.'},
-  {id:'p5',name:'Terreno Carretera Nacional',location:'Carretera Nacional, Monterrey',price:'$18,000,000 MXN',beds:0,baths:0,m2:1200,type:'terreno',status:'venta',img:'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=85',desc:'Terreno residencial premium con todos los servicios.'},
-  {id:'p6',name:'Villa Cerradas del Valle',location:'Cerradas del Valle, San Pedro',price:'$120,000 MXN/mes',beds:5,baths:6,m2:780,type:'casa',status:'renta',img:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=85',desc:'Villa privada con seguridad 24/7 y club deportivo exclusivo.'}
-];
-
-const DEFAULT_TEAM = [
-  {id:'t1',name:'Maricela Arcia',role:'Directora',photo:'Maricela.jpg',bio:'Directora general de Montana Realty Co. con más de 15 años en bienes raíces de lujo en San Pedro Garza García.',wa:'528110448818'},
-  {id:'t2',name:'Federico Mecutchen',role:'Director de Ventas y Marketing',photo:'Fede.jpg',bio:'Director de Ventas y Marketing especializado en propiedades premium y desarrollos boutique.',wa:'528123532365'}
-];
-
-const DEFAULT_TESTS = [
-  {id:'r1',name:'Carlos Gutiérrez',stars:5,text:'Montana Realty nos ayudó a encontrar nuestra casa ideal. El proceso fue impecable de principio a fin.',photo:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=85'},
-  {id:'r2',name:'Andrea Salinas',stars:5,text:'Profesionalismo, discreción y un conocimiento del mercado de San Pedro como ningún otro asesor.',photo:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=85'},
-  {id:'r3',name:'Roberto Treviño',stars:5,text:'Vendieron mi propiedad en menos de 60 días al precio que pedíamos. Recomendados al 100%.',photo:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=85'},
-  {id:'r4',name:'Patricia Garza',stars:5,text:'El equipo de Maricela y Federico es excepcional. Nos asesoraron en cada detalle de la inversión.',photo:'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=85'},
-  {id:'r5',name:'Eduardo Lozano',stars:5,text:'Compramos un penthouse a través de Montana Realty y la experiencia fue de primer mundo.',photo:'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=85'}
-];
-
-const DEFAULT_CONFIG = {
-  wa:'528123532365',
-  email:'contacto@montana-realty-co.com',
-  ig:'https://www.instagram.com/montanarealtyco/',
-  fb:'https://www.facebook.com/MRdesarrollos/',
-  logo:'assets/logo.png'
-};
-
-function loadData(){
+/* ═══ DASHBOARD COUNTS ═══ */
+(function(){
+  var STORE_KEY = 'mr_data_v1';
+  var counts = {props:0, blogs:0, team:0, tests:0, blogsPub:0};
   try{
-    const raw = localStorage.getItem(STORE_KEY);
-    if(!raw) return defaultData();
-    const d = JSON.parse(raw);
-    return {
-      blogs: d.blogs || DEFAULT_BLOGS,
-      props: d.props || DEFAULT_PROPS,
-      team:  d.team  || DEFAULT_TEAM,
-      tests: d.tests || DEFAULT_TESTS,
-      config:{...DEFAULT_CONFIG, ...(d.config||{})}
-    };
-  }catch(e){ return defaultData(); }
-}
-function defaultData(){
-  return {blogs:[...DEFAULT_BLOGS],props:[...DEFAULT_PROPS],team:[...DEFAULT_TEAM],tests:[...DEFAULT_TESTS],config:{...DEFAULT_CONFIG}};
-}
-function saveData(){ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
-
-let state = loadData();
-
-const CAT_LABELS = {
-  reporte:'Reporte de Mercado',
-  guia:'Guía de Compra',
-  inversion:'Inversión',
-  tendencias:'Tendencias',
-  mercado:'Mercado',
-  lifestyle:'Lifestyle'
-};
-const TYPE_LABELS = {casa:'Casa',depto:'Departamento',penthouse:'Penthouse',terreno:'Terreno',villa:'Villa'};
-const STATUS_LABELS = {venta:'En Venta',renta:'En Renta'};
-
-/* ═══════════════════════════════════════════════
-   UTIL
-═══════════════════════════════════════════════ */
-const $ = (s,r=document)=>r.querySelector(s);
-const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
-const uid = ()=> Math.random().toString(36).slice(2,9);
-const esc = s => String(s??'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function fmtDate(d){
-  if(!d) return '—';
-  try{
-    const dt = new Date(d);
-    if(isNaN(dt)) return d;
-    return dt.toLocaleDateString('es-MX',{year:'numeric',month:'short',day:'numeric'});
-  }catch(e){ return d; }
-}
-function toast(msg){
-  const t=$('#toast');
-  t.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span>${esc(msg)}</span>`;
-  t.classList.add('show');
-  clearTimeout(t._h);
-  t._h=setTimeout(()=>t.classList.remove('show'),2400);
-}
-
-/* ═══════════════════════════════════════════════
-   NAV / SECTIONS
-═══════════════════════════════════════════════ */
-const SECTIONS = {
-  dashboard:'Dashboard', blog:'Blog', props:'Propiedades',
-  team:'Equipo', testimonials:'Testimonios', kpis:'KPIs', config:'Configuración'
-};
-function go(name){
-  $$('.section').forEach(s=>s.classList.remove('active'));
-  const el = $('#sec-'+name);
-  if(el) el.classList.add('active');
-  $$('.sb-link').forEach(l=>l.classList.remove('active'));
-  const link = $(`.sb-link[data-go="${name}"]`);
-  if(link) link.classList.add('active');
-  $('#crumbSection').textContent = SECTIONS[name] || name;
-  if(window.innerWidth<=780) closeSidebar();
-  refreshAll();
-  window.scrollTo(0,0);
-}
-document.addEventListener('click', e=>{
-  const t = e.target.closest('[data-go]');
-  if(t){ e.preventDefault(); go(t.dataset.go); }
-});
-
-$('#logoutBtn').addEventListener('click', ()=>{
-  sessionStorage.removeItem('mr_admin_token');
-  sessionStorage.removeItem('mr_admin_user');
-  window.location.href = 'admin-login.html';
-});
-
-/* mobile sidebar */
-function openSidebar(){ $('#sb').classList.add('open'); $('#sbBackdrop').classList.add('show'); }
-function closeSidebar(){ $('#sb').classList.remove('open'); $('#sbBackdrop').classList.remove('show'); }
-$('#hamBtn').addEventListener('click', openSidebar);
-$('#sbBackdrop').addEventListener('click', closeSidebar);
-
-/* ═══════════════════════════════════════════════
-   DASHBOARD
-═══════════════════════════════════════════════ */
-function renderDashboard(){
-  $('#ds-props').textContent = state.props.length;
-  $('#ds-blogs').textContent = state.blogs.length;
-  $('#ds-team').textContent = state.team.length;
-  $('#ds-test').textContent = state.tests.length;
-  const pub = state.blogs.filter(b=>b.status==='published').length;
-  $('#ds-blogs-pub').textContent = `↑ ${pub} publicados`;
-  const u = sessionStorage.getItem('mr_admin_user') || 'admin';
-  $('#userAvatar').textContent = u[0].toUpperCase();
-  $('#userName').textContent = u==='admin' ? 'Administrador' : u;
-}
-
-/* ═══════════════════════════════════════════════
-   BLOG
-═══════════════════════════════════════════════ */
-function renderBlogs(){
-  const q = ($('#blogSearch')?.value||'').toLowerCase().trim();
-  const tb = $('#blogTbody');
-  const list = state.blogs.filter(b=>!q || b.title.toLowerCase().includes(q) || (CAT_LABELS[b.cat]||'').toLowerCase().includes(q));
-  if(!list.length){
-    tb.innerHTML = `<tr><td colspan="5"><div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><p>No hay artículos. Crea el primero.</p></div></td></tr>`;
-    return;
-  }
-  tb.innerHTML = list.map(b=>`
-    <tr>
-      <td><div class="cell-strong">${esc(b.title)}</div><div class="cell-soft">${esc(b.excerpt||'')}</div></td>
-      <td><span class="badge badge-gold">${esc(CAT_LABELS[b.cat]||b.cat)}</span></td>
-      <td class="cell-soft">${esc(fmtDate(b.date))}</td>
-      <td>${b.status==='published' ? '<span class="badge badge-green">Publicado</span>' : '<span class="badge badge-gray">Borrador</span>'}</td>
-      <td class="col-actions">
-        <button class="btn-icon" data-edit-blog="${b.id}" title="Editar"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-        <button class="btn-icon del" data-del-blog="${b.id}" title="Eliminar"><svg viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
-      </td>
-    </tr>
-  `).join('');
-}
-$('#newBlogBtn').addEventListener('click', ()=>openBlogEditor());
-document.addEventListener('input', e=>{
-  if(e.target.id==='blogSearch') renderBlogs();
-  if(e.target.id==='propSearch') renderProps();
-});
-document.addEventListener('click', e=>{
-  const eb = e.target.closest('[data-edit-blog]');
-  if(eb) openBlogEditor(state.blogs.find(b=>b.id===eb.dataset.editBlog));
-  const db = e.target.closest('[data-del-blog]');
-  if(db && confirm('¿Eliminar este artículo?')){
-    state.blogs = state.blogs.filter(b=>b.id!==db.dataset.delBlog);
-    saveData(); renderBlogs(); renderDashboard(); toast('Artículo eliminado');
-  }
-});
-
-function openBlogEditor(blog){
-  const isNew = !blog;
-  blog = blog || {id:uid(),title:'',cat:'reporte',date:new Date().toISOString().slice(0,10),status:'draft',img:'',excerpt:'',content:''};
-  $('#modalTitle').innerHTML = isNew ? 'Crear <em>artículo</em>' : 'Editar <em>artículo</em>';
-  $('#modalBody').innerHTML = `
-    <div class="form-row full"><div class="fld">
-      <label>Título del artículo</label>
-      <input type="text" id="b-title" value="${esc(blog.title)}" placeholder="Reporte trimestral del mercado...">
-    </div></div>
-    <div class="form-row three">
-      <div class="fld">
-        <label>Categoría</label>
-        <select id="b-cat">
-          ${Object.entries(CAT_LABELS).map(([v,l])=>`<option value="${v}" ${v===blog.cat?'selected':''}>${l}</option>`).join('')}
-        </select>
-      </div>
-      <div class="fld">
-        <label>Fecha</label>
-        <input type="date" id="b-date" value="${esc(blog.date)}">
-      </div>
-      <div class="fld">
-        <label>Status</label>
-        <label class="toggle" style="margin-top:10px">
-          <input type="checkbox" id="b-status" ${blog.status==='published'?'checked':''}>
-          <span class="track"></span>
-          <span class="lbl" id="b-status-lbl">${blog.status==='published'?'Publicado':'Borrador'}</span>
-        </label>
-      </div>
-    </div>
-    <div class="form-row full"><div class="fld">
-      <label>URL de imagen</label>
-      <input type="text" id="b-img" value="${esc(blog.img)}" placeholder="https://...">
-    </div></div>
-    <div class="form-row full"><div class="fld">
-      <label>Excerpt (resumen corto)</label>
-      <textarea id="b-excerpt" style="min-height:70px">${esc(blog.excerpt)}</textarea>
-    </div></div>
-    <div class="form-row full"><div class="fld">
-      <label>Contenido del artículo</label>
-      <div class="toolbar">
-        <button class="tb-btn" type="button" data-cmd="bold" title="Negrita"><b>B</b></button>
-        <button class="tb-btn" type="button" data-cmd="italic" title="Cursiva"><i>I</i></button>
-        <button class="tb-btn" type="button" data-cmd="underline" title="Subrayado"><u>U</u></button>
-        <span class="tb-sep"></span>
-        <button class="tb-btn" type="button" data-cmd="h2">H2</button>
-        <button class="tb-btn" type="button" data-cmd="h3">H3</button>
-        <button class="tb-btn" type="button" data-cmd="p">P</button>
-        <span class="tb-sep"></span>
-        <button class="tb-btn" type="button" data-cmd="ul">• Lista</button>
-        <button class="tb-btn" type="button" data-cmd="ol">1. Numerada</button>
-        <span class="tb-sep"></span>
-        <button class="tb-btn" type="button" data-cmd="link">🔗 Link</button>
-      </div>
-      <textarea id="b-content" class="editor" placeholder="Escribe aquí el contenido del artículo. Puedes usar HTML básico.">${esc(blog.content)}</textarea>
-      <p class="help">Acepta HTML básico. Usa los botones de la barra para insertar etiquetas.</p>
-    </div></div>
-  `;
-  $('#modalFoot').innerHTML = `
-    <button class="btn btn-ghost" id="m-cancel">Cancelar</button>
-    <button class="btn btn-ghost" id="m-prev">Previsualizar</button>
-    <button class="btn btn-primary" id="m-save">
-      <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/></svg>
-      Guardar
-    </button>
-  `;
-  openModal();
-
-  const tog = $('#b-status'), lbl = $('#b-status-lbl');
-  tog.addEventListener('change', ()=>{ lbl.textContent = tog.checked?'Publicado':'Borrador'; });
-
-  $$('.tb-btn', $('#modalBody')).forEach(b=>{
-    b.addEventListener('click', e=>{ e.preventDefault(); applyToolbarCmd(b.dataset.cmd, $('#b-content')); });
-  });
-
-  $('#m-cancel').addEventListener('click', closeModal);
-  $('#m-save').addEventListener('click', ()=>{
-    const title = $('#b-title').value.trim();
-    if(!title){ toast('Falta el título'); return; }
-    const data = {
-      id: blog.id,
-      title,
-      cat: $('#b-cat').value,
-      date: $('#b-date').value,
-      status: $('#b-status').checked?'published':'draft',
-      img: $('#b-img').value.trim(),
-      excerpt: $('#b-excerpt').value.trim(),
-      content: $('#b-content').value
-    };
-    if(isNew) state.blogs.unshift(data);
-    else state.blogs = state.blogs.map(b=>b.id===blog.id?data:b);
-    saveData(); renderBlogs(); renderDashboard(); closeModal();
-    toast(isNew?'Artículo creado':'Artículo actualizado');
-  });
-  $('#m-prev').addEventListener('click', ()=>{
-    const w = window.open('', '_blank');
-    const title = $('#b-title').value || 'Sin título';
-    const img = $('#b-img').value;
-    const content = $('#b-content').value;
-    w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${esc(title)}</title><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"><style>body{font-family:Poppins,sans-serif;max-width:760px;margin:0 auto;padding:48px 24px;color:#1a1f2e;line-height:1.7}h1{font-family:'Cormorant Garamond',serif;font-size:48px;line-height:1.1;margin-bottom:24px;font-weight:500}img{width:100%;border-radius:12px;margin-bottom:32px}.preview-tag{display:inline-block;font-size:11px;letter-spacing:.2em;color:#c9a96e;text-transform:uppercase;margin-bottom:18px}p{margin:14px 0}h2,h3{font-family:'Cormorant Garamond',serif;margin-top:32px;font-weight:500}</style></head><body><span class="preview-tag">Vista previa</span><h1>${esc(title)}</h1>${img?`<img src="${esc(img)}">`:''}<div>${content}</div></body></html>`);
-    w.document.close();
-  });
-}
-
-function applyToolbarCmd(cmd, ta){
-  const start = ta.selectionStart, end = ta.selectionEnd;
-  const sel = ta.value.slice(start,end);
-  const wrap = (open,close=open)=>{
-    ta.setRangeText(open+sel+close, start, end, 'select');
-    ta.focus();
-  };
-  switch(cmd){
-    case 'bold': wrap('<strong>','</strong>'); break;
-    case 'italic': wrap('<em>','</em>'); break;
-    case 'underline': wrap('<u>','</u>'); break;
-    case 'h2': wrap('<h2>','</h2>'); break;
-    case 'h3': wrap('<h3>','</h3>'); break;
-    case 'p': wrap('<p>','</p>'); break;
-    case 'ul':{
-      const items = sel.split('\n').filter(Boolean).map(x=>`  <li>${x}</li>`).join('\n');
-      ta.setRangeText('<ul>\n'+(items||'  <li></li>')+'\n</ul>', start, end, 'select');
-      ta.focus();
-      break;
+    var raw = localStorage.getItem(STORE_KEY);
+    if(raw){
+      var d = JSON.parse(raw);
+      counts.props = (d.props||[]).length;
+      counts.blogs = (d.blogs||[]).length;
+      counts.team  = (d.team||[]).length;
+      counts.tests = (d.tests||[]).length;
+      counts.blogsPub = (d.blogs||[]).filter(function(b){ return b.status==='published'; }).length;
     }
-    case 'ol':{
-      const items = sel.split('\n').filter(Boolean).map(x=>`  <li>${x}</li>`).join('\n');
-      ta.setRangeText('<ol>\n'+(items||'  <li></li>')+'\n</ol>', start, end, 'select');
-      ta.focus();
-      break;
-    }
-    case 'link':{
-      const url = prompt('URL del link', 'https://');
-      if(!url) return;
-      ta.setRangeText(`<a href="${url}">${sel||url}</a>`, start, end, 'select');
-      ta.focus();
-      break;
-    }
-  }
-}
+  }catch(e){}
+  function setText(id, v){ var el = document.getElementById(id); if(el) el.textContent = v; }
+  setText('ds-props', counts.props);
+  setText('ds-blogs', counts.blogs);
+  setText('ds-team',  counts.team);
+  setText('ds-test',  counts.tests);
+  var pubEl = document.getElementById('ds-blogs-pub');
+  if(pubEl) pubEl.textContent = '↑ ' + counts.blogsPub + ' publicados';
 
-/* ═══════════════════════════════════════════════
-   PROPIEDADES
-═══════════════════════════════════════════════ */
-function renderProps(){
-  const q = ($('#propSearch')?.value||'').toLowerCase().trim();
-  const list = state.props.filter(p=>!q || p.name.toLowerCase().includes(q) || p.location.toLowerCase().includes(q));
-  const tb = $('#propTbody');
-  if(!list.length){
-    tb.innerHTML = `<tr><td colspan="7"><div class="empty-state"><p>Sin propiedades. Agrega la primera.</p></div></td></tr>`;
-    return;
-  }
-  tb.innerHTML = list.map(p=>`
-    <tr>
-      <td><img class="thumb" src="${esc(p.img)}" onerror="this.style.background='#eee';this.removeAttribute('src')" alt=""></td>
-      <td><div class="cell-strong">${esc(p.name)}</div><div class="cell-soft">${p.beds} hab · ${p.baths} baños · ${p.m2} m²</div></td>
-      <td class="cell-soft">${esc(p.location)}</td>
-      <td class="cell-strong">${esc(p.price)}</td>
-      <td><span class="badge badge-gray">${esc(TYPE_LABELS[p.type]||p.type)}</span></td>
-      <td>${p.status==='renta' ? '<span class="badge badge-blue">En Renta</span>' : '<span class="badge badge-gold">En Venta</span>'}</td>
-      <td class="col-actions">
-        <button class="btn-icon" data-edit-prop="${p.id}" title="Editar"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-        <button class="btn-icon del" data-del-prop="${p.id}" title="Eliminar"><svg viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>
-      </td>
-    </tr>
-  `).join('');
-}
-$('#newPropBtn').addEventListener('click', ()=>openPropEditor());
-document.addEventListener('click', e=>{
-  const ep = e.target.closest('[data-edit-prop]');
-  if(ep) openPropEditor(state.props.find(p=>p.id===ep.dataset.editProp));
-  const dp = e.target.closest('[data-del-prop]');
-  if(dp && confirm('¿Eliminar esta propiedad?')){
-    state.props = state.props.filter(p=>p.id!==dp.dataset.delProp);
-    saveData(); renderProps(); renderDashboard(); toast('Propiedad eliminada');
-  }
-});
-
-function openPropEditor(prop){
-  const isNew = !prop;
-  prop = prop || {id:uid(),name:'',location:'',price:'',beds:0,baths:0,m2:0,type:'casa',status:'venta',img:'',desc:''};
-  $('#modalTitle').innerHTML = isNew ? 'Agregar <em>propiedad</em>' : 'Editar <em>propiedad</em>';
-  $('#modalBody').innerHTML = `
-    <div class="form-row"><div class="fld">
-      <label>Nombre</label>
-      <input id="p-name" value="${esc(prop.name)}" placeholder="Residencia ...">
-    </div><div class="fld">
-      <label>Ubicación</label>
-      <input id="p-loc" value="${esc(prop.location)}" placeholder="Lomas del Campestre, San Pedro">
-    </div></div>
-    <div class="form-row"><div class="fld">
-      <label>Precio</label>
-      <input id="p-price" value="${esc(prop.price)}" placeholder="$45,000,000 MXN">
-    </div><div class="fld">
-      <label>Tipo</label>
-      <select id="p-type">${Object.entries(TYPE_LABELS).map(([v,l])=>`<option value="${v}" ${v===prop.type?'selected':''}>${l}</option>`).join('')}</select>
-    </div></div>
-    <div class="form-row four">
-      <div class="fld"><label>Recámaras</label><input type="number" id="p-beds" value="${prop.beds}" min="0"></div>
-      <div class="fld"><label>Baños</label><input type="number" id="p-baths" value="${prop.baths}" min="0"></div>
-      <div class="fld"><label>m²</label><input type="number" id="p-m2" value="${prop.m2}" min="0"></div>
-      <div class="fld"><label>Status</label>
-        <select id="p-status"><option value="venta" ${prop.status==='venta'?'selected':''}>En Venta</option><option value="renta" ${prop.status==='renta'?'selected':''}>En Renta</option></select>
-      </div>
-    </div>
-    <div class="form-row full"><div class="fld">
-      <label>URL de imagen</label>
-      <input id="p-img" value="${esc(prop.img)}" placeholder="https://...">
-    </div></div>
-    <div class="form-row full"><div class="fld">
-      <label>Descripción</label>
-      <textarea id="p-desc">${esc(prop.desc)}</textarea>
-    </div></div>
-  `;
-  $('#modalFoot').innerHTML = `<button class="btn btn-ghost" id="m-cancel">Cancelar</button><button class="btn btn-primary" id="m-save">Guardar</button>`;
-  openModal();
-  $('#m-cancel').addEventListener('click', closeModal);
-  $('#m-save').addEventListener('click', ()=>{
-    const name = $('#p-name').value.trim();
-    if(!name){ toast('Falta el nombre'); return; }
-    const data = {
-      id: prop.id, name,
-      location: $('#p-loc').value.trim(),
-      price: $('#p-price').value.trim(),
-      beds: +$('#p-beds').value||0,
-      baths: +$('#p-baths').value||0,
-      m2: +$('#p-m2').value||0,
-      type: $('#p-type').value,
-      status: $('#p-status').value,
-      img: $('#p-img').value.trim(),
-      desc: $('#p-desc').value.trim()
-    };
-    if(isNew) state.props.unshift(data);
-    else state.props = state.props.map(p=>p.id===prop.id?data:p);
-    saveData(); renderProps(); renderDashboard(); closeModal();
-    toast(isNew?'Propiedad agregada':'Propiedad actualizada');
-  });
-}
-
-/* ═══════════════════════════════════════════════
-   EQUIPO
-═══════════════════════════════════════════════ */
-function renderTeam(){
-  const tb = $('#teamTbody');
-  if(!state.team.length){ tb.innerHTML = `<tr><td colspan="5"><div class="empty-state"><p>Sin miembros del equipo.</p></div></td></tr>`; return; }
-  tb.innerHTML = state.team.map(m=>`
-    <tr>
-      <td><img class="thumb" src="${esc(m.photo)}" style="border-radius:50%;width:40px;height:40px;object-fit:cover" alt=""></td>
-      <td class="cell-strong">${esc(m.name)}</td>
-      <td><span class="badge badge-gold">${esc(m.role)}</span></td>
-      <td class="cell-soft" style="max-width:380px">${esc(m.bio)}</td>
-      <td class="col-actions">
-        <button class="btn-icon" data-edit-team="${m.id}" title="Editar"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-        <button class="btn-icon del" data-del-team="${m.id}" title="Eliminar"><svg viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>
-      </td>
-    </tr>
-  `).join('');
-}
-$('#newTeamBtn').addEventListener('click', ()=>openTeamEditor());
-document.addEventListener('click', e=>{
-  const et = e.target.closest('[data-edit-team]');
-  if(et) openTeamEditor(state.team.find(m=>m.id===et.dataset.editTeam));
-  const dt = e.target.closest('[data-del-team]');
-  if(dt && confirm('¿Eliminar este miembro?')){
-    state.team = state.team.filter(m=>m.id!==dt.dataset.delTeam);
-    saveData(); renderTeam(); renderDashboard(); toast('Miembro eliminado');
-  }
-});
-
-function openTeamEditor(m){
-  const isNew = !m;
-  m = m || {id:uid(),name:'',role:'',photo:'',bio:'',wa:''};
-  $('#modalTitle').innerHTML = isNew ? 'Agregar <em>miembro</em>' : 'Editar <em>miembro</em>';
-  $('#modalBody').innerHTML = `
-    <div class="form-row"><div class="fld">
-      <label>Nombre</label><input id="t-name" value="${esc(m.name)}">
-    </div><div class="fld">
-      <label>Cargo</label><input id="t-role" value="${esc(m.role)}" placeholder="Director de Ventas">
-    </div></div>
-    <div class="form-row"><div class="fld">
-      <label>Foto URL</label><input id="t-photo" value="${esc(m.photo)}" placeholder="https://... o nombre.jpg">
-    </div><div class="fld">
-      <label>WhatsApp (sólo dígitos)</label><input id="t-wa" value="${esc(m.wa)}" placeholder="528123532365">
-    </div></div>
-    <div class="form-row full"><div class="fld">
-      <label>Bio corta</label>
-      <textarea id="t-bio">${esc(m.bio)}</textarea>
-    </div></div>
-  `;
-  $('#modalFoot').innerHTML = `<button class="btn btn-ghost" id="m-cancel">Cancelar</button><button class="btn btn-primary" id="m-save">Guardar</button>`;
-  openModal();
-  $('#m-cancel').addEventListener('click', closeModal);
-  $('#m-save').addEventListener('click', ()=>{
-    const name = $('#t-name').value.trim();
-    if(!name){ toast('Falta el nombre'); return; }
-    const data = {id:m.id, name, role:$('#t-role').value.trim(), photo:$('#t-photo').value.trim(), bio:$('#t-bio').value.trim(), wa:$('#t-wa').value.trim()};
-    if(isNew) state.team.push(data); else state.team = state.team.map(x=>x.id===m.id?data:x);
-    saveData(); renderTeam(); renderDashboard(); closeModal();
-    toast(isNew?'Miembro agregado':'Miembro actualizado');
-  });
-}
-
-/* ═══════════════════════════════════════════════
-   TESTIMONIOS
-═══════════════════════════════════════════════ */
-function renderTests(){
-  const tb = $('#testTbody');
-  if(!state.tests.length){ tb.innerHTML = `<tr><td colspan="5"><div class="empty-state"><p>Sin testimonios.</p></div></td></tr>`; return; }
-  tb.innerHTML = state.tests.map(t=>`
-    <tr>
-      <td><img class="thumb" src="${esc(t.photo)}" style="border-radius:50%;width:40px;height:40px;object-fit:cover" alt=""></td>
-      <td class="cell-strong">${esc(t.name)}</td>
-      <td style="color:var(--gold);font-size:14px;letter-spacing:1px">${'★'.repeat(t.stars||0)}<span style="color:var(--border)">${'★'.repeat(5-(t.stars||0))}</span></td>
-      <td class="cell-soft" style="max-width:380px">${esc(t.text)}</td>
-      <td class="col-actions">
-        <button class="btn-icon" data-edit-test="${t.id}" title="Editar"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-        <button class="btn-icon del" data-del-test="${t.id}" title="Eliminar"><svg viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>
-      </td>
-    </tr>
-  `).join('');
-}
-$('#newTestBtn').addEventListener('click', ()=>openTestEditor());
-document.addEventListener('click', e=>{
-  const et = e.target.closest('[data-edit-test]');
-  if(et) openTestEditor(state.tests.find(x=>x.id===et.dataset.editTest));
-  const dt = e.target.closest('[data-del-test]');
-  if(dt && confirm('¿Eliminar este testimonio?')){
-    state.tests = state.tests.filter(x=>x.id!==dt.dataset.delTest);
-    saveData(); renderTests(); renderDashboard(); toast('Testimonio eliminado');
-  }
-});
-
-function openTestEditor(t){
-  const isNew = !t;
-  t = t || {id:uid(),name:'',stars:5,text:'',photo:''};
-  $('#modalTitle').innerHTML = isNew ? 'Agregar <em>testimonio</em>' : 'Editar <em>testimonio</em>';
-  $('#modalBody').innerHTML = `
-    <div class="form-row"><div class="fld">
-      <label>Nombre del cliente</label><input id="r-name" value="${esc(t.name)}">
-    </div><div class="fld">
-      <label>Estrellas</label>
-      <select id="r-stars">${[5,4,3,2,1].map(n=>`<option value="${n}" ${n===t.stars?'selected':''}>${n} ★</option>`).join('')}</select>
-    </div></div>
-    <div class="form-row full"><div class="fld">
-      <label>Foto URL</label><input id="r-photo" value="${esc(t.photo)}" placeholder="https://...">
-    </div></div>
-    <div class="form-row full"><div class="fld">
-      <label>Texto del testimonio</label>
-      <textarea id="r-text">${esc(t.text)}</textarea>
-    </div></div>
-  `;
-  $('#modalFoot').innerHTML = `<button class="btn btn-ghost" id="m-cancel">Cancelar</button><button class="btn btn-primary" id="m-save">Guardar</button>`;
-  openModal();
-  $('#m-cancel').addEventListener('click', closeModal);
-  $('#m-save').addEventListener('click', ()=>{
-    const name = $('#r-name').value.trim();
-    if(!name){ toast('Falta el nombre'); return; }
-    const data = {id:t.id, name, stars:+$('#r-stars').value, text:$('#r-text').value.trim(), photo:$('#r-photo').value.trim()};
-    if(isNew) state.tests.push(data); else state.tests = state.tests.map(x=>x.id===t.id?data:x);
-    saveData(); renderTests(); renderDashboard(); closeModal();
-    toast(isNew?'Testimonio agregado':'Testimonio actualizado');
-  });
-}
-
-/* ═══════════════════════════════════════════════
-   KPIs
-═══════════════════════════════════════════════ */
-function renderKpis(){
-  const venta = state.props.filter(p=>p.status==='venta').length;
-  const renta = state.props.filter(p=>p.status==='renta').length;
-  const pub = state.blogs.filter(b=>b.status==='published').length;
-  const draft = state.blogs.filter(b=>b.status!=='published').length;
-  $('#kpi-venta').textContent = venta;
-  $('#kpi-renta').textContent = renta;
-  $('#kpi-pub').textContent = pub;
-  $('#kpi-draft').textContent = draft;
-
-  const types = {};
-  state.props.forEach(p=>{ types[p.type] = (types[p.type]||0)+1; });
-  const totalT = state.props.length || 1;
-  $('#kpi-types').innerHTML = Object.entries(TYPE_LABELS).map(([k,l])=>{
-    const n = types[k]||0;
-    const pct = Math.round((n/totalT)*100);
-    return `<div class="bar-row"><span class="lbl">${l}</span><div class="bar"><div class="bar-fill" style="width:${pct}%"></div></div><span class="val">${n}</span></div>`;
-  }).join('');
-
-  const cats = {};
-  state.blogs.forEach(b=>{ cats[b.cat] = (cats[b.cat]||0)+1; });
-  const totalC = state.blogs.length || 1;
-  $('#kpi-cats').innerHTML = Object.entries(CAT_LABELS).map(([k,l])=>{
-    const n = cats[k]||0;
-    const pct = Math.round((n/totalC)*100);
-    return `<div class="bar-row"><span class="lbl">${l}</span><div class="bar"><div class="bar-fill" style="width:${pct}%"></div></div><span class="val">${n}</span></div>`;
-  }).join('');
-}
-
-/* ═══════════════════════════════════════════════
-   CONFIG
-═══════════════════════════════════════════════ */
-function renderConfig(){
-  const c = state.config;
-  $('#cfg-wa').value = c.wa||'';
-  $('#cfg-email').value = c.email||'';
-  $('#cfg-ig').value = c.ig||'';
-  $('#cfg-fb').value = c.fb||'';
-  $('#cfg-logo').value = c.logo||'';
-}
-$('#saveCfgBtn').addEventListener('click', ()=>{
-  state.config = {
-    wa: $('#cfg-wa').value.trim(),
-    email: $('#cfg-email').value.trim(),
-    ig: $('#cfg-ig').value.trim(),
-    fb: $('#cfg-fb').value.trim(),
-    logo: $('#cfg-logo').value.trim() || 'assets/logo.png'
-  };
-  saveData(); toast('Configuración guardada');
-});
-
-$('#savePwdBtn').addEventListener('click', ()=>{
-  const cur = $('#cfg-cur').value, nw = $('#cfg-new').value, nw2 = $('#cfg-new2').value;
-  const stored = localStorage.getItem('mr_admin_pwd') || 'montana2026';
-  if(cur !== stored){ toast('Contraseña actual incorrecta'); return; }
-  if(!nw || nw.length < 6){ toast('Mínimo 6 caracteres'); return; }
-  if(nw !== nw2){ toast('Las contraseñas no coinciden'); return; }
-  localStorage.setItem('mr_admin_pwd', nw);
-  $('#cfg-cur').value=$('#cfg-new').value=$('#cfg-new2').value='';
-  toast('Contraseña actualizada');
-});
-
-$('#exportBtn').addEventListener('click', ()=>{
-  const blob = new Blob([JSON.stringify(state,null,2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'montana-realty-data.json'; a.click();
-  URL.revokeObjectURL(url);
-  toast('Datos exportados');
-});
-$('#importBtn').addEventListener('click', ()=> $('#importFile').click());
-$('#importFile').addEventListener('change', e=>{
-  const f = e.target.files[0]; if(!f) return;
-  const r = new FileReader();
-  r.onload = () => {
-    try{
-      const d = JSON.parse(r.result);
-      state = {
-        blogs: d.blogs || state.blogs,
-        props: d.props || state.props,
-        team:  d.team  || state.team,
-        tests: d.tests || state.tests,
-        config:{...state.config, ...(d.config||{})}
-      };
-      saveData(); refreshAll(); toast('Datos importados');
-    }catch(err){ toast('JSON inválido'); }
-  };
-  r.readAsText(f);
-});
-$('#resetBtn').addEventListener('click', ()=>{
-  if(confirm('Esto borrará todos los cambios y volverá a los datos por defecto. ¿Continuar?')){
-    localStorage.removeItem(STORE_KEY);
-    state = defaultData();
-    saveData(); refreshAll(); toast('Datos restablecidos');
-  }
-});
-
-/* ═══════════════════════════════════════════════
-   MODAL
-═══════════════════════════════════════════════ */
-function openModal(){ $('#modal').classList.add('open'); document.body.style.overflow='hidden'; }
-function closeModal(){ $('#modal').classList.remove('open'); document.body.style.overflow=''; }
-$('#modalClose').addEventListener('click', closeModal);
-$('#modal').addEventListener('click', e=>{ if(e.target.id==='modal') closeModal(); });
-document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
-
-/* ═══════════════════════════════════════════════
-   REFRESH ALL
-═══════════════════════════════════════════════ */
-function refreshAll(){
-  renderDashboard();
-  renderBlogs();
-  renderProps();
-  renderTeam();
-  renderTests();
-  renderKpis();
-  renderConfig();
-}
-refreshAll();
+  var u = sessionStorage.getItem('mr_admin_user') || 'admin';
+  var av = document.getElementById('userAvatar');
+  var nm = document.getElementById('userName');
+  if(av) av.textContent = (u[0]||'A').toUpperCase();
+  if(nm) nm.textContent = u==='admin' ? 'Administrador' : u;
+})();
 </script>
 </body>
 </html>
