@@ -676,10 +676,12 @@ em{font-style:italic}
 /* BLOG */
 .blog-sec{padding:120px 56px 40px;background:var(--black)}
 .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:60px}
-.blog-card{overflow:hidden;transition:all .5s cubic-bezier(.25,.46,.45,.94);border-radius:8px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.blog-card{display:block;text-decoration:none;color:inherit;overflow:hidden;transition:transform .5s cubic-bezier(.25,.46,.45,.94),box-shadow .5s cubic-bezier(.25,.46,.45,.94),border-color .5s ease;border-radius:8px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.blog-card:hover{transform:translateY(-4px);border-color:rgba(201,169,110,.18);box-shadow:0 18px 42px rgba(0,0,0,.32)}
+.blog-card:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .blog-img{aspect-ratio:16/9;overflow:hidden;position:relative}
 .blog-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.25,.46,.45,.94),filter .6s ease;filter:brightness(.85)}
-.blog-card:hover .blog-img img{transform:scale(1.08);filter:brightness(.65)}
+.blog-card:hover .blog-img img{transform:scale(1.02);filter:brightness(.7)}
 .blog-body{padding:36px}
 .blog-cat{font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block;font-weight:500;opacity:.8}
 .blog-title{font-family:var(--serif);font-size:24px;font-weight:300;line-height:1.3;letter-spacing:-.01em;margin-bottom:16px;color:var(--white);transition:color .4s;font-style:italic}
@@ -1581,42 +1583,42 @@ textarea.fi{min-height:120px;resize:vertical;line-height:1.55}
     <a href="blog.html" class="cta r d2">Ver todos los artículos</a>
   </div>
   <div class="blog-grid">
-    <div class="blog-card r">
-      <div class="blog-img"><img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=85" alt="Reporte Q1 2026"></div>
+    <a href="blog/reporte-q1-2026-san-pedro-garza-garcia.html" class="blog-card r">
+      <div class="blog-img"><img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1600&q=85" alt="Skyline residencial San Pedro Garza García — Reporte Q1 2026"></div>
       <div class="blog-body">
         <span class="blog-cat">Reporte de mercado</span>
-        <h3 class="blog-title">Reporte Q1 2026: San Pedro Garza García</h3>
-        <p class="blog-excerpt">El mercado inmobiliario de San Pedro mantiene su dinamismo con un incremento del 12% en valores respecto al mismo período del año anterior.</p>
+        <h3 class="blog-title">Reporte Q1 2026: Mercado Inmobiliario en San Pedro Garza García</h3>
+        <p class="blog-excerpt">Incremento del 12% YoY en valores. Análisis por zona, perfil del comprador y proyección 2026 para Valle Oriente, Del Valle y Bosques del Valle.</p>
         <div class="blog-meta">
-          <span class="blog-date">Abr 2026</span>
-          <button type="button" class="blog-read" data-article="reporte-q1">Leer más</button>
+          <span class="blog-date">15 abr 2026</span>
+          <span class="blog-read">Leer más</span>
         </div>
       </div>
-    </div>
-    <div class="blog-card r d1">
-      <div class="blog-img"><img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=85" alt="Guía de compra"></div>
+    </a>
+    <a href="blog/como-negociar-precio-propiedad-lujo.html" class="blog-card r d1">
+      <div class="blog-img"><img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1000&q=85" alt="Negociación de propiedad de lujo en San Pedro"></div>
       <div class="blog-body">
         <span class="blog-cat">Guía de compra</span>
         <h3 class="blog-title">Cómo negociar el precio de una propiedad de lujo</h3>
-        <p class="blog-excerpt">Estrategias probadas para obtener el mejor precio en el segmento premium sin perder la oportunidad de cierre.</p>
+        <p class="blog-excerpt">7 estrategias accionables para obtener el mejor precio en el segmento $15M+ MXN sin perder la oportunidad de cierre.</p>
         <div class="blog-meta">
-          <span class="blog-date">Mar 2026</span>
-          <button type="button" class="blog-read" data-article="negociar">Leer más</button>
+          <span class="blog-date">20 mar 2026</span>
+          <span class="blog-read">Leer más</span>
         </div>
       </div>
-    </div>
-    <div class="blog-card r d2">
-      <div class="blog-img"><img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=85" alt="Inversión inmobiliaria"></div>
+    </a>
+    <a href="blog/3-colonias-mayor-roi-san-pedro.html" class="blog-card r d2">
+      <div class="blog-img"><img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=1000&q=85" alt="3 colonias con mayor plusvalía en San Pedro"></div>
       <div class="blog-body">
         <span class="blog-cat">Inversión</span>
-        <h3 class="blog-title">Las 3 colonias con mayor ROI en San Pedro en 2026</h3>
-        <p class="blog-excerpt">Análisis de las zonas con mayor apreciación histórica y proyección de crecimiento para los próximos 5 años.</p>
+        <h3 class="blog-title">3 colonias con mayor plusvalía en San Pedro</h3>
+        <p class="blog-excerpt">Análisis estructural de Valle Oriente, Bosques del Valle y San Agustín, los factores reales detrás de su desempeño y cómo elegir según tu objetivo.</p>
         <div class="blog-meta">
-          <span class="blog-date">Feb 2026</span>
-          <button type="button" class="blog-read" data-article="roi">Leer más</button>
+          <span class="blog-date">10 feb 2026</span>
+          <span class="blog-read">Leer más</span>
         </div>
       </div>
-    </div>
+    </a>
   </div>
 </section>
 
