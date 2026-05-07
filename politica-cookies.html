@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Política de Cookies | Montana Realty Co.</title>
+<meta name="description" content="Política de Cookies de Montana Realty Co. Conoce qué cookies utilizamos, cómo gestionarlas desde tu navegador y los servicios de terceros involucrados.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://montana-realty-co.com/politica-cookies.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --nav-h:72px;
+  --white:#ffffff;
+  --black:#0d0d0d;
+  --navy:#1a1f2e;
+  --gold:#c9a96e;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Poppins',Helvetica,Arial,sans-serif;
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);background:#fbfaf7;color:#1a1f2e;overflow-x:hidden;font-weight:300}
+
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:var(--nav-h);background:rgba(251,250,247,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid #e8e8e8;transition:height .3s}
+#nav.scrolled{height:60px}
+.nav-logo{display:flex;flex-direction:column;gap:3px;text-decoration:none}
+.nav-logo-img{height:44px;width:auto;display:block;filter:brightness(0);transition:filter .3s}
+.nav-center{display:flex;align-items:center}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(0,0,0,.55);text-decoration:none;transition:color .3s;position:relative;padding-bottom:3px}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1.5px;background:currentColor;transition:width .3s ease;transform-origin:left}
+.nav-links a:hover{color:#111}
+.nav-links a:hover::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:24px}
+.nav-sub{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(0,0,0,.45);text-decoration:none;transition:color .3s}
+.nav-sub:hover{color:#111}
+.nav-action{font-size:11px;letter-spacing:.06em;color:#111;font-family:var(--sans);font-weight:500;padding:10px 24px;border:1.5px solid rgba(0,0,0,.3);border-radius:30px;transition:all .3s;text-decoration:none;display:inline-block}
+.nav-action:hover{background:#111;color:#fff;border-color:#111}
+.nav-ham{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;cursor:pointer}
+.nav-ham span{display:block;width:22px;height:1.5px;background:#111;transition:all .3s}
+.nav-ham.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.nav-ham.open span:nth-child(2){opacity:0}
+.nav-ham.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
+.mob-menu{position:fixed;inset:0;background:#fdf5ec;z-index:700;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px;opacity:0;pointer-events:none;transition:opacity .4s}
+.mob-menu.open{opacity:1;pointer-events:all}
+.mob-menu a{font-family:var(--serif);font-size:clamp(32px,7vw,56px);font-weight:400;color:#111;text-decoration:none}
+.mob-menu a:hover{color:var(--gold)}
+.mob-action{font-size:12px!important;letter-spacing:.2em!important;text-transform:uppercase;font-family:var(--sans)!important;border:1px solid rgba(0,0,0,.2)!important;padding:14px 40px;color:#111!important}
+
+/* BREADCRUMB */
+.crumb{padding:calc(var(--nav-h) + 32px) 32px 0;max-width:1200px;margin:0 auto;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#888;font-weight:400}
+.crumb a{color:#888;text-decoration:none;transition:color .3s}
+.crumb a:hover{color:var(--gold)}
+.crumb .sep{margin:0 10px;color:#ccc}
+.crumb .here{color:#1a1f2e}
+
+/* PAGE HEAD */
+.page-head{padding:36px 32px 56px;max-width:1200px;margin:0 auto}
+.page-eye{display:inline-block;font-family:var(--sans);font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:18px}
+.page-title{font-family:var(--serif);font-size:clamp(40px,5vw,60px);font-weight:400;line-height:1.06;letter-spacing:-.018em;color:#1a1f2e;margin:0 0 18px}
+.page-title em{font-style:italic;font-weight:400}
+.legal-update{display:inline-block;font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#888;font-weight:400;background:#fff;border:1px solid #eee;padding:8px 14px;border-radius:4px;margin-top:10px}
+
+/* LAYOUT */
+.legal-wrap{max-width:1200px;margin:0 auto;padding:0 32px 120px;display:grid;grid-template-columns:240px 1fr;gap:80px;align-items:start}
+
+/* TOC */
+.toc{position:sticky;top:calc(var(--nav-h) + 28px);align-self:start;border-left:1px solid rgba(201,169,110,.25);padding:8px 0 8px 22px}
+.toc-title{font-family:var(--sans);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:0 0 16px}
+.toc ol{list-style:none;counter-reset:toci;display:flex;flex-direction:column;gap:10px}
+.toc li{counter-increment:toci;font-family:var(--sans);font-size:13px;line-height:1.4}
+.toc a{color:#666;text-decoration:none;transition:color .25s;display:block;padding:2px 0;font-weight:400}
+.toc a::before{content:counter(toci,decimal-leading-zero) '.';color:var(--gold);margin-right:8px;font-weight:500}
+.toc a:hover,.toc a.active{color:#1a1f2e}
+
+/* CONTENT */
+.legal{max-width:780px;font-family:var(--sans);font-size:1rem;line-height:1.75;color:#2a2f3e;font-weight:300}
+.legal h2{font-family:var(--serif);font-size:clamp(26px,3vw,34px);font-weight:500;line-height:1.18;letter-spacing:-.012em;color:#1a1f2e;margin:56px 0 18px;scroll-margin-top:calc(var(--nav-h) + 24px)}
+.legal h2:first-of-type{margin-top:0}
+.legal h2 .num{display:inline-block;font-family:var(--sans);font-size:11px;letter-spacing:.2em;color:var(--gold);font-weight:500;vertical-align:middle;margin-right:14px;border:1px solid rgba(201,169,110,.4);border-radius:4px;padding:4px 9px}
+.legal h3{font-family:var(--serif);font-size:1.4rem;font-weight:500;color:#1a1f2e;margin:28px 0 10px;letter-spacing:-.005em}
+.legal p{margin:0 0 18px}
+.legal strong{font-weight:500;color:#1a1f2e}
+.legal a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,169,110,.35);transition:border-color .25s,color .25s}
+.legal a:hover{color:#1a1f2e;border-bottom-color:#1a1f2e}
+.legal ul{list-style:none;margin:0 0 22px;padding:0}
+.legal ul li{position:relative;padding-left:22px;margin-bottom:10px}
+.legal ul li::before{content:'';position:absolute;left:0;top:.7em;width:8px;height:1px;background:var(--gold)}
+.legal ul li strong{color:#1a1f2e}
+.cookie-types{display:grid;grid-template-columns:1fr;gap:16px;margin:0 0 24px}
+.cookie-card{background:#fff;border:1px solid #eee;border-radius:8px;padding:22px 26px}
+.cookie-card .ck-tag{display:inline-block;font-family:var(--sans);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px;border:1px solid rgba(201,169,110,.4);border-radius:4px;padding:4px 9px}
+.cookie-card h3{font-family:var(--serif);font-size:1.35rem;font-weight:500;color:#1a1f2e;margin:6px 0 8px;letter-spacing:-.005em}
+.cookie-card p{margin:0;font-size:.95rem;color:#3a3f4e;line-height:1.65}
+
+/* FOOTER */
+.site-footer{background:#0d0d0d;color:#fff;font-family:var(--sans)}
+.footer-main{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:80px;padding:100px 56px;border-top:1px solid rgba(255,255,255,.08)}
+.footer-brand p{font-family:var(--serif);font-style:italic;font-size:1.1rem;line-height:1.6;letter-spacing:.01em;color:#a8a8a8;margin-top:24px;max-width:300px;font-weight:400}
+.footer-logo{height:32px;width:auto;display:block;margin-bottom:8px;filter:brightness(0) invert(1);opacity:.9}
+.footer-social{display:flex;gap:14px;margin-top:32px}
+.fs-icon{width:40px;height:40px;border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);text-decoration:none;transition:all .4s cubic-bezier(.25,.46,.45,.94);border-radius:8px}
+.fs-icon svg{width:18px;height:18px;display:block;transition:transform .4s}
+.fs-icon:hover{border-color:var(--gold);background:rgba(201,169,110,.1);transform:translateY(-4px);color:var(--gold)}
+.fs-icon:hover svg{transform:scale(1.08)}
+.footer-col-title{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:24px;display:block;font-weight:500}
+.footer-col a{display:block;font-size:13px;color:rgba(255,255,255,.52);text-decoration:none;margin-bottom:14px;transition:all .3s;font-weight:300;position:relative}
+.footer-col a::before{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width .3s}
+.footer-col a:hover{color:var(--gold)}
+.footer-col a:hover::before{width:100%}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding:32px 56px;border-top:1px solid rgba(255,255,255,.08)}
+.footer-copy{font-size:9px;letter-spacing:.12em;color:#a8a8a8;text-transform:uppercase;font-weight:400}
+.footer-legal{display:flex;gap:28px}
+.footer-legal a{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#a8a8a8;text-decoration:none;transition:color .3s;font-weight:400}
+.footer-legal a:hover{color:var(--gold)}
+
+/* RESPONSIVE */
+@media(max-width:980px){
+  .legal-wrap{grid-template-columns:1fr;gap:36px;padding:0 24px 80px}
+  .toc{position:static;border-left:none;border-top:1px solid rgba(201,169,110,.25);padding:18px 0 0}
+}
+@media(max-width:900px){
+  #nav{padding:0 20px}
+  .nav-center,.nav-right{display:none}
+  .nav-ham{display:flex}
+  .crumb{padding:calc(var(--nav-h) + 24px) 24px 0}
+  .page-head{padding:24px 24px 32px}
+  .footer-main{grid-template-columns:1fr;gap:32px;padding:72px 24px}
+  .footer-bottom{flex-direction:column;gap:14px;padding:24px;text-align:center}
+  .legal h2{margin:42px 0 14px}
+}
+</style>
+<meta name="autofill" content="off">
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+  <a href="propiedades.html" onclick="closeMob()">Propiedades</a>
+  <a href="index.html#svc" onclick="closeMob()">Servicios</a>
+  <a href="equipo.html" onclick="closeMob()">Equipo</a>
+  <a href="nosotros.html" onclick="closeMob()">Nosotros</a>
+  <a href="blog.html" onclick="closeMob()">Blog</a>
+  <a href="index.html#cta" class="mob-action" onclick="closeMob()">Agendar visita</a>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <img src="assets/logo.png" class="nav-logo-img" alt="Montana Realty">
+  </a>
+  <div class="nav-center">
+    <ul class="nav-links">
+      <li><a href="propiedades.html">Propiedades</a></li>
+      <li><a href="index.html#svc">Servicios</a></li>
+      <li><a href="equipo.html">Equipo</a></li>
+      <li><a href="nosotros.html">Nosotros</a></li>
+      <li><a href="blog.html">Blog</a></li>
+    </ul>
+  </div>
+  <div class="nav-right">
+    <a href="admin-login.html" class="nav-sub">Administración</a>
+    <a href="index.html#cta" class="nav-action">Agendar visita</a>
+  </div>
+  <button class="nav-ham" id="navHam" onclick="toggleMob()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="crumb">
+  <a href="index.html">Inicio</a><span class="sep">/</span><span class="here">Política de Cookies</span>
+</div>
+
+<!-- PAGE HEAD -->
+<section class="page-head">
+  <span class="page-eye">Documento legal</span>
+  <h1 class="page-title">Política de <em>Cookies</em></h1>
+  <span class="legal-update">Última actualización: 5 de mayo de 2026</span>
+</section>
+
+<!-- LEGAL CONTENT -->
+<div class="legal-wrap">
+  <aside class="toc" aria-label="Índice de la política de cookies">
+    <p class="toc-title">Índice</p>
+    <ol>
+      <li><a href="#que-son">¿Qué son las cookies?</a></li>
+      <li><a href="#tipos">Tipos de cookies que usamos</a></li>
+      <li><a href="#gestionar">Cómo gestionar cookies</a></li>
+      <li><a href="#terceros">Cookies de terceros</a></li>
+      <li><a href="#cambios">Cambios en esta política</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ol>
+  </aside>
+
+  <article class="legal">
+    <p>Esta Política de Cookies explica qué son las cookies, cuáles utilizamos en montana-realty-co.com y cómo puede gestionarlas desde su navegador. Forma parte integral de nuestro <a href="aviso-privacidad.html">Aviso de Privacidad</a>.</p>
+
+    <h2 id="que-son"><span class="num">01</span>¿Qué son las cookies?</h2>
+    <p>Las <strong>cookies</strong> son pequeños archivos de texto que un sitio web guarda en su dispositivo (computadora, tablet o teléfono) cuando lo visita. Sirven para que el sitio recuerde acciones y preferencias durante un periodo de tiempo, de modo que no tenga que volver a indicarlas cada vez que regrese o navegue entre páginas.</p>
+    <p>Las cookies <strong>no contienen información que pueda identificarle personalmente por sí sola</strong>, pero sí pueden estar vinculadas con datos personales que usted nos proporcione mediante los formularios del sitio.</p>
+
+    <h2 id="tipos"><span class="num">02</span>Tipos de cookies que usamos</h2>
+    <p>En montana-realty-co.com utilizamos cuatro categorías de cookies:</p>
+
+    <div class="cookie-types">
+      <div class="cookie-card">
+        <span class="ck-tag">Esenciales</span>
+        <h3>Funcionamiento del sitio</h3>
+        <p>Permiten la navegación, el envío de formularios de contacto y de búsqueda de propiedades, y la prevención de fraudes. Sin ellas el sitio no puede operar correctamente, por lo que no requieren consentimiento previo.</p>
+      </div>
+      <div class="cookie-card">
+        <span class="ck-tag">Analíticas</span>
+        <h3>Estadísticas de uso</h3>
+        <p>Nos ayudan a entender cómo se utiliza el sitio (páginas más visitadas, tiempo de permanencia, dispositivos más usados) para mejorar la experiencia. Si se implementa Google Analytics, los datos se procesan de forma agregada y anónima.</p>
+      </div>
+      <div class="cookie-card">
+        <span class="ck-tag">Funcionales</span>
+        <h3>Preferencias</h3>
+        <p>Recuerdan elecciones del usuario como filtros aplicados, propiedades vistas recientemente o el estado del comparador, para evitar tener que reintroducirlas en cada visita.</p>
+      </div>
+      <div class="cookie-card">
+        <span class="ck-tag">Publicitarias</span>
+        <h3>Contenido y remarketing</h3>
+        <p>Si se implementan herramientas como Meta Pixel o Google Ads, estas cookies permiten mostrar contenido y anuncios más relevantes en otros sitios. Solo se activarán cuando se habilite expresamente esta funcionalidad.</p>
+      </div>
+    </div>
+
+    <h2 id="gestionar"><span class="num">03</span>Cómo gestionar cookies</h2>
+    <p>Usted puede aceptar, rechazar o eliminar cookies en cualquier momento desde la configuración de su navegador. A continuación, los enlaces oficiales con instrucciones por navegador:</p>
+    <ul>
+      <li><strong>Google Chrome:</strong> <a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener">support.google.com/chrome/answer/95647</a></li>
+      <li><strong>Mozilla Firefox:</strong> <a href="https://support.mozilla.org/es/kb/habilitar-y-deshabilitar-cookies-sitios-web-rastrear-preferencias" target="_blank" rel="noopener">support.mozilla.org</a></li>
+      <li><strong>Apple Safari:</strong> <a href="https://support.apple.com/es-mx/guide/safari/sfri11471/mac" target="_blank" rel="noopener">support.apple.com/es-mx/guide/safari</a></li>
+      <li><strong>Microsoft Edge:</strong> <a href="https://support.microsoft.com/es-es/microsoft-edge" target="_blank" rel="noopener">support.microsoft.com/es-es/microsoft-edge</a></li>
+    </ul>
+    <p><strong>Consecuencias de deshabilitar cookies:</strong> el sitio seguirá siendo accesible, pero algunas funciones podrían dejar de operar correctamente, como la persistencia de filtros de búsqueda, el comparador de propiedades o la correcta operación de los formularios.</p>
+
+    <h2 id="terceros"><span class="num">04</span>Cookies de terceros</h2>
+    <p>El Sitio puede integrar servicios externos que, por su propia operación, instalan cookies en su dispositivo. Estos servicios se rigen por sus propias políticas, sobre las que Montana Realty Co. no tiene control directo:</p>
+    <ul>
+      <li><strong>Google Analytics:</strong> medición agregada del tráfico y comportamiento del sitio (cuando esté activado).</li>
+      <li><strong>Google Maps:</strong> mapas embebidos en páginas de propiedades y zonas.</li>
+      <li><strong>YouTube:</strong> reproducción de videos embebidos en artículos del blog o fichas de propiedad.</li>
+      <li><strong>Meta Pixel (Facebook / Instagram):</strong> medición de campañas y remarketing (cuando esté activado).</li>
+      <li><strong>WhatsApp:</strong> al hacer clic en los botones de contacto directo.</li>
+    </ul>
+    <p>Le recomendamos consultar las políticas de privacidad de cada uno de estos servicios para conocer en detalle cómo tratan sus datos.</p>
+
+    <h2 id="cambios"><span class="num">05</span>Cambios en esta política</h2>
+    <p>Podemos actualizar esta Política de Cookies para reflejar cambios en las tecnologías utilizadas, en la legislación aplicable o en nuestras prácticas. Cualquier modificación se publicará en esta misma página con la fecha de última actualización. Le recomendamos revisarla periódicamente.</p>
+
+    <h2 id="contacto"><span class="num">06</span>Contacto</h2>
+    <p>Si tiene preguntas sobre esta Política de Cookies, puede escribirnos a <a href="mailto:contacto@montana-realty-co.com">contacto@montana-realty-co.com</a>. Estaremos encantados de atenderle.</p>
+  </article>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="footer-brand">
+      <img src="assets/logo.png" alt="Montana Realty" class="footer-logo">
+      <p>Creando tu sueño inmobiliario. La agencia boutique de propiedades de lujo en San Pedro Garza García.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/montanarealtyco/" class="fs-icon" title="Instagram" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg>
+        </a>
+        <a href="https://www.facebook.com/MRdesarrollos/" class="fs-icon" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+        </a>
+        <a href="https://wa.me/528123532365" class="fs-icon" title="WhatsApp" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-title">Propiedades</span>
+      <a href="propiedades.html">Casas</a>
+      <a href="propiedades.html">Penthouses</a>
+      <a href="propiedades.html">Terrenos</a>
+      <a href="propiedades.html">Departamentos</a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-title">Servicios</span>
+      <a href="index.html#svc">Comprar</a>
+      <a href="index.html#svc">Vender</a>
+      <a href="index.html#svc">Rentar</a>
+      <a href="index.html#cta">Hipoteca</a>
+      <a href="index.html#cta">Valuación</a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-title">Empresa</span>
+      <a href="nosotros.html">Nosotros</a>
+      <a href="equipo.html">Equipo</a>
+      <a href="blog.html">Blog</a>
+      <a href="index.html#cta">Contacto</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Montana Realty Co · San Pedro Garza García, Nuevo León</span>
+    <div class="footer-legal">
+      <a href="aviso-privacidad.html">Aviso de privacidad</a>
+      <a href="terminos-uso.html">Términos de uso</a>
+      <a href="politica-cookies.html">Política de cookies</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>50),{passive:true});
+function toggleMob(){
+  const m=document.getElementById('mobMenu'),h=document.getElementById('navHam');
+  m.classList.toggle('open');h.classList.toggle('open');
+  document.body.style.overflow=m.classList.contains('open')?'hidden':'';
+}
+function closeMob(){
+  document.getElementById('mobMenu').classList.remove('open');
+  document.getElementById('navHam').classList.remove('open');
+  document.body.style.overflow='';
+}
+(function(){
+  const links=document.querySelectorAll('.toc a[href^="#"]');
+  if(!links.length) return;
+  const map=new Map();
+  links.forEach(l=>{const t=document.getElementById(l.getAttribute('href').slice(1));if(t) map.set(t,l)});
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=map.get(e.target);if(a) a.classList.add('active')}});
+  },{rootMargin:'-30% 0px -60% 0px',threshold:0});
+  map.forEach((_,h)=>io.observe(h));
+})();
+</script>
+</body>
+</html>

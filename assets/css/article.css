@@ -180,9 +180,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:
 .footer-col a{display:block;font-size:13px;color:rgba(255,255,255,.52);text-decoration:none;margin-bottom:14px;transition:color .3s;font-weight:300}
 .footer-col a:hover{color:var(--gold)}
 .footer-bottom{display:flex;align-items:center;justify-content:space-between;padding:32px 56px;border-top:1px solid rgba(255,255,255,.08)}
-.footer-copy{font-size:9px;letter-spacing:.12em;color:rgba(255,255,255,.28);text-transform:uppercase;font-weight:400}
-.footer-legal{display:flex;gap:28px}
-.footer-legal a{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.28);text-decoration:none}
+.footer-copy{font-size:9px;letter-spacing:.12em;color:#a8a8a8;text-transform:uppercase;font-weight:400}
+.footer-legal{display:flex;gap:28px;flex-wrap:wrap}
+.footer-legal a{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#a8a8a8;text-decoration:none;transition:color .3s}
 .footer-legal a:hover{color:var(--gold)}
 
 /* RESPONSIVE */
