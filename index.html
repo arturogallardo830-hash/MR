@@ -259,24 +259,9 @@ em{font-style:italic}
   .props-tab{padding:16px 14px;font-size:12px;white-space:nowrap;flex-shrink:0}
 }
 
-/* EXCLUSIVAS */
-.exclusive-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:1400px;margin:0 auto}
-.excl-card{position:relative;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#0d0d0d;border:1px solid rgba(201,169,110,.15);cursor:pointer;color:inherit;padding:0;font:inherit;text-align:left;transition:transform .5s cubic-bezier(.25,.46,.45,.94),box-shadow .5s,border-color .5s}
-.excl-card:hover{transform:translateY(-6px);border-color:rgba(201,169,110,.55);box-shadow:0 28px 64px rgba(0,0,0,.55),0 0 0 1px rgba(201,169,110,.2)}
-.excl-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform 1s cubic-bezier(.25,.46,.45,.94),filter .6s;filter:blur(6px) brightness(.55);user-select:none}
-.excl-card:hover img{transform:scale(1.05);filter:blur(10px) brightness(.45)}
-.excl-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,13,13,.35) 0%,rgba(13,13,13,.55) 45%,rgba(13,13,13,.9) 100%);pointer-events:none}
-.excl-lock{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;background:rgba(201,169,110,.16);border:1px solid rgba(201,169,110,.45);display:flex;align-items:center;justify-content:center;color:var(--gold);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:all .4s}
-.excl-lock svg{width:16px;height:16px}
-.excl-card:hover .excl-lock{background:var(--gold);color:#111;border-color:var(--gold);transform:scale(1.05)}
-.excl-cap{position:absolute;left:0;right:0;bottom:0;padding:18px 22px 20px;display:flex;flex-direction:column;align-items:flex-start;gap:4px}
-.excl-badge{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;padding:4px 10px;border:1px solid rgba(201,169,110,.5);border-radius:100px;background:rgba(201,169,110,.06)}
-.excl-zone{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:500;margin-top:4px}
-.excl-name{font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-size:clamp(20px,2.2vw,28px);line-height:1.04;letter-spacing:-.01em;color:#fff;margin:2px 0 4px}
-.excl-cta{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.7);font-weight:500;transition:color .3s;display:inline-flex;align-items:center;gap:8px}
-.excl-cta span{transition:transform .3s}
-.excl-card:hover .excl-cta{color:var(--gold)}
-.excl-card:hover .excl-cta span{transform:translateX(4px)}
+/* TOP PROPIEDADES */
+.props-grid-top{grid-template-columns:repeat(2,1fr)}
+.pcard-flag.pcard-top{background:var(--gold);color:#111;box-shadow:0 3px 10px rgba(201,169,110,.35)}
 
 /* PROPIEDADES CARD GRID (nuevas + portafolio) */
 .props-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1400px;margin:0 auto}
@@ -302,54 +287,12 @@ em{font-style:italic}
 .props-cta-btn span{transition:transform .3s}
 .props-cta-btn:hover span{transform:translateX(4px)}
 
-/* MODAL EXCLUSIVO */
-.excl-modal{position:fixed;inset:0;z-index:9500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s cubic-bezier(.25,.46,.45,.94)}
-.excl-modal.open{opacity:1;pointer-events:auto}
-.excl-modal-backdrop{position:absolute;inset:0;background:rgba(8,10,18,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.excl-modal-dialog{position:relative;background:linear-gradient(160deg,#161b2a 0%,#0d1120 100%);border:1px solid rgba(201,169,110,.28);border-radius:20px;padding:56px 56px 44px;max-width:480px;width:calc(100% - 32px);box-shadow:0 32px 80px rgba(0,0,0,.6),0 0 0 1px rgba(201,169,110,.1);transform:scale(.94);opacity:0;transition:transform .4s cubic-bezier(.25,.46,.45,.94),opacity .4s;text-align:center}
-.excl-modal.open .excl-modal-dialog{transform:scale(1);opacity:1}
-.excl-modal-x{position:absolute;top:16px;right:18px;background:none;border:none;color:rgba(255,255,255,.55);font-size:28px;line-height:1;cursor:pointer;padding:6px 12px;transition:color .3s}
-.excl-modal-x:hover{color:#fff}
-.excl-modal-ico{display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:50%;background:rgba(201,169,110,.12);border:1px solid rgba(201,169,110,.35);color:var(--gold);margin:0 auto 26px}
-.excl-modal-ico svg{width:32px;height:32px}
-.excl-modal-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;font-weight:500;color:#fff;margin:0 0 14px;letter-spacing:-.01em}
-.excl-modal-desc{font-family:var(--sans);font-size:14px;line-height:1.65;color:rgba(255,255,255,.62);margin:0 0 32px;font-weight:300}
-.excl-pinpad{display:flex;flex-direction:column;align-items:center;gap:18px;margin-bottom:18px}
-.excl-pin-dots{display:flex;justify-content:center;gap:16px;margin-bottom:6px}
-.excl-pin-dot{width:14px;height:14px;border-radius:50%;border:1.5px solid rgba(255,255,255,.28);background:transparent;transition:all .25s cubic-bezier(.25,.46,.45,.94)}
-.excl-pin-dot.filled{background:var(--gold);border-color:var(--gold);transform:scale(1.08);box-shadow:0 0 12px rgba(201,169,110,.45)}
-.excl-pin-dots.invalid{animation:exclShake .45s cubic-bezier(.36,.07,.19,.97)}
-.excl-pin-dots.invalid .excl-pin-dot{border-color:#ffffff;background:#ffffff;box-shadow:0 0 10px rgba(255,255,255,.4)}
-@keyframes exclShake{
-  0%,100%{transform:translateX(0)}
-  20%{transform:translateX(-8px)}
-  40%{transform:translateX(8px)}
-  60%{transform:translateX(-6px)}
-  80%{transform:translateX(6px)}
-}
-.excl-pin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:280px}
-.excl-pin-key{padding:16px 0;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#fff;font-family:var(--sans);font-size:18px;font-weight:500;cursor:pointer;transition:background .2s,border-color .2s,color .2s,transform .12s;-webkit-tap-highlight-color:transparent;user-select:none}
-.excl-pin-key:hover{background:rgba(201,169,110,.12);border-color:rgba(201,169,110,.4);color:var(--gold)}
-.excl-pin-key:active{transform:scale(.94);background:rgba(201,169,110,.2)}
-.excl-pin-act{color:var(--gold);font-size:16px}
-.excl-pin-act[data-key="ok"]{background:rgba(201,169,110,.12);border-color:rgba(201,169,110,.4)}
-.excl-pin-act[data-key="ok"]:hover{background:var(--gold);color:#111;border-color:var(--gold)}
-.excl-modal-err{font-size:12px;color:#ffffff;margin:4px 0 0;min-height:18px;opacity:0;transition:opacity .25s;letter-spacing:.04em}
-.excl-modal-err.show{opacity:1}
-.excl-modal-foot{font-size:12.5px;color:rgba(255,255,255,.45);margin:0;font-weight:300}
-.excl-modal-foot a{color:var(--gold);text-decoration:none;font-weight:500;border-bottom:1px solid rgba(201,169,110,.3);transition:border-color .3s,color .3s}
-.excl-modal-foot a:hover{color:#fff;border-color:var(--gold)}
-
 @media(max-width:900px){
   .props-sec{padding:40px 22px 24px;min-height:auto}
   .props-head{margin-bottom:14px}
-  .exclusive-grid{grid-template-columns:1fr;gap:14px}
-  .excl-card{aspect-ratio:16/10}
-  .excl-cap{padding:16px 20px 18px}
   .props-grid{grid-template-columns:1fr;gap:14px}
+  .props-grid-top{grid-template-columns:1fr}
   .props-cta-wrap{margin-top:16px}
-  .excl-modal-dialog{padding:44px 28px 32px}
-  .excl-modal-title{font-size:26px}
 }
 @media(min-width:901px) and (max-width:1100px){
   .props-grid{grid-template-columns:repeat(3,1fr)}
@@ -1074,11 +1017,11 @@ textarea.fi{min-height:120px;resize:vertical;line-height:1.55}
   </div>
 
   <div class="props-tabs r d2" role="tablist" aria-label="Categorías de propiedades">
-    <button type="button" class="props-tab active" data-tab="exclusivas" role="tab" aria-selected="true" aria-controls="tab-exclusivas">
+    <button type="button" class="props-tab active" data-tab="top" role="tab" aria-selected="true" aria-controls="tab-top">
       <span class="pt-ico" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
       </span>
-      <span>Exclusivas</span>
+      <span>Top Propiedades</span>
     </button>
     <button type="button" class="props-tab" data-tab="nuevas" role="tab" aria-selected="false" aria-controls="tab-nuevas">
       <span class="pt-dot" aria-hidden="true"></span>
@@ -1089,36 +1032,34 @@ textarea.fi{min-height:120px;resize:vertical;line-height:1.55}
     </button>
   </div>
 
-  <!-- PANEL: Exclusivas -->
-  <div class="props-panel active" id="tab-exclusivas" role="tabpanel" aria-labelledby="tab-exclusivas-btn">
-    <p class="props-sub">Acceso solo con invitación. Propiedades que no encontrarás en ningún portal.</p>
-    <div class="exclusive-grid">
-      <button type="button" class="excl-card" data-name="Residencia Sierra Madre" data-zone="Valle Oriente" aria-label="Residencia Sierra Madre — acceso exclusivo">
-        <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1600&q=85" alt="Residencia Sierra Madre">
-        <div class="excl-veil"></div>
-        <span class="excl-lock" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </span>
-        <div class="excl-cap">
-          <span class="excl-badge">Exclusiva</span>
-          <span class="excl-zone">Valle Oriente</span>
-          <h3 class="excl-name">Residencia<br>Sierra Madre</h3>
-          <span class="excl-cta">Solicitar acceso <span aria-hidden="true">→</span></span>
+  <!-- PANEL: Top Propiedades -->
+  <div class="props-panel active" id="tab-top" role="tabpanel" aria-labelledby="tab-top-btn">
+    <p class="props-sub">Selección destacada de las propiedades más exclusivas de nuestro portafolio.</p>
+    <div class="props-grid props-grid-top">
+      <a href="propiedades.html?destacada=residencia-sierra-madre" class="pcard">
+        <div class="pcard-img">
+          <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200&q=85" alt="Residencia Sierra Madre">
+          <span class="pcard-flag pcard-top">Top</span>
         </div>
-      </button>
-      <button type="button" class="excl-card" data-name="Penthouse Cumbre" data-zone="San Agustín" aria-label="Penthouse Cumbre — acceso exclusivo">
-        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1600&q=85" alt="Penthouse Cumbre">
-        <div class="excl-veil"></div>
-        <span class="excl-lock" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </span>
-        <div class="excl-cap">
-          <span class="excl-badge">Exclusiva</span>
-          <span class="excl-zone">San Agustín</span>
-          <h3 class="excl-name">Penthouse<br>Cumbre</h3>
-          <span class="excl-cta">Solicitar acceso <span aria-hidden="true">→</span></span>
+        <div class="pcard-body">
+          <h3 class="pcard-name">Residencia Sierra Madre</h3>
+          <span class="pcard-zone">Valle Oriente</span>
+          <span class="pcard-price">$24,500,000 <span class="pcard-curr">MXN</span></span>
+          <div class="pcard-specs"><span>5 rec</span><span>·</span><span>6 baños</span><span>·</span><span>780 m²</span></div>
         </div>
-      </button>
+      </a>
+      <a href="propiedades.html?destacada=penthouse-cumbre" class="pcard">
+        <div class="pcard-img">
+          <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=85" alt="Penthouse Cumbre">
+          <span class="pcard-flag pcard-top">Top</span>
+        </div>
+        <div class="pcard-body">
+          <h3 class="pcard-name">Penthouse Cumbre</h3>
+          <span class="pcard-zone">San Agustín</span>
+          <span class="pcard-price">$18,900,000 <span class="pcard-curr">MXN</span></span>
+          <div class="pcard-specs"><span>4 rec</span><span>·</span><span>5 baños</span><span>·</span><span>520 m²</span></div>
+        </div>
+      </a>
     </div>
   </div>
 
@@ -1228,43 +1169,6 @@ textarea.fi{min-height:120px;resize:vertical;line-height:1.55}
     </div>
   </div>
 </section>
-
-<!-- MODAL ACCESO EXCLUSIVO -->
-<div class="excl-modal" id="exclModal" aria-hidden="true" role="dialog" aria-labelledby="exclModalTitle">
-  <div class="excl-modal-backdrop" data-excl-close></div>
-  <div class="excl-modal-dialog" role="document">
-    <button type="button" class="excl-modal-x" data-excl-close aria-label="Cerrar">×</button>
-    <span class="excl-modal-ico" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-    </span>
-    <h3 class="excl-modal-title" id="exclModalTitle">Acceso Exclusivo</h3>
-    <p class="excl-modal-desc">Esta propiedad está disponible solo para clientes invitados. Ingresa tu código de 4 dígitos.</p>
-    <div class="excl-pinpad" id="exclPinpad" role="group" aria-label="Código de acceso">
-      <div class="excl-pin-dots" id="exclPinDots" aria-live="polite">
-        <span class="excl-pin-dot"></span>
-        <span class="excl-pin-dot"></span>
-        <span class="excl-pin-dot"></span>
-        <span class="excl-pin-dot"></span>
-      </div>
-      <div class="excl-pin-grid">
-        <button type="button" class="excl-pin-key" data-key="1">1</button>
-        <button type="button" class="excl-pin-key" data-key="2">2</button>
-        <button type="button" class="excl-pin-key" data-key="3">3</button>
-        <button type="button" class="excl-pin-key" data-key="4">4</button>
-        <button type="button" class="excl-pin-key" data-key="5">5</button>
-        <button type="button" class="excl-pin-key" data-key="6">6</button>
-        <button type="button" class="excl-pin-key" data-key="7">7</button>
-        <button type="button" class="excl-pin-key" data-key="8">8</button>
-        <button type="button" class="excl-pin-key" data-key="9">9</button>
-        <button type="button" class="excl-pin-key excl-pin-act" data-key="del" aria-label="Borrar">⌫</button>
-        <button type="button" class="excl-pin-key" data-key="0">0</button>
-        <button type="button" class="excl-pin-key excl-pin-act" data-key="ok" aria-label="Confirmar">✓</button>
-      </div>
-      <p class="excl-modal-err" id="exclErr">Código inválido</p>
-    </div>
-    <p class="excl-modal-foot">¿No tienes código? <a href="https://wa.me/528123532365?text=Hola,%20me%20gustaría%20solicitar%20un%20código%20de%20acceso%20exclusivo" target="_blank" rel="noopener">Solicítalo a tu asesor</a></p>
-  </div>
-</div>
 
 <!-- ⑤ COLLECTION -->
 
@@ -2504,83 +2408,6 @@ let openValModal;
   // Cálculo inicial
   updateVisibility();
   calc();
-})();
-
-// ── EXCLUSIVE ACCESS MODAL (PIN pad — no input element to avoid Safari password autofill) ──
-(function(){
-  const modal=document.getElementById('exclModal');
-  const pinpad=document.getElementById('exclPinpad');
-  const dotsWrap=document.getElementById('exclPinDots');
-  const err=document.getElementById('exclErr');
-  if(!modal||!pinpad) return;
-  const VALID='2026';
-  const LEN=4;
-  let entered='';
-  let current=null;
-
-  const dots=Array.from(dotsWrap.querySelectorAll('.excl-pin-dot'));
-
-  function render(){
-    dots.forEach((d,i)=>d.classList.toggle('filled',i<entered.length));
-  }
-  function reset(){
-    entered='';
-    render();
-    err.classList.remove('show');
-    dotsWrap.classList.remove('invalid');
-  }
-  function open(card){
-    current=card;
-    modal.classList.add('open');
-    modal.setAttribute('aria-hidden','false');
-    document.body.style.overflow='hidden';
-    reset();
-  }
-  function close(){
-    modal.classList.remove('open');
-    modal.setAttribute('aria-hidden','true');
-    document.body.style.overflow='';
-    current=null;
-  }
-  function submit(){
-    if(entered===VALID){
-      const name=current?current.dataset.name||'':'';
-      const msg=encodeURIComponent(`Hola, tengo código de acceso exclusivo para ${name||'una propiedad'}.`);
-      window.location.href=`https://wa.me/528123532365?text=${msg}`;
-    } else {
-      err.classList.add('show');
-      dotsWrap.classList.remove('invalid');
-      void dotsWrap.offsetWidth;
-      dotsWrap.classList.add('invalid');
-      setTimeout(()=>{entered='';render();dotsWrap.classList.remove('invalid');},520);
-    }
-  }
-  function press(key){
-    if(err.classList.contains('show'))err.classList.remove('show');
-    if(key==='del'){entered=entered.slice(0,-1);render();return;}
-    if(key==='ok'){submit();return;}
-    if(entered.length>=LEN)return;
-    entered+=key;
-    render();
-    if(entered.length===LEN)setTimeout(submit,180);
-  }
-
-  pinpad.querySelectorAll('.excl-pin-key').forEach(btn=>{
-    btn.addEventListener('click',()=>press(btn.dataset.key));
-  });
-  document.querySelectorAll('.excl-card').forEach(c=>{
-    c.addEventListener('click',()=>open(c));
-  });
-  modal.querySelectorAll('[data-excl-close]').forEach(el=>{
-    el.addEventListener('click',close);
-  });
-  document.addEventListener('keydown',e=>{
-    if(!modal.classList.contains('open'))return;
-    if(e.key==='Escape'){close();return;}
-    if(/^[0-9]$/.test(e.key)){press(e.key);return;}
-    if(e.key==='Backspace'){press('del');return;}
-    if(e.key==='Enter'){press('ok');return;}
-  });
 })();
 
 // ── TESTIMONIALS v2: TITLE REVEAL + CAROUSEL ──
