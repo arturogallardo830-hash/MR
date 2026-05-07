@@ -360,8 +360,10 @@ em{font-style:italic}
 /* SUPPORT SERVICES */
 .sup-sec{background:var(--dark);border-top:1px solid rgba(255,255,255,.08)}
 .sup-header{padding:100px 56px 60px}
-.sup-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.sup-card{padding:60px;border:1px solid rgba(255,255,255,.07);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);transition:all .3s ease;border-radius:8px;position:relative;overflow:hidden}
+.sup-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+@media(max-width:1100px){.sup-grid{grid-template-columns:repeat(2,1fr);gap:24px}}
+.sup-card{padding:48px 40px;border:1px solid rgba(255,255,255,.07);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);transition:transform .4s ease,border-color .4s ease,background .4s ease,box-shadow .4s ease;border-radius:8px;position:relative;overflow:hidden;cursor:pointer}
+.sup-card:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .sup-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,169,110,.1) 0%,transparent 100%);opacity:0;transition:opacity .3s ease;pointer-events:none}
 .sup-card:hover::before,.sup-card:focus-within::before,.sup-card:active::before{opacity:1}
 .sup-card:hover,.sup-card:focus-within,.sup-card:active{background:rgba(255,255,255,.06);border-color:rgba(201,169,110,.3);transform:translateY(-8px);box-shadow:0 12px 40px rgba(201,169,110,.15)}
@@ -374,27 +376,35 @@ em{font-style:italic}
 .sup-link::after{content:'→';font-size:12px;transition:transform .4s}
 .sup-card:hover .sup-link::after{transform:translateX(3px)}
 
-/* MODAL: servicios adicionales */
+/* MODAL: servicios adicionales (rich body) */
 .sup-modal{position:fixed;inset:0;z-index:9500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s ease;padding:16px}
 .sup-modal.open{opacity:1;pointer-events:auto}
-.sup-modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.5);cursor:pointer}
-.sup-modal-dialog{position:relative;background:#ffffff;color:#111;border-radius:16px;padding:32px;max-width:500px;width:100%;box-shadow:0 32px 80px rgba(0,0,0,.35),0 8px 24px rgba(0,0,0,.2);transform:scale(.95);opacity:0;transition:transform .3s cubic-bezier(.25,.46,.45,.94),opacity .3s ease;max-height:calc(100vh - 48px);overflow-y:auto}
+.sup-modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);cursor:pointer}
+.sup-modal-dialog{position:relative;background:#1a1f2e;color:#e8e6e1;border:1px solid rgba(201,169,110,.2);border-radius:8px;padding:48px 40px;max-width:720px;width:100%;box-shadow:0 32px 80px rgba(0,0,0,.55);transform:scale(.95);opacity:0;transition:transform .3s cubic-bezier(.25,.46,.45,.94),opacity .3s ease;max-height:calc(100vh - 48px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(201,169,110,.4) transparent}
+.sup-modal-dialog::-webkit-scrollbar{width:6px}
+.sup-modal-dialog::-webkit-scrollbar-track{background:transparent}
+.sup-modal-dialog::-webkit-scrollbar-thumb{background:rgba(201,169,110,.4);border-radius:100px}
 .sup-modal.open .sup-modal-dialog{transform:scale(1);opacity:1}
-.sup-modal-x{position:absolute;top:14px;right:16px;background:none;border:none;color:#888;font-size:26px;line-height:1;cursor:pointer;padding:6px 10px;transition:color .3s;font-family:var(--sans)}
-.sup-modal-x:hover{color:#111}
-.sup-modal-ico{display:inline-block;font-size:30px;color:var(--gold);line-height:1;margin:4px 0 16px}
-.sup-modal-title{font-family:var(--serif);font-size:28px;font-weight:500;line-height:1.15;letter-spacing:-.01em;color:#111;margin:0 0 14px}
-.sup-modal-intro{font-family:var(--sans);font-size:14px;line-height:1.6;color:#444;font-weight:400;margin:0 0 14px}
-.sup-modal-list{list-style:none;padding:0;margin:0 0 26px;display:flex;flex-direction:column;gap:10px}
-.sup-modal-list li{font-family:var(--sans);font-size:13.5px;line-height:1.55;color:#555;font-weight:400;padding-left:22px;position:relative}
-.sup-modal-list li::before{content:'';position:absolute;left:0;top:9px;width:8px;height:8px;border-radius:50%;background:var(--gold)}
-.sup-modal-btn{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:#111;padding:14px 26px;border-radius:100px;font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;text-decoration:none;transition:all .3s;border:none;cursor:pointer}
-.sup-modal-btn:hover{background:#e0c08c;transform:translateY(-2px);box-shadow:0 10px 24px rgba(201,169,110,.35)}
-@media(max-width:600px){
-  .sup-modal-dialog{padding:26px 22px;border-radius:14px}
-  .sup-modal-title{font-size:24px}
-  .sup-modal-intro{font-size:13.5px}
-  .sup-modal-list li{font-size:13px}
+.sup-modal-x{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--gold);font-size:30px;line-height:1;cursor:pointer;padding:6px 10px;transition:transform .3s ease;font-family:var(--sans);z-index:2}
+.sup-modal-x:hover{transform:rotate(90deg)}
+.sup-modal-ico{display:inline-block;font-size:32px;color:var(--gold);line-height:1;margin:4px 0 16px}
+.sup-modal-title{font-family:var(--serif);font-size:clamp(28px,4vw,40px);font-weight:400;line-height:1.1;letter-spacing:-.012em;color:#e8e6e1;margin:0 0 24px}
+.sup-modal-title em{color:var(--gold);font-style:italic;font-weight:500}
+.sup-modal-body{font-family:var(--sans);font-size:14px;line-height:1.7;color:#a8a8a8;margin:0 0 28px}
+.sup-modal-body .sup-modal-intro-rich{font-family:var(--sans);font-size:15px;line-height:1.6;color:var(--gold);font-style:italic;margin:0 0 22px;font-weight:400}
+.sup-modal-body h4{font-family:var(--serif);font-size:20px;font-weight:500;color:var(--gold);margin:24px 0 10px;letter-spacing:-.005em;font-style:normal}
+.sup-modal-body h4:first-child{margin-top:0}
+.sup-modal-body ul{list-style:none;padding:0;margin:0 0 18px}
+.sup-modal-body ul li{position:relative;padding-left:20px;margin-bottom:8px;color:#a8a8a8}
+.sup-modal-body ul li::before{content:"—";position:absolute;left:0;color:var(--gold)}
+.sup-modal-body strong{color:#e8e6e1;font-weight:500}
+.sup-modal-body p{margin:0 0 16px;color:#a8a8a8}
+.sup-modal-btn{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:#1a1f2e;padding:16px 32px;border-radius:50px;font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;text-decoration:none;transition:all .3s;border:none;cursor:pointer}
+.sup-modal-btn:hover{background:#d4b67e;transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,169,110,.3)}
+@media(max-width:640px){
+  .sup-modal-dialog{padding:32px 22px;border-radius:8px}
+  .sup-modal-title{font-size:26px;margin-bottom:18px}
+  .sup-modal-body h4{font-size:18px}
 }
 
 /* ZONE CUSTOM DROPDOWN (search modal) */
@@ -1242,23 +1252,29 @@ textarea.fi{min-height:120px;resize:vertical;line-height:1.55}
     <span class="h3 r d1" style="display:block">Todo lo que necesitas,<br><em>en un solo lugar</em></span>
   </div>
   <div class="sup-grid">
-    <div class="sup-card r">
+    <div class="sup-card r" data-sup="hipotecarios" role="button" tabindex="0" aria-haspopup="dialog">
       <span class="sup-ic">◈</span>
       <h3 class="sup-title">Servicios Hipotecarios</h3>
       <p class="sup-desc">Te conectamos con las mejores instituciones financieras para hacer tu inversión posible. Tasas preferenciales y asesoría personalizada.</p>
-      <button type="button" class="sup-link" data-sup="hipotecarios">Más información</button>
+      <span class="sup-link">Más información</span>
     </div>
-    <div class="sup-card r d1">
+    <div class="sup-card r d1" data-sup="valuacion" role="button" tabindex="0" aria-haspopup="dialog">
       <span class="sup-ic">⊙</span>
       <h3 class="sup-title">Valuación Profesional</h3>
       <p class="sup-desc">Análisis comparativo de mercado y valuaciones certificadas por expertos independientes. Conoce el valor real de tu propiedad.</p>
-      <button type="button" class="sup-link" data-sup="valuacion">Solicitar valuación</button>
+      <span class="sup-link">Solicitar valuación</span>
     </div>
-    <div class="sup-card r d2">
+    <div class="sup-card r d2" data-sup="legal" role="button" tabindex="0" aria-haspopup="dialog">
       <span class="sup-ic">⟐</span>
       <h3 class="sup-title">Asesoría Legal</h3>
       <p class="sup-desc">Acompañamiento jurídico completo desde la primera oferta hasta la escrituración. Protege tu inversión con expertos de confianza.</p>
-      <button type="button" class="sup-link" data-sup="legal">Contactar</button>
+      <span class="sup-link">Contactar</span>
+    </div>
+    <div class="sup-card r d3" data-sup="vanta" role="button" tabindex="0" aria-haspopup="dialog">
+      <span class="sup-ic">◇</span>
+      <h3 class="sup-title">Vanta — Marketing & IA</h3>
+      <p class="sup-desc">Posicionamiento digital de propiedades y asesores con contenido profesional, optimización con IA y estrategias que aceleran ventas.</p>
+      <span class="sup-link">Conocer más</span>
     </div>
   </div>
 </section>
@@ -1270,10 +1286,9 @@ textarea.fi{min-height:120px;resize:vertical;line-height:1.55}
     <button type="button" class="sup-modal-x" data-sup-close aria-label="Cerrar">×</button>
     <span class="sup-modal-ico" id="supModalIco" aria-hidden="true">◈</span>
     <h3 class="sup-modal-title" id="supModalTitle"></h3>
-    <p class="sup-modal-intro" id="supModalIntro"></p>
-    <ul class="sup-modal-list" id="supModalList"></ul>
+    <div class="sup-modal-body" id="supModalBody"></div>
     <a href="#" class="sup-modal-btn" id="supModalBtn" target="_blank" rel="noopener">
-      <span id="supModalBtnLabel"></span> <span aria-hidden="true">→</span>
+      <span id="supModalBtnLabel">Contactar asesor</span> <span aria-hidden="true">→</span>
     </a>
   </div>
 </div>
@@ -2016,63 +2031,110 @@ document.querySelectorAll('.r').forEach(el=>{if(!el.classList.contains('v'))obs.
   if(!modal) return;
   const iconEl=document.getElementById('supModalIco');
   const titleEl=document.getElementById('supModalTitle');
-  const introEl=document.getElementById('supModalIntro');
-  const listEl=document.getElementById('supModalList');
+  const bodyEl=document.getElementById('supModalBody');
   const btnEl=document.getElementById('supModalBtn');
   const btnLabelEl=document.getElementById('supModalBtnLabel');
-  const WA='https://wa.me/528123532365?text=';
   const data={
     hipotecarios:{
       ico:'◈',
-      title:'Servicios Hipotecarios',
-      intro:'En Montana Realty te conectamos con las mejores instituciones financieras del país. Nuestro equipo te acompaña en todo el proceso:',
-      bullets:[
-        'Pre-calificación y análisis de capacidad crediticia',
-        'Comparativa de tasas entre bancos (BBVA, Banorte, HSBC, Scotiabank, entre otros)',
-        'Gestión completa del trámite hipotecario',
-        'Asesoría en créditos puente e inversión',
-        'Tasas preferenciales por volumen de operación'
-      ],
-      btn:'Agendar cita',
-      msg:'Hola, me interesa información sobre servicios hipotecarios'
+      title:'Servicios <em>Hipotecarios</em>',
+      body:`<p class="sup-modal-intro-rich">Hacemos posible tu inversión inmobiliaria con las mejores opciones de financiamiento del mercado.</p>
+<h4>¿Qué incluye?</h4>
+<ul>
+  <li>Conexión directa con bancos y SOFOMES top del país</li>
+  <li>Comparativo de tasas y plazos personalizado</li>
+  <li>Acompañamiento durante todo el proceso de aprobación</li>
+  <li>Asesoría en estructura de pago según tu perfil</li>
+  <li>Pre-aprobación crediticia antes de buscar propiedad</li>
+</ul>
+<h4>¿Para quién es?</h4>
+<p>Compradores que buscan optimizar el financiamiento de su propiedad de lujo, ya sea primera residencia, segunda casa o inversión.</p>
+<h4>¿Cómo funciona?</h4>
+<p>Agendamos una llamada de 30 minutos donde analizamos tu perfil y necesidades. Te presentamos las opciones más convenientes y te conectamos directamente con los ejecutivos correspondientes.</p>`,
+      btn:'Contactar asesor',
+      msg:'Hola, me interesa información sobre Servicios Hipotecarios de Montana Realty. ¿Pueden contactarme?',
+      phone:'528110448818'
     },
     valuacion:{
       ico:'⊙',
-      title:'Valuación Profesional',
-      intro:'Conoce el valor real de tu propiedad con un análisis profesional certificado:',
-      bullets:[
-        'Avalúo comercial por peritos certificados',
-        'Análisis comparativo de mercado (CMA)',
-        'Estudio de plusvalía y proyección de retorno',
-        'Valuación para compra, venta o inversión',
-        'Reportes detallados con fotografía profesional'
-      ],
-      btn:'Solicitar valuación',
-      msg:'Hola, me interesa solicitar una valuación profesional de mi propiedad'
+      title:'Valuación <em>Profesional</em>',
+      body:`<p class="sup-modal-intro-rich">Conoce el valor real de tu propiedad con análisis comparativo de mercado y avalúos certificados.</p>
+<h4>¿Qué incluye?</h4>
+<ul>
+  <li>Análisis comparativo de mercado (CMA) detallado</li>
+  <li>Avalúo por perito certificado independiente</li>
+  <li>Reporte completo con gráficas y proyecciones</li>
+  <li>Estrategia de precio óptimo para venta o renta</li>
+  <li>Recomendaciones para maximizar el valor</li>
+</ul>
+<h4>¿Para qué sirve?</h4>
+<ul>
+  <li><strong>Venta:</strong> Conocer el precio óptimo para vender rápido</li>
+  <li><strong>Compra:</strong> Validar que estás pagando el precio correcto</li>
+  <li><strong>Trámites legales:</strong> Sucesiones, divorcios, patrimonio</li>
+  <li><strong>Seguros:</strong> Asegurar tu propiedad por su valor real</li>
+  <li><strong>Inversión:</strong> Evaluar plusvalía y ROI esperado</li>
+</ul>
+<h4>¿Cuánto tarda?</h4>
+<p>El análisis comparativo lo entregamos en 48 horas. El avalúo certificado oficial toma entre 5 y 10 días hábiles dependiendo del tipo de propiedad.</p>`,
+      btn:'Contactar asesor',
+      msg:'Hola, me interesa solicitar una Valuación Profesional de mi propiedad con Montana Realty. ¿Pueden contactarme?',
+      phone:'528110448818'
     },
     legal:{
       ico:'⟐',
-      title:'Asesoría Legal',
-      intro:'Protege tu inversión con acompañamiento jurídico completo en cada etapa:',
-      bullets:[
-        'Revisión de contratos y escrituras',
-        'Due diligence legal de la propiedad',
-        'Trámites ante notaría y registro público',
-        'Asesoría en fideicomisos y estructuras legales',
-        'Resolución de temas fiscales inmobiliarios'
-      ],
+      title:'Asesoría <em>Legal</em>',
+      body:`<p class="sup-modal-intro-rich">Acompañamiento jurídico completo desde la primera oferta hasta la escrituración. Protege tu inversión con expertos.</p>
+<h4>¿Qué incluye?</h4>
+<ul>
+  <li>Revisión exhaustiva de títulos y antecedentes registrales</li>
+  <li>Elaboración y revisión de contratos de compraventa</li>
+  <li>Negociación de cláusulas y contingencias</li>
+  <li>Trámites notariales y de escrituración</li>
+  <li>Verificación de gravámenes, hipotecas o limitaciones</li>
+  <li>Asesoría fiscal en la transacción (ISR, IVA, predial)</li>
+</ul>
+<h4>¿Por qué es importante?</h4>
+<p>Una propiedad de lujo es una inversión de millones de pesos. Un error legal puede costarte el doble. Nuestros abogados especializados en bienes raíces aseguran que cada documento, contrato y trámite esté blindado.</p>
+<h4>¿Quién lo necesita?</h4>
+<p>Cualquier persona que esté comprando, vendiendo, rentando o heredando una propiedad. Es especialmente crítico en transacciones de $5M MXN+ donde los riesgos legales son mayores.</p>`,
       btn:'Contactar asesor',
-      msg:'Hola, me interesa asesoría legal para una operación inmobiliaria'
+      msg:'Hola, me interesa información sobre Asesoría Legal Inmobiliaria de Montana Realty. ¿Pueden contactarme?',
+      phone:'528110448818'
+    },
+    vanta:{
+      ico:'◇',
+      title:'Vanta — <em>Consultoría Digital</em>',
+      body:`<p class="sup-modal-intro-rich">Vanta es la división de marketing digital de Montana Realty. Posicionamos propiedades, asesores y desarrollos con contenido de alto impacto y herramientas de IA.</p>
+<h4>¿Qué ofrece Vanta?</h4>
+<ul>
+  <li><strong>Creación de contenido:</strong> Producción audiovisual profesional para propiedades (reels, fotografía, recorridos virtuales)</li>
+  <li><strong>Optimización con IA:</strong> Descripciones, títulos y copy optimizados para venta usando inteligencia artificial</li>
+  <li><strong>Estrategia digital:</strong> Planes de contenido mensuales para redes sociales</li>
+  <li><strong>Branding personal:</strong> Posicionamiento de asesores inmobiliarios</li>
+  <li><strong>Consultoría 1-a-1:</strong> Asesoría personalizada para dueños de propiedades premium</li>
+</ul>
+<h4>¿Para quién es?</h4>
+<ul>
+  <li><strong>Propietarios:</strong> que quieren vender o rentar su inmueble más rápido y al mejor precio</li>
+  <li><strong>Inversionistas:</strong> con portafolios que necesitan posicionamiento estratégico</li>
+  <li><strong>Asesores inmobiliarios:</strong> que quieren construir marca personal y atraer clientes premium</li>
+  <li><strong>Desarrolladores:</strong> que lanzan proyectos y necesitan estrategia de venta digital</li>
+</ul>
+<h4>¿Por qué Vanta?</h4>
+<p>El 87% de los compradores premium investigan online antes de tomar la decisión. Si tu propiedad o marca no tiene presencia digital de calidad, estás perdiendo dinero. Vanta combina conocimiento del sector inmobiliario con expertise digital y herramientas de IA para acelerar tus resultados.</p>`,
+      btn:'Contactar asesor',
+      msg:'Hola, me interesa información sobre los servicios de Vanta (Marketing & IA). ¿Pueden contactarme?',
+      phone:'528123532365'
     }
   };
   function open(key){
     const d=data[key]; if(!d) return;
     iconEl.textContent=d.ico;
-    titleEl.textContent=d.title;
-    introEl.textContent=d.intro;
-    listEl.innerHTML=d.bullets.map(b=>`<li>${b}</li>`).join('');
+    titleEl.innerHTML=d.title;
+    bodyEl.innerHTML=d.body;
     btnLabelEl.textContent=d.btn;
-    btnEl.setAttribute('href',WA+encodeURIComponent(d.msg));
+    btnEl.setAttribute('href','https://wa.me/'+d.phone+'?text='+encodeURIComponent(d.msg));
     modal.classList.add('open');
     modal.setAttribute('aria-hidden','false');
     document.body.style.overflow='hidden';
@@ -2082,11 +2144,15 @@ document.querySelectorAll('.r').forEach(el=>{if(!el.classList.contains('v'))obs.
     modal.setAttribute('aria-hidden','true');
     document.body.style.overflow='';
   }
-  document.querySelectorAll('.sup-link[data-sup]').forEach(b=>{
-    b.addEventListener('click',e=>{
-      e.preventDefault();
-      const key=b.dataset.sup;
-      open(key);
+  document.querySelectorAll('.sup-card[data-sup]').forEach(card=>{
+    card.addEventListener('click',()=>{
+      open(card.dataset.sup);
+    });
+    card.addEventListener('keydown',e=>{
+      if(e.key==='Enter'||e.key===' '){
+        e.preventDefault();
+        open(card.dataset.sup);
+      }
     });
   });
   modal.querySelectorAll('[data-sup-close]').forEach(el=>el.addEventListener('click',close));
