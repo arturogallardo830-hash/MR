@@ -413,106 +413,42 @@ em{font-style:italic}
 .zone-dd-opt.selected{background:rgba(201,169,110,.12);color:var(--gold);font-weight:500}
 .zone-dd-opt.selected:hover{background:rgba(201,169,110,.2);color:var(--gold)}
 
-/* MODAL: calculadora de valuación */
-.val-modal{position:fixed;inset:0;z-index:9500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s ease;padding:16px}
-.val-modal.open{opacity:1;pointer-events:auto}
-.val-modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.68);cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-.val-modal-dialog{position:relative;background:#1a1f2e;color:#fff;border-radius:16px;padding:34px 36px 28px;max-width:650px;width:100%;box-shadow:0 32px 80px rgba(0,0,0,.55),0 0 0 1px rgba(201,169,110,.12);transform:scale(.95);opacity:0;transition:transform .3s cubic-bezier(.25,.46,.45,.94),opacity .3s ease;max-height:calc(100vh - 32px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(201,169,110,.4) transparent}
-.val-modal-dialog::-webkit-scrollbar{width:6px}
-.val-modal-dialog::-webkit-scrollbar-track{background:transparent}
-.val-modal-dialog::-webkit-scrollbar-thumb{background:rgba(201,169,110,.4);border-radius:100px}
-.val-modal.open .val-modal-dialog{transform:scale(1);opacity:1}
-.val-modal-x{position:absolute;top:14px;right:18px;background:none;border:none;color:rgba(255,255,255,.55);font-size:26px;line-height:1;cursor:pointer;padding:6px 10px;transition:color .3s;font-family:var(--sans);z-index:2}
-.val-modal-x:hover{color:#fff}
-.val-modal-head{margin-bottom:24px}
-.val-eye{display:inline-block;font-family:var(--sans);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px}
-.val-title{font-family:var(--serif);font-size:clamp(26px,3.2vw,34px);font-weight:400;line-height:1.15;letter-spacing:-.01em;color:#fff;margin:0 0 12px}
-.val-title em{font-style:italic;color:var(--gold);font-weight:500}
-.val-source{font-family:var(--sans);font-size:11.5px;line-height:1.55;color:rgba(255,255,255,.48);font-weight:300;margin:0 0 8px}
-.val-updated{display:inline-block;font-family:var(--sans);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(201,169,110,.6);font-weight:500;padding:4px 10px;border:1px solid rgba(201,169,110,.22);border-radius:100px}
-
-.val-form{display:flex;flex-direction:column;gap:18px;margin-bottom:22px}
-.val-row{display:flex;flex-direction:column;gap:8px}
-.val-row-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.val-label{font-family:var(--sans);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:600}
-.val-val-disp{font-family:var(--sans);font-size:13px;color:var(--gold);font-weight:600;letter-spacing:.01em}
-.val-hint{font-family:var(--sans);font-size:10.5px;color:rgba(255,255,255,.38);font-weight:400;font-style:italic}
-
-/* Custom dropdown ubicación */
-.val-dd{position:relative;width:100%}
-.val-dd-trigger{width:100%;display:flex;align-items:center;gap:12px;padding:13px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-family:var(--sans);font-size:13.5px;cursor:pointer;transition:border-color .25s,background .25s;text-align:left}
-.val-dd-trigger:hover,.val-dd.open .val-dd-trigger{border-color:rgba(201,169,110,.45);background:rgba(201,169,110,.06)}
-.val-dd-label{flex:1;font-weight:500}
-.val-dd-price{font-size:12px;color:var(--gold);font-weight:600;letter-spacing:.01em;white-space:nowrap}
-.val-dd-arrow{width:10px;height:6px;color:var(--gold);transition:transform .3s;flex-shrink:0}
-.val-dd.open .val-dd-arrow{transform:rotate(180deg)}
-.val-dd-menu{position:absolute;top:calc(100% + 6px);left:0;right:0;background:#2a2f3e;border:1px solid rgba(201,169,110,.2);border-radius:8px;padding:6px;box-shadow:0 16px 40px rgba(0,0,0,.5);z-index:6;max-height:280px;overflow-y:auto;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .2s ease,transform .2s ease;scrollbar-width:thin;scrollbar-color:rgba(201,169,110,.4) transparent}
-.val-dd-menu::-webkit-scrollbar{width:5px}
-.val-dd-menu::-webkit-scrollbar-thumb{background:rgba(201,169,110,.4);border-radius:100px}
-.val-dd.open .val-dd-menu{opacity:1;transform:none;pointer-events:auto}
-.val-dd-opt{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;background:transparent;border:none;color:#fff;font-family:var(--sans);font-size:13px;font-weight:400;padding:10px 12px;border-radius:6px;cursor:pointer;text-align:left;transition:background .2s ease}
-.val-dd-opt:hover{background:rgba(201,169,110,.2)}
-.val-dd-opt.selected{background:rgba(201,169,110,.14)}
-.val-dd-opt .val-dd-opt-price{color:var(--gold);font-weight:600;font-size:12px;white-space:nowrap}
-
-/* Ranges */
-.val-range{width:100%;height:4px;cursor:pointer;appearance:none;-webkit-appearance:none;background:linear-gradient(to right,rgba(201,169,110,.25),rgba(201,169,110,.55));border-radius:3px;outline:none;margin-top:6px}
-.val-range::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--gold);cursor:pointer;box-shadow:0 3px 8px rgba(201,169,110,.4);border:2px solid #1a1f2e}
-.val-range::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--gold);cursor:pointer;border:2px solid #1a1f2e;box-shadow:0 3px 8px rgba(201,169,110,.4)}
-
-/* Pills */
-.val-pills{display:flex;gap:6px;flex-wrap:wrap}
-.val-pills-wrap{flex-wrap:wrap}
-.val-pills-compact .val-pill{flex:1;min-width:34px;padding:8px 4px;font-size:12px}
-.val-pill{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:rgba(255,255,255,.7);font-family:var(--sans);font-size:12.5px;font-weight:500;padding:9px 14px;cursor:pointer;transition:all .22s;text-align:center;line-height:1}
-.val-pill:hover{border-color:rgba(201,169,110,.4);color:#fff}
-.val-pill.active{background:var(--gold);border-color:var(--gold);color:#111;font-weight:600}
-
-.val-three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-
-/* Amenidades */
-.val-amen{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.val-check{display:flex;align-items:center;gap:8px;font-family:var(--sans);font-size:12px;color:rgba(255,255,255,.75);padding:9px 11px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;cursor:pointer;transition:all .22s}
-.val-check:hover{border-color:rgba(201,169,110,.3);background:rgba(201,169,110,.04)}
-.val-check input{accent-color:var(--gold);width:14px;height:14px;cursor:pointer;flex-shrink:0;margin:0}
-.val-check-ic{font-size:14px;flex-shrink:0}
-.val-check-val{margin-left:auto;font-size:10.5px;color:var(--gold);font-weight:500}
-
-/* Divider before result */
-.val-divider{height:1px;background:linear-gradient(to right,transparent,rgba(201,169,110,.3),transparent);margin:6px 0 18px}
-
-/* Result block */
-.val-result{background:linear-gradient(135deg,rgba(201,169,110,.12) 0%,rgba(201,169,110,.02) 100%);border:1px solid rgba(201,169,110,.28);border-radius:12px;padding:24px 22px;text-align:center;margin-bottom:22px}
-.val-result-label{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.6);font-weight:600;margin-bottom:10px}
-.val-result-main{font-family:var(--serif);font-size:clamp(32px,5.5vw,48px);font-weight:500;color:var(--gold);line-height:1.05;letter-spacing:-.01em;margin-bottom:10px;font-variant-numeric:tabular-nums}
-.val-result-range{display:block;font-family:var(--sans);font-size:12.5px;color:rgba(255,255,255,.6);font-weight:400;letter-spacing:.01em;margin-bottom:6px}
-.val-result-perm{display:block;font-family:var(--sans);font-size:11.5px;color:rgba(255,255,255,.5);font-weight:400;margin-bottom:16px}
-.val-bar{margin:12px 0 14px}
-.val-bar-track{position:relative;height:6px;background:rgba(255,255,255,.08);border-radius:100px;overflow:visible}
-.val-bar-fill{position:absolute;inset:0;background:linear-gradient(to right,rgba(201,169,110,.2),var(--gold));border-radius:100px;transform-origin:left;transform:scaleX(0);transition:transform .6s cubic-bezier(.25,.46,.45,.94)}
-.val-bar-marker{position:absolute;top:50%;left:0;width:14px;height:14px;background:#fff;border:2px solid var(--gold);border-radius:50%;transform:translate(-50%,-50%);transition:left .6s cubic-bezier(.25,.46,.45,.94);box-shadow:0 2px 8px rgba(201,169,110,.5)}
-.val-bar-labels{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--sans);font-size:10px;color:rgba(255,255,255,.4);letter-spacing:.06em;font-weight:500}
-.val-bar-caption{display:block;margin-top:6px;font-family:var(--sans);font-size:10px;color:rgba(255,255,255,.35);font-style:italic}
-.val-plus{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:12px;color:rgba(255,255,255,.7);background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);border-radius:100px;padding:8px 16px;margin-top:8px}
-.val-plus-ico{color:#22c55e;font-size:14px;font-weight:700}
-.val-plus strong{color:#22c55e;font-weight:700;margin-left:2px}
-
-/* Actions */
-.val-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}
-.val-btn-primary{flex:1;min-width:220px;display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--gold);color:#111;padding:14px 22px;border-radius:100px;font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;text-decoration:none;transition:all .3s;border:none;cursor:pointer}
-.val-btn-primary:hover{background:#e0c08c;transform:translateY(-2px);box-shadow:0 10px 24px rgba(201,169,110,.3)}
-.val-btn-outline{flex:1;min-width:200px;display:inline-flex;align-items:center;justify-content:center;gap:10px;background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.25);border-radius:100px;padding:13px 22px;font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;cursor:pointer;transition:all .3s;text-decoration:none}
-.val-btn-outline:hover{border-color:var(--gold);color:var(--gold)}
-
-.val-legal{font-family:var(--sans);font-size:10px;line-height:1.55;color:rgba(255,255,255,.38);font-weight:300;margin:0;font-style:italic}
-
+/* MODAL: listar mi propiedad (lead form → WhatsApp Federico) */
+.sell-modal{display:none;position:fixed;inset:0;z-index:9500;justify-content:center;align-items:center;padding:20px}
+.sell-modal.active{display:flex}
+.sell-modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);cursor:pointer}
+.sell-modal-content{position:relative;background:#1a1f2e;border:1px solid rgba(201,169,110,.2);border-radius:8px;max-width:600px;width:100%;max-height:90vh;overflow-y:auto;padding:48px 40px;z-index:1;animation:sellModalSlideUp .4s ease;scrollbar-width:thin;scrollbar-color:rgba(201,169,110,.4) transparent}
+.sell-modal-content::-webkit-scrollbar{width:6px}
+.sell-modal-content::-webkit-scrollbar-track{background:transparent}
+.sell-modal-content::-webkit-scrollbar-thumb{background:rgba(201,169,110,.4);border-radius:100px}
+@keyframes sellModalSlideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.sell-modal-close{position:absolute;top:16px;right:20px;background:transparent;border:none;color:var(--gold);font-size:30px;cursor:pointer;transition:transform .3s ease;line-height:1;font-family:var(--sans);padding:6px 10px;z-index:2}
+.sell-modal-close:hover{transform:rotate(90deg)}
+.sell-modal-header{margin-bottom:32px;text-align:center}
+.sell-modal-eyebrow{display:block;color:var(--gold);font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;margin-bottom:16px;font-weight:600}
+.sell-modal-title{font-family:var(--serif);font-size:clamp(28px,4vw,40px);font-weight:400;line-height:1.1;color:#e8e6e1;margin:0 0 12px;letter-spacing:-.012em}
+.sell-modal-title em{color:var(--gold);font-style:italic;font-weight:500}
+.sell-modal-subtitle{font-family:var(--sans);color:#a8a8a8;font-size:14px;line-height:1.55;margin:0;font-weight:300}
+.sell-modal-form{display:flex;flex-direction:column;gap:20px}
+.sell-modal .form-group{display:flex;flex-direction:column}
+.sell-modal .form-group label{font-family:var(--sans);color:#a8a8a8;font-size:10px;letter-spacing:.2em;margin-bottom:8px;text-transform:uppercase;font-weight:500}
+.sell-modal .form-group input,
+.sell-modal .form-group select{background:#232a3d;border:1px solid rgba(201,169,110,.15);border-radius:4px;padding:14px 16px;color:#e8e6e1;font-family:var(--sans);font-size:14px;font-weight:400;outline:none;transition:border-color .3s ease,box-shadow .3s ease,background .3s ease;width:100%;appearance:none;-webkit-appearance:none;-moz-appearance:none}
+.sell-modal .form-group select{cursor:pointer;background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23c9a96e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:44px}
+.sell-modal .form-group input::placeholder{color:rgba(232,230,225,.4)}
+.sell-modal .form-group input:hover,
+.sell-modal .form-group select:hover{border-color:rgba(201,169,110,.4)}
+.sell-modal .form-group input:focus,
+.sell-modal .form-group select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,169,110,.12)}
+.sell-modal .form-group select option{background-color:#2a2f3e;color:#e8e6e1;padding:10px 14px}
+.sell-modal-submit{background:var(--gold);color:#1a1f2e;border:none;border-radius:50px;padding:16px 32px;font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;margin-top:16px;transition:all .3s ease}
+.sell-modal-submit:hover{background:#d4b67e;transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,169,110,.3)}
+.sell-modal-disclaimer{text-align:center;color:#6b7280;font-family:var(--sans);font-size:11px;margin:8px 0 0;line-height:1.5;font-weight:400}
 @media(max-width:640px){
-  .val-modal-dialog{padding:28px 20px 22px;border-radius:14px}
-  .val-three{grid-template-columns:1fr}
-  .val-amen{grid-template-columns:1fr}
-  .val-btn-primary,.val-btn-outline{min-width:100%;flex:1 0 100%}
-  .val-dd-trigger{flex-wrap:wrap}
-  .val-dd-price{width:100%}
+  .sell-modal{padding:16px}
+  .sell-modal-content{padding:32px 22px;border-radius:8px}
+  .sell-modal-title{font-size:26px}
+  .sell-modal-header{margin-bottom:24px}
 }
 
 /* MODAL: búsqueda de renta */
@@ -1181,24 +1117,24 @@ textarea.fi{min-height:120px;resize:vertical;line-height:1.55}
     <h2 class="kpi-title r d1">Resultados que <em>hablan.</em></h2>
     <div class="kpi-grid r d2" id="kpiGrid">
       <div class="kpi">
-        <div class="kpi-num" data-target="10" data-suffix="+">0</div>
+        <div class="kpi-num" data-target="15" data-suffix="+">0</div>
         <span class="kpi-rule" aria-hidden="true"></span>
-        <span class="kpi-label">Años de experiencia</span>
+        <span class="kpi-label">Años en el mercado</span>
       </div>
       <div class="kpi">
-        <div class="kpi-num" data-target="500" data-prefix="$" data-suffix="M+">0</div>
+        <div class="kpi-num" data-target="6000" data-suffix="+">0</div>
         <span class="kpi-rule" aria-hidden="true"></span>
-        <span class="kpi-label">En propiedades vendidas</span>
+        <span class="kpi-label">Propiedades captadas</span>
       </div>
       <div class="kpi">
-        <div class="kpi-num" data-target="98" data-suffix="%">0</div>
+        <div class="kpi-num" data-target="8">0</div>
         <span class="kpi-rule" aria-hidden="true"></span>
-        <span class="kpi-label">Clientes satisfechos</span>
+        <span class="kpi-label">Desarrollos propios</span>
       </div>
       <div class="kpi">
-        <div class="kpi-num" data-target="150" data-suffix="+">0</div>
+        <div class="kpi-num" data-target="200" data-suffix="+">0</div>
         <span class="kpi-rule" aria-hidden="true"></span>
-        <span class="kpi-label">Propiedades cerradas</span>
+        <span class="kpi-label">Familias atendidas</span>
       </div>
     </div>
   </div>
@@ -1299,181 +1235,101 @@ textarea.fi{min-height:120px;resize:vertical;line-height:1.55}
   </div>
 </div>
 
-<!-- MODAL: calculadora de valuación -->
-<div class="val-modal" id="valModal" aria-hidden="true" role="dialog" aria-labelledby="valModalTitle">
-  <div class="val-modal-backdrop" data-val-close></div>
-  <div class="val-modal-dialog" role="document">
-    <button type="button" class="val-modal-x" data-val-close aria-label="Cerrar">×</button>
-    <div class="val-modal-head">
-      <span class="val-eye" id="valModalTitle">Valúa tu propiedad</span>
-      <h3 class="val-title">Calculadora de Valuación <em>Inmobiliaria</em></h3>
-      <p class="val-source">Basada en datos del mercado de San Pedro Garza García Q1 2026 · Fuentes: Inmuebles24, Lamudi, Propiedades.com</p>
-      <span class="val-updated" id="valUpdated">Datos actualizados: Abril 2026</span>
+<!-- MODAL: listar mi propiedad (lead form → WhatsApp Federico) -->
+<div class="sell-modal" id="sellModal" aria-hidden="true" role="dialog" aria-labelledby="sellModalTitle">
+  <div class="sell-modal-overlay" onclick="closeSellModal()"></div>
+  <div class="sell-modal-content" role="document">
+    <button type="button" class="sell-modal-close" onclick="closeSellModal()" aria-label="Cerrar">×</button>
+    <div class="sell-modal-header">
+      <span class="sell-modal-eyebrow">Vender propiedad</span>
+      <h2 class="sell-modal-title" id="sellModalTitle">Listemos tu <em>propiedad.</em></h2>
+      <p class="sell-modal-subtitle">Comparte la información de tu inmueble y nuestro asesor Federico Mecutchen te contactará para iniciar el proceso de venta.</p>
     </div>
-
-    <div class="val-form">
-      <!-- 1. Tipo -->
-      <div class="val-row">
-        <label class="val-label">Tipo de propiedad</label>
-        <div class="val-pills val-pills-wrap" id="valTipo" data-active="casa">
-          <button type="button" class="val-pill active" data-val="casa">Casa</button>
-          <button type="button" class="val-pill" data-val="depto">Departamento</button>
-          <button type="button" class="val-pill" data-val="terreno">Terreno</button>
-          <button type="button" class="val-pill" data-val="penthouse">Penthouse</button>
-          <button type="button" class="val-pill" data-val="local">Local Comercial</button>
-          <button type="button" class="val-pill" data-val="oficina">Oficina</button>
-        </div>
+    <form class="sell-modal-form" id="sellForm" onsubmit="sendSellToWhatsApp(event)" autocomplete="off" data-form-type="other" data-lpignore="true">
+      <div class="form-group">
+        <label for="sellName">Nombre completo *</label>
+        <input type="text" id="sellName" name="name" required placeholder="Tu nombre completo">
       </div>
-
-      <!-- 2. Ubicación (custom dropdown) -->
-      <div class="val-row">
-        <label class="val-label">Ubicación</label>
-        <div class="val-dd" id="valZonaDD" data-value="valle-campestre">
-          <button type="button" class="val-dd-trigger" aria-haspopup="listbox" aria-expanded="false">
-            <span class="val-dd-label">Valle del Campestre</span>
-            <span class="val-dd-price" id="valZonaPrice">$104,500 /m²</span>
-            <svg class="val-dd-arrow" viewBox="0 0 10 6" aria-hidden="true"><path fill="currentColor" d="M0 0l5 6 5-6z"/></svg>
-          </button>
-          <div class="val-dd-menu" role="listbox"></div>
-        </div>
+      <div class="form-group">
+        <label for="sellPhone">Teléfono (WhatsApp) *</label>
+        <input type="tel" id="sellPhone" name="phone" required placeholder="+52 81 1234 5678">
       </div>
-
-      <!-- 3. Superficie total -->
-      <div class="val-row">
-        <div class="val-row-head">
-          <label class="val-label">Superficie total</label>
-          <span class="val-val-disp"><span id="valSupT">200</span> m²</span>
-        </div>
-        <input type="range" id="valSupTRange" min="50" max="2000" step="10" value="200" class="val-range">
+      <div class="form-group">
+        <label for="sellType">Tipo de propiedad *</label>
+        <select id="sellType" name="type" required>
+          <option value="">Selecciona una opción</option>
+          <option value="Casa">Casa</option>
+          <option value="Departamento">Departamento</option>
+          <option value="Penthouse">Penthouse</option>
+          <option value="Terreno">Terreno</option>
+          <option value="Local Comercial">Local Comercial</option>
+          <option value="Oficina">Oficina</option>
+        </select>
       </div>
-
-      <!-- 4. Superficie construida -->
-      <div class="val-row" id="valSupCRow">
-        <div class="val-row-head">
-          <label class="val-label">Superficie construida</label>
-          <span class="val-val-disp"><span id="valSupC">180</span> m²</span>
-        </div>
-        <input type="range" id="valSupCRange" min="50" max="1500" step="10" value="180" class="val-range">
-        <span class="val-hint">(Solo aplica para casa y local)</span>
+      <div class="form-group">
+        <label for="sellZone">Zona / Colonia *</label>
+        <select id="sellZone" name="zone" required>
+          <option value="">Selecciona una zona</option>
+          <option value="Valle Oriente">Valle Oriente</option>
+          <option value="Valle del Campestre">Valle del Campestre</option>
+          <option value="Del Valle">Del Valle</option>
+          <option value="San Agustín">San Agustín</option>
+          <option value="Centrito Valle">Centrito Valle</option>
+          <option value="Lomas del Valle">Lomas del Valle</option>
+          <option value="Chipinque">Chipinque</option>
+          <option value="Carretera Nacional">Carretera Nacional</option>
+          <option value="Colinas de San Jerónimo">Colinas de San Jerónimo</option>
+          <option value="Carrizalejo">Carrizalejo</option>
+          <option value="Bosques del Valle">Bosques del Valle</option>
+          <option value="Cumbres">Cumbres</option>
+          <option value="Otra">Otra (especificar en mensaje)</option>
+        </select>
       </div>
-
-      <!-- 5, 6, 7. Rec / Baños / Estacionamientos -->
-      <div class="val-three">
-        <div class="val-row">
-          <label class="val-label">Recámaras</label>
-          <div class="val-pills val-pills-compact" id="valRec" data-active="3">
-            <button type="button" class="val-pill" data-val="1">1</button>
-            <button type="button" class="val-pill" data-val="2">2</button>
-            <button type="button" class="val-pill active" data-val="3">3</button>
-            <button type="button" class="val-pill" data-val="4">4</button>
-            <button type="button" class="val-pill" data-val="5">5+</button>
-          </div>
-        </div>
-        <div class="val-row">
-          <label class="val-label">Baños</label>
-          <div class="val-pills val-pills-compact" id="valBanos" data-active="2">
-            <button type="button" class="val-pill" data-val="1">1</button>
-            <button type="button" class="val-pill active" data-val="2">2</button>
-            <button type="button" class="val-pill" data-val="3">3</button>
-            <button type="button" class="val-pill" data-val="4">4</button>
-            <button type="button" class="val-pill" data-val="5">5+</button>
-          </div>
-        </div>
-        <div class="val-row">
-          <label class="val-label">Estacionamientos</label>
-          <div class="val-pills val-pills-compact" id="valEst" data-active="2">
-            <button type="button" class="val-pill" data-val="0">0</button>
-            <button type="button" class="val-pill" data-val="1">1</button>
-            <button type="button" class="val-pill active" data-val="2">2</button>
-            <button type="button" class="val-pill" data-val="3">3</button>
-            <button type="button" class="val-pill" data-val="4">4+</button>
-          </div>
-        </div>
+      <div class="form-group">
+        <label for="sellBedrooms">Recámaras</label>
+        <select id="sellBedrooms" name="bedrooms">
+          <option value="N/A">No aplica (terreno/local)</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6+">6 o más</option>
+        </select>
       </div>
-
-      <!-- 8. Antigüedad -->
-      <div class="val-row">
-        <label class="val-label">Antigüedad</label>
-        <div class="val-pills val-pills-wrap" id="valAnt" data-active="3-5">
-          <button type="button" class="val-pill" data-val="preventa">Pre-venta / Nuevo</button>
-          <button type="button" class="val-pill" data-val="1-3">1-3 años</button>
-          <button type="button" class="val-pill active" data-val="3-5">3-5 años</button>
-          <button type="button" class="val-pill" data-val="5-10">5-10 años</button>
-          <button type="button" class="val-pill" data-val="10-15">10-15 años</button>
-          <button type="button" class="val-pill" data-val="15-25">15-25 años</button>
-          <button type="button" class="val-pill" data-val="25+">+25 años</button>
-        </div>
+      <div class="form-group">
+        <label for="sellMeters">Metros cuadrados aproximados *</label>
+        <input type="text" id="sellMeters" name="meters" required placeholder="Ej: 380 m² construcción / 500 m² terreno">
       </div>
-
-      <!-- 9. Condición -->
-      <div class="val-row">
-        <label class="val-label">Condición</label>
-        <div class="val-pills val-pills-wrap" id="valCond" data-active="buena">
-          <button type="button" class="val-pill" data-val="excelente">Excelente / Remodelada</button>
-          <button type="button" class="val-pill active" data-val="muybuena">Muy Buena</button>
-          <button type="button" class="val-pill" data-val="buena">Buena</button>
-          <button type="button" class="val-pill" data-val="regular">Regular / Necesita remodelación</button>
-        </div>
+      <div class="form-group">
+        <label for="sellPrice">Precio esperado (MXN) *</label>
+        <select id="sellPrice" name="price" required>
+          <option value="">Selecciona un rango</option>
+          <option value="Menos de $5M">Menos de $5M</option>
+          <option value="$5M - $10M">$5M - $10M</option>
+          <option value="$10M - $20M">$10M - $20M</option>
+          <option value="$20M - $35M">$20M - $35M</option>
+          <option value="$35M - $50M">$35M - $50M</option>
+          <option value="$50M - $75M">$50M - $75M</option>
+          <option value="$75M - $100M">$75M - $100M</option>
+          <option value="$100M+">$100M+</option>
+          <option value="No estoy seguro">No estoy seguro, necesito asesoría</option>
+        </select>
       </div>
-
-      <!-- 10. Nivel / Piso (solo depto/penthouse/oficina) -->
-      <div class="val-row" id="valNivelRow" style="display:none">
-        <label class="val-label">Nivel / Piso</label>
-        <div class="val-pills val-pills-wrap" id="valNivel" data-active="4-8">
-          <button type="button" class="val-pill" data-val="pb-3">Planta baja a piso 3</button>
-          <button type="button" class="val-pill active" data-val="4-8">Piso 4-8</button>
-          <button type="button" class="val-pill" data-val="9-15">Piso 9-15</button>
-          <button type="button" class="val-pill" data-val="16+">Piso 16+</button>
-        </div>
+      <div class="form-group">
+        <label for="sellUrgency">¿Cuándo necesitas vender?</label>
+        <select id="sellUrgency" name="urgency">
+          <option value="">Selecciona</option>
+          <option value="Urgente (lo antes posible)">Urgente (lo antes posible)</option>
+          <option value="1-3 meses">1-3 meses</option>
+          <option value="3-6 meses">3-6 meses</option>
+          <option value="6-12 meses">6-12 meses</option>
+          <option value="Sin prisa, explorando opciones">Sin prisa, explorando opciones</option>
+        </select>
       </div>
-
-      <!-- 11. Amenidades -->
-      <div class="val-row">
-        <label class="val-label">Amenidades</label>
-        <div class="val-amen">
-          <label class="val-check"><input type="checkbox" data-amen="400000"> <span class="val-check-ic">🏊</span> Alberca <span class="val-check-val">+$400,000</span></label>
-          <label class="val-check"><input type="checkbox" data-amen="300000"> <span class="val-check-ic">🌿</span> Roof garden / Terraza <span class="val-check-val">+$300,000</span></label>
-          <label class="val-check"><input type="checkbox" data-amen="200000"> <span class="val-check-ic">🏋️</span> Gimnasio <span class="val-check-val">+$200,000</span></label>
-          <label class="val-check"><input type="checkbox" data-amen="350000"> <span class="val-check-ic">🛡️</span> Seguridad 24/7 <span class="val-check-val">+$350,000</span></label>
-          <label class="val-check"><input type="checkbox" data-amen="250000"> <span class="val-check-ic">🛗</span> Elevador <span class="val-check-val">+$250,000</span></label>
-          <label class="val-check"><input type="checkbox" data-amen="500000"> <span class="val-check-ic">🏙️</span> Vista panorámica <span class="val-check-val">+$500,000</span></label>
-          <label class="val-check"><input type="checkbox" data-amen="350000"> <span class="val-check-ic">🌳</span> Jardín privado <span class="val-check-val">+$350,000</span></label>
-          <label class="val-check"><input type="checkbox" data-amen="200000"> <span class="val-check-ic">🛏️</span> Cuarto de servicio <span class="val-check-val">+$200,000</span></label>
-        </div>
-      </div>
-    </div>
-
-    <div class="val-divider"></div>
-
-    <div class="val-result">
-      <span class="val-result-label">Valor estimado de tu propiedad</span>
-      <div class="val-result-main" id="valResult">$0 MXN</div>
-      <span class="val-result-range" id="valRange">Rango de mercado: $0 — $0 MXN</span>
-      <span class="val-result-perm" id="valPerM">Equivalente a $0 MXN/m²</span>
-      <div class="val-bar">
-        <div class="val-bar-track">
-          <div class="val-bar-fill" id="valBarFill"></div>
-          <div class="val-bar-marker" id="valBarMarker"></div>
-        </div>
-        <div class="val-bar-labels">
-          <span id="valBarMin">$0</span>
-          <span id="valBarMax">$0</span>
-        </div>
-        <span class="val-bar-caption">Posición dentro del rango de mercado de la zona seleccionada</span>
-      </div>
-      <div class="val-plus"><span class="val-plus-ico">↗</span> Plusvalía anual estimada: <strong>+9%</strong></div>
-    </div>
-
-    <div class="val-actions">
-      <a href="#" class="val-btn-primary" id="valCta" target="_blank" rel="noopener">
-        Solicitar valuación oficial <span aria-hidden="true">→</span>
-      </a>
-      <a href="#" class="val-btn-outline" id="valCtaAdv" target="_blank" rel="noopener">
-        Contactar asesor de inversión <span aria-hidden="true">→</span>
-      </a>
-    </div>
-
-    <p class="val-legal">* Valuación aproximada con fines informativos, basada en datos públicos del mercado inmobiliario de San Pedro Garza García (Q1 2026). Los precios por m² provienen de Inmuebles24, Lamudi, Propiedades.com y reportes de mercado de la zona. Para una valuación oficial, se requiere un avalúo comercial por perito certificado. Montana Realty Co. no se hace responsable por decisiones basadas en esta estimación.</p>
+      <button type="submit" class="sell-modal-submit">Enviar a asesor →</button>
+      <p class="sell-modal-disclaimer">Al enviar, se abrirá WhatsApp con tu mensaje listo para enviar a Federico Mecutchen, Director de Ventas.</p>
+    </form>
   </div>
 </div>
 
@@ -2109,39 +1965,63 @@ document.querySelectorAll('.r').forEach(el=>{if(!el.classList.contains('v'))obs.
   });
 })();
 
-// ── VALUACIÓN: CALCULADORA PROFESIONAL ──
-// ACTUALIZAR ESTOS DATOS CADA TRIMESTRE - Fuentes: Inmuebles24, Lamudi, Propiedades.com
-const MARKET_DATA={
-  quarter:'Q1 2026',
-  updated:'Abril 2026',
-  annualAppreciation:9, // plusvalía anual estimada %
-  zones:[
-    {id:'valle-campestre',name:'Valle del Campestre',price:104500},
-    {id:'valle-oriente',name:'Valle Oriente',price:98900},
-    {id:'santa-engracia',name:'Santa Engracia',price:98700},
-    {id:'del-valle',name:'Del Valle',price:94800},
-    {id:'san-agustin',name:'San Agustín',price:87000},
-    {id:'centrito-valle',name:'Centrito Valle',price:82000},
-    {id:'lomas-valle',name:'Lomas del Valle',price:75000},
-    {id:'chipinque',name:'Chipinque',price:72000},
-    {id:'fuentes-valle',name:'Fuentes del Valle',price:68000},
-    {id:'rincon-valle',name:'Rincón del Valle',price:58100},
-    {id:'colinas',name:'Colinas de San Jerónimo',price:45000},
-    {id:'carr-nacional',name:'Carretera Nacional',price:35000},
-    {id:'cumbres2',name:'Cumbres 2do Sector',price:32000}
-  ],
-  tipoMult:{casa:1.0,depto:0.88,terreno:0.55,penthouse:1.25,local:1.10,oficina:1.15},
-  antMult:{'preventa':1.15,'1-3':1.05,'3-5':1.0,'5-10':0.92,'10-15':0.85,'15-25':0.78,'25+':0.68},
-  condMult:{excelente:1.10,muybuena:1.0,buena:0.92,regular:0.80},
-  nivelMult:{'pb-3':0.95,'4-8':1.0,'9-15':1.05,'16+':1.12},
-  parkingValue:200000, // MXN por estacionamiento
-  // Tipos que usan "Nivel / Piso"
-  tiposConNivel:['depto','penthouse','oficina'],
-  // Tipos que usan "Superficie construida" separada de terreno
-  tiposConConstruida:['casa','local']
-};
+// ── SELL MODAL: listar mi propiedad (lead form → WhatsApp Federico) ──
+function openSellModal(){
+  const m=document.getElementById('sellModal');
+  if(!m) return;
+  m.classList.add('active');
+  m.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+}
+function closeSellModal(){
+  const m=document.getElementById('sellModal');
+  if(!m) return;
+  m.classList.remove('active');
+  m.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+function sendSellToWhatsApp(event){
+  event.preventDefault();
+  const name=document.getElementById('sellName').value.trim();
+  const phone=document.getElementById('sellPhone').value.trim();
+  const type=document.getElementById('sellType').value;
+  const zone=document.getElementById('sellZone').value;
+  const bedrooms=document.getElementById('sellBedrooms').value;
+  const meters=document.getElementById('sellMeters').value.trim();
+  const price=document.getElementById('sellPrice').value;
+  const urgency=document.getElementById('sellUrgency').value;
 
-let openValModal;
+  let message='Hola Federico, vi en el sitio web de Montana Realty Co. y quiero LISTAR MI PROPIEDAD para venta.\n\n';
+  message+='📋 INFORMACIÓN DE CONTACTO:\n';
+  message+='• Nombre: '+name+'\n';
+  message+='• Teléfono: '+phone+'\n\n';
+  message+='🏠 INFORMACIÓN DE LA PROPIEDAD:\n';
+  message+='• Tipo: '+type+'\n';
+  message+='• Zona: '+zone+'\n';
+  if(bedrooms&&bedrooms!=='N/A'){
+    message+='• Recámaras: '+bedrooms+'\n';
+  }
+  message+='• m² aproximados: '+meters+'\n';
+  message+='• Precio esperado: '+price+'\n\n';
+  if(urgency){
+    message+='⏰ URGENCIA:\n';
+    message+='• Quiero vender en: '+urgency+'\n\n';
+  }
+  message+='¿Cuándo podemos agendar una llamada?';
+
+  const url='https://wa.me/528123532365?text='+encodeURIComponent(message);
+  window.open(url,'_blank');
+  setTimeout(function(){
+    closeSellModal();
+    document.getElementById('sellForm').reset();
+  },500);
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    const m=document.getElementById('sellModal');
+    if(m&&m.classList.contains('active'))closeSellModal();
+  }
+});
 (function(){
   const modal=document.getElementById('valModal');
   if(!modal) return;
@@ -2525,11 +2405,11 @@ let openValModal;
       const ease=1-Math.pow(1-p,3); // ease-out cubic
       items.forEach(it=>{
         const val=Math.round(it.target*ease);
-        // Only attach suffix/prefix when animation completes (per spec)
+        const fmt=n=>n.toLocaleString('es-MX');
         if(p>=1){
-          it.el.textContent=it.prefix+it.target+it.suffix;
+          it.el.textContent=it.prefix+fmt(it.target)+it.suffix;
         } else {
-          it.el.textContent=it.prefix+val;
+          it.el.textContent=it.prefix+fmt(val);
         }
       });
       if(p<1)requestAnimationFrame(frame);
