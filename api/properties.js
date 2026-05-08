@@ -30,6 +30,11 @@ export default async function handler(req, res) {
       limit: Math.min(Number(limit), 50).toString()
     });
 
+    // Solo activas/publicadas (≈159 de 682). Permitir opt-out con ?include_disabled=1
+    if (!req.query.include_disabled) {
+      params.append('search[search_disabled]', 'false');
+    }
+
     if (search) params.append('search[query]', search);
     if (min_price) params.append('search[min_price]', String(min_price));
     if (max_price) params.append('search[max_price]', String(max_price));
