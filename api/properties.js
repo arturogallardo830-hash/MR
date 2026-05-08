@@ -62,7 +62,34 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    // (Filtro public_url removido temporalmente — investigar filtro correcto)
+    // Enriquecimiento de coordenadas: el listado de EasyBroker NO incluye
+    // latitude/longitude. Si el cliente lo pide explícitamente (?include_location=1)
+    // hacemos fetch en paralelo del detalle de cada propiedad para extraer coords.
+    // Costoso (N+1 calls), pero el cache CDN de 5 min absorbe la mayoría de hits.
+    if (req.query.include_location === '1' && data.content && data.content.length > 0) {
+      const enriched = await Promise.all(
+        data.content.map(async (property) => {
+          try {
+            const dr = await fetch(
+              `https://api.easybroker.com/v1/properties/${encodeURIComponent(property.public_id)}`,
+              { headers: { 'X-Authorization': apiKey, 'Accept': 'application/json' } }
+            );
+            if (!dr.ok) return property;
+            const detail = await dr.json();
+            const lat = (detail.location && detail.location.latitude) ?? detail.latitude;
+            const lng = (detail.location && detail.location.longitude) ?? detail.longitude;
+            if (lat == null || lng == null) return property;
+            return { ...property, latitude: lat, longitude: lng };
+          } catch (e) {
+            console.error('detail enrich failed for', property.public_id, e.message);
+            return property;
+          }
+        })
+      );
+      const withCoords = enriched.filter(p => p.latitude != null && p.longitude != null).length;
+      console.log(`Enriched ${withCoords}/${enriched.length} with coords`);
+      data.content = enriched;
+    }
 
     // Cache de 5 minutos en CDN de Vercel
     res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate');

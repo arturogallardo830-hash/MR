@@ -692,11 +692,14 @@ function initPropertiesMap(){
 }
 
 function getCoords(p){
-  const lat=p.latitude||(p.location&&p.location.latitude);
-  const lng=p.longitude||(p.location&&p.location.longitude);
+  const loc=p.location&&typeof p.location==='object'?p.location:null;
+  const lat=p.latitude??(loc&&(loc.latitude??loc.lat));
+  const lng=p.longitude??(loc&&(loc.longitude??loc.lng));
   const fLat=parseFloat(lat),fLng=parseFloat(lng);
   if(!isFinite(fLat)||!isFinite(fLng)) return null;
   if(fLat===0&&fLng===0) return null;
+  // Rango razonable para México (incluye un margen)
+  if(fLat<14||fLat>33||fLng<-118||fLng>-86) return null;
   return [fLat,fLng];
 }
 
@@ -741,20 +744,25 @@ function cleanTitle(t){
 async function loadMapMarkers(){
   if(!mapInitialized||!markersCluster) return;
   const reqId=++mapReqId;
+  console.log('🗺️ loadMapMarkers: start');
   markersCluster.clearLayers();
   // Reuse current filter params, but no pagination — fetch all matching pages.
+  // include_location=1 le pide al backend enriquecer con coords (más lento la primera vez,
+  // luego cache CDN 5 min).
   const baseParams=buildApiParams();
   baseParams.set('limit','50');
+  baseParams.set('include_location','1');
   const minRec=parseInt(document.getElementById('recFilter').value)||0;
   const collected=[];
   const maxPages=8; // safety: 8 * 50 = 400 max
   for(let pg=1;pg<=maxPages;pg++){
     if(reqId!==mapReqId) return; // stale
     baseParams.set('page',String(pg));
+    console.log(`📥 page ${pg}…`);
     let r;
     try{r=await fetch('/api/properties?'+baseParams.toString());}
     catch(e){console.error('map fetch error',e);break;}
-    if(!r.ok) break;
+    if(!r.ok){console.error('map api status',r.status);break;}
     const d=await r.json();
     const list=d.content||[];
     if(!list.length) break;
@@ -763,13 +771,18 @@ async function loadMapMarkers(){
     if(!next) break;
   }
   if(reqId!==mapReqId) return;
+  if(collected[0]){
+    console.log('🔍 sample:',{id:collected[0].public_id,latitude:collected[0].latitude,longitude:collected[0].longitude,locationType:typeof collected[0].location});
+  }
   const filtered=minRec?collected.filter(p=>(parseInt(p.bedrooms)||0)>=minRec):collected;
+  let withCoords=0,withoutCoords=0;
   const markers=[];
   filtered.forEach(p=>{
     const m=createPropertyMarker(p);
-    if(m){markersCluster.addLayer(m);markers.push(m);}
+    if(m){markersCluster.addLayer(m);markers.push(m);withCoords++;}
+    else{withoutCoords++;}
   });
-  console.log(`Map: ${markers.length} markers from ${filtered.length} properties`);
+  console.log(`✅ ${withCoords} pins / ❌ ${withoutCoords} sin coords / total ${filtered.length}`);
   if(markers.length>0){
     const group=L.featureGroup(markers);
     window.propMap.fitBounds(group.getBounds(),{padding:[40,40],maxZoom:14});
