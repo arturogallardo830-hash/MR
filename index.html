@@ -262,6 +262,12 @@ em{font-style:italic}
 /* TOP PROPIEDADES */
 .props-grid-top{grid-template-columns:repeat(2,1fr)}
 .pcard-flag.pcard-top{background:var(--gold);color:#111;box-shadow:0 3px 10px rgba(201,169,110,.35)}
+.pcard-flag.pcard-sale{background:#0d0d0d;color:#fff;box-shadow:0 3px 10px rgba(0,0,0,.3)}
+.pcard-flag.pcard-rent{background:#1f3a8a;color:#fff;box-shadow:0 3px 10px rgba(31,58,138,.35)}
+.pcard-state{grid-column:1/-1;text-align:center;padding:48px 20px;font-family:var(--sans);font-size:13px;color:rgba(255,255,255,.55);font-weight:300;letter-spacing:.04em}
+.pcard-state.pcard-loading{opacity:.7;animation:pcardPulse 1.6s ease-in-out infinite}
+@keyframes pcardPulse{0%,100%{opacity:.4}50%{opacity:.85}}
+.pcard-state.pcard-error{color:rgba(255,180,180,.7)}
 
 /* PROPIEDADES CARD GRID (nuevas + portafolio) */
 .props-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1400px;margin:0 auto}
@@ -1034,137 +1040,20 @@ textarea.fi{min-height:70px;max-height:110px;resize:vertical;line-height:1.5}
   <!-- PANEL: Top Propiedades -->
   <div class="props-panel active" id="tab-top" role="tabpanel" aria-labelledby="tab-top-btn">
     <p class="props-sub">Selección destacada de las propiedades más exclusivas de nuestro portafolio.</p>
-    <div class="props-grid props-grid-top">
-      <a href="propiedades.html?destacada=residencia-sierra-madre" class="pcard">
-        <div class="pcard-img">
-          <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200&q=85" alt="Residencia Sierra Madre">
-          <span class="pcard-flag pcard-top">Top</span>
-        </div>
-        <div class="pcard-body">
-          <h3 class="pcard-name">Residencia Sierra Madre</h3>
-          <span class="pcard-zone">Valle Oriente</span>
-          <span class="pcard-price">$24,500,000 <span class="pcard-curr">MXN</span></span>
-          <div class="pcard-specs"><span>5 rec</span><span>·</span><span>6 baños</span><span>·</span><span>780 m²</span></div>
-        </div>
-      </a>
-      <a href="propiedades.html?destacada=penthouse-cumbre" class="pcard">
-        <div class="pcard-img">
-          <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=85" alt="Penthouse Cumbre">
-          <span class="pcard-flag pcard-top">Top</span>
-        </div>
-        <div class="pcard-body">
-          <h3 class="pcard-name">Penthouse Cumbre</h3>
-          <span class="pcard-zone">San Agustín</span>
-          <span class="pcard-price">$18,900,000 <span class="pcard-curr">MXN</span></span>
-          <div class="pcard-specs"><span>4 rec</span><span>·</span><span>5 baños</span><span>·</span><span>520 m²</span></div>
-        </div>
-      </a>
-    </div>
+    <div class="props-grid props-grid-top" id="topPropertiesGrid"></div>
   </div>
 
   <!-- PANEL: Nuevas -->
   <div class="props-panel" id="tab-nuevas" role="tabpanel" aria-labelledby="tab-nuevas-btn" hidden>
     <p class="props-sub">Las últimas incorporaciones a nuestro portafolio.</p>
-    <div class="props-grid">
-      <a href="propiedades.html?propiedad=villa-cascada&zona=carretera-nacional&tipo=casa" class="pcard">
-        <div class="pcard-img">
-          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=85" alt="Villa Cascada">
-          <span class="pcard-flag pcard-new">Nuevo</span>
-        </div>
-        <div class="pcard-body">
-          <h3 class="pcard-name">Villa Cascada</h3>
-          <span class="pcard-zone">Carretera Nacional</span>
-          <span class="pcard-price">$15,800,000 <span class="pcard-curr">MXN</span></span>
-          <div class="pcard-specs"><span>4 rec</span><span>·</span><span>5 baños</span><span>·</span><span>720 m²</span></div>
-        </div>
-      </a>
-      <a href="propiedades.html?propiedad=departamento-lux&zona=valle-oriente&tipo=departamento" class="pcard">
-        <div class="pcard-img">
-          <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&q=85" alt="Departamento Lux">
-          <span class="pcard-flag pcard-new">Nuevo</span>
-        </div>
-        <div class="pcard-body">
-          <h3 class="pcard-name">Departamento Lux</h3>
-          <span class="pcard-zone">Valle Oriente</span>
-          <span class="pcard-price">$4,500,000 <span class="pcard-curr">MXN</span></span>
-          <div class="pcard-specs"><span>2 rec</span><span>·</span><span>2 baños</span><span>·</span><span>140 m²</span></div>
-        </div>
-      </a>
-      <a href="propiedades.html?propiedad=casa-bosque-real&zona=lomas-del-valle&tipo=casa" class="pcard">
-        <div class="pcard-img">
-          <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=85" alt="Casa Bosque Real">
-          <span class="pcard-flag pcard-new">Nuevo</span>
-        </div>
-        <div class="pcard-body">
-          <h3 class="pcard-name">Casa Bosque Real</h3>
-          <span class="pcard-zone">Lomas del Valle</span>
-          <span class="pcard-price">$9,200,000 <span class="pcard-curr">MXN</span></span>
-          <div class="pcard-specs"><span>3 rec</span><span>·</span><span>4 baños</span><span>·</span><span>380 m²</span></div>
-        </div>
-      </a>
-    </div>
+    <div class="props-grid" id="newPropertiesGrid"></div>
   </div>
 
   <!-- PANEL: Todas -->
   <div class="props-panel" id="tab-todas" role="tabpanel" aria-labelledby="tab-todas-btn" hidden>
-    <div class="props-grid">
-      <a href="propiedades.html" class="pcard">
-        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200&q=85" alt="Casa Montaña"></div>
-        <div class="pcard-body">
-          <h3 class="pcard-name">Casa Montaña</h3>
-          <span class="pcard-zone">Valle Oriente</span>
-          <span class="pcard-price">$12,500,000 <span class="pcard-curr">MXN</span></span>
-          <div class="pcard-specs"><span>5 rec</span><span>·</span><span>6 baños</span><span>·</span><span>620 m²</span></div>
-        </div>
-      </a>
-      <a href="propiedades.html" class="pcard">
-        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=85" alt="Sky Residence"></div>
-        <div class="pcard-body">
-          <h3 class="pcard-name">Sky Residence</h3>
-          <span class="pcard-zone">Carretera Nacional</span>
-          <span class="pcard-price">$6,800,000 <span class="pcard-curr">MXN</span></span>
-          <div class="pcard-specs"><span>4 rec</span><span>·</span><span>4 baños</span><span>·</span><span>320 m²</span></div>
-        </div>
-      </a>
-      <a href="propiedades.html" class="pcard">
-        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=85" alt="Villa Serena"></div>
-        <div class="pcard-body">
-          <h3 class="pcard-name">Villa Serena</h3>
-          <span class="pcard-zone">San Agustín</span>
-          <span class="pcard-price">$18,200,000 <span class="pcard-curr">MXN</span></span>
-          <div class="pcard-specs"><span>6 rec</span><span>·</span><span>7 baños</span><span>·</span><span>850 m²</span></div>
-        </div>
-      </a>
-      <a href="propiedades.html" class="pcard">
-        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1200&q=85" alt="Residencia Altos"></div>
-        <div class="pcard-body">
-          <h3 class="pcard-name">Residencia Altos</h3>
-          <span class="pcard-zone">Colinas de San Jerónimo</span>
-          <span class="pcard-price">$4,600,000 <span class="pcard-curr">MXN</span></span>
-          <div class="pcard-specs"><span>4 rec</span><span>·</span><span>4 baños</span><span>·</span><span>380 m²</span></div>
-        </div>
-      </a>
-      <a href="propiedades.html" class="pcard">
-        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=85" alt="Casa Jardín"></div>
-        <div class="pcard-body">
-          <h3 class="pcard-name">Casa Jardín</h3>
-          <span class="pcard-zone">Del Valle</span>
-          <span class="pcard-price">$8,900,000 <span class="pcard-curr">MXN</span></span>
-          <div class="pcard-specs"><span>4 rec</span><span>·</span><span>4 baños</span><span>·</span><span>420 m²</span></div>
-        </div>
-      </a>
-      <a href="propiedades.html" class="pcard">
-        <div class="pcard-img"><img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=1200&q=85" alt="Terreno Sierra"></div>
-        <div class="pcard-body">
-          <h3 class="pcard-name">Terreno Sierra</h3>
-          <span class="pcard-zone">San Jerónimo</span>
-          <span class="pcard-price">$3,200,000 <span class="pcard-curr">MXN</span></span>
-          <div class="pcard-specs"><span>Terreno</span><span>·</span><span>1,200 m²</span></div>
-        </div>
-      </a>
-    </div>
+    <div class="props-grid" id="allPropertiesGrid"></div>
     <div class="props-cta-wrap">
-      <a href="propiedades.html" class="props-cta-btn">Ver todas <span aria-hidden="true">→</span></a>
+      <a href="propiedades.html" class="props-cta-btn">Ver portafolio completo <span aria-hidden="true">→</span></a>
     </div>
   </div>
 </section>
@@ -1894,11 +1783,132 @@ document.querySelectorAll('.r').forEach(el=>{if(!el.classList.contains('v'))obs.
   update();
 })();
 
-// ── PROPS TABS ──
+// ── PROPS TABS + LIVE DATA (EasyBroker via /api/properties) ──
 (function(){
   const tabs=document.querySelectorAll('.props-tab');
   const panels=document.querySelectorAll('.props-panel');
   if(!tabs.length||!panels.length) return;
+
+  const loaded={top:false,nuevas:false,todas:false};
+
+  function escapeHtml(s){
+    return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function renderCard(p, flag){
+    const op=p.operations&&p.operations[0]||{};
+    const opType=op.type==='sale'?'Venta':(op.type==='rental'?'Renta':'');
+    const price=op.formatted_amount||'Consultar precio';
+    const currency=op.currency||'MXN';
+    // Strip currency suffix if duplicated and split currency for two-tone styling
+    const priceMatch=String(price).match(/^(\$?[\d.,]+)\s*(MXN|USD)?\s*(.*)$/i);
+    const priceMain=priceMatch?priceMatch[1]:price;
+    const priceCurr=priceMatch&&priceMatch[2]?priceMatch[2]:currency;
+    const locParts=(p.location||'').split(',');
+    const zone=(locParts[0]||'').trim()||'Ubicación reservada';
+    const cleanTitle=(p.title||'Propiedad').replace(/\$[\d,.]+(\s*M\.?N?\.?)?/gi,'').trim()||'Propiedad';
+    const specs=[];
+    if(p.bedrooms) specs.push(`${p.bedrooms} rec`);
+    if(p.bathrooms) specs.push(`${p.bathrooms} baños`);
+    if(p.construction_size) specs.push(`${p.construction_size} m²`);
+    else if(p.lot_size) specs.push(`${p.lot_size} m² terreno`);
+    const flagHtml=flag?`<span class="pcard-flag pcard-${flag.cls}">${flag.label}</span>`:(opType?`<span class="pcard-flag pcard-${op.type==='rental'?'rent':'sale'}">${opType}</span>`:'');
+    const img=p.title_image_full||p.title_image_thumb||'';
+    return `
+      <a href="propiedades.html?id=${encodeURIComponent(p.public_id||'')}" class="pcard">
+        <div class="pcard-img">
+          <img src="${escapeHtml(img)}" alt="${escapeHtml(cleanTitle)}" loading="lazy">
+          ${flagHtml}
+        </div>
+        <div class="pcard-body">
+          <span class="pcard-zone">${escapeHtml(zone)}</span>
+          <h3 class="pcard-name">${escapeHtml(cleanTitle)}</h3>
+          <span class="pcard-price">${escapeHtml(priceMain)} <span class="pcard-curr">${escapeHtml(priceCurr)}</span></span>
+          ${specs.length?`<div class="pcard-specs">${specs.map((s,i)=>(i>0?'<span>·</span>':'')+`<span>${escapeHtml(s)}</span>`).join('')}</div>`:''}
+        </div>
+      </a>`;
+  }
+
+  function setState(container,html){
+    if(container) container.innerHTML=html;
+  }
+  function loadingHtml(){return '<div class="pcard-state pcard-loading">Cargando propiedades</div>';}
+  function emptyHtml(msg){return `<div class="pcard-state pcard-empty">${escapeHtml(msg)}</div>`;}
+  function errorHtml(){return '<div class="pcard-state pcard-error">No se pudieron cargar las propiedades. Intenta de nuevo más tarde.</div>';}
+
+  async function fetchProps(qs){
+    const r=await fetch(`/api/properties?${qs}`);
+    if(!r.ok) throw new Error('API '+r.status);
+    return r.json();
+  }
+
+  async function loadTop(){
+    const c=document.getElementById('topPropertiesGrid');
+    if(!c) return;
+    setState(c,loadingHtml());
+    try{
+      const d=await fetchProps('location=San Pedro Garza Garc%C3%ADa&min_price=15000000&limit=50');
+      const allowed=['Casa','Penthouse','Departamento','Casas en condominio','Casa en condominio'];
+      const list=(d.content||[]).filter(p=>p.title_image_full && allowed.includes(p.property_type));
+      const sorted=list.sort((a,b)=>new Date(b.updated_at||0)-new Date(a.updated_at||0)).slice(0,10);
+      if(!sorted.length) return setState(c,emptyHtml('No hay propiedades destacadas en este momento.'));
+      setState(c,sorted.map(p=>renderCard(p,{cls:'top',label:'Top'})).join(''));
+    }catch(e){console.error(e);setState(c,errorHtml());}
+  }
+
+  async function loadNuevas(){
+    const c=document.getElementById('newPropertiesGrid');
+    if(!c) return;
+    setState(c,loadingHtml());
+    try{
+      const d=await fetchProps('limit=50');
+      const all=(d.content||[]).filter(p=>p.updated_at&&p.title_image_full);
+      const now=new Date();
+      const month=now.getMonth(),year=now.getFullYear();
+      let list=all.filter(p=>{const dt=new Date(p.updated_at);return dt.getMonth()===month&&dt.getFullYear()===year;});
+      if(list.length<10){
+        const cutoff=new Date(now.getTime()-30*24*60*60*1000);
+        list=all.filter(p=>new Date(p.updated_at)>=cutoff);
+      }
+      list=list.sort((a,b)=>new Date(b.updated_at)-new Date(a.updated_at)).slice(0,10);
+      if(!list.length) return setState(c,emptyHtml('No hay propiedades nuevas en este momento.'));
+      setState(c,list.map(p=>renderCard(p,{cls:'new',label:'Nuevo'})).join(''));
+    }catch(e){console.error(e);setState(c,errorHtml());}
+  }
+
+  async function loadTodas(){
+    const c=document.getElementById('allPropertiesGrid');
+    if(!c) return;
+    setState(c,loadingHtml());
+    try{
+      const d=await fetchProps('limit=50');
+      const withPhoto=(d.content||[]).filter(p=>p.title_image_full);
+      const seenTypes=new Set(),seenZones=new Set(),variety=[];
+      for(const p of withPhoto){
+        if(variety.length>=10) break;
+        const z=(p.location||'').split(',')[1]?.trim()||'';
+        const unique=!seenTypes.has(p.property_type)||!seenZones.has(z);
+        if(variety.length<5||unique){
+          variety.push(p);seenTypes.add(p.property_type);seenZones.add(z);
+        }
+      }
+      for(const p of withPhoto){
+        if(variety.length>=10) break;
+        if(!variety.includes(p)) variety.push(p);
+      }
+      if(!variety.length) return setState(c,emptyHtml('No hay propiedades disponibles.'));
+      setState(c,variety.slice(0,10).map(p=>renderCard(p,null)).join(''));
+    }catch(e){console.error(e);setState(c,errorHtml());}
+  }
+
+  function loadFor(id){
+    if(loaded[id]) return;
+    loaded[id]=true;
+    if(id==='top') loadTop();
+    else if(id==='nuevas') loadNuevas();
+    else if(id==='todas') loadTodas();
+  }
+
   tabs.forEach(tab=>{
     tab.addEventListener('click',()=>{
       const id=tab.dataset.tab;
@@ -1913,8 +1923,13 @@ document.querySelectorAll('.r').forEach(el=>{if(!el.classList.contains('v'))obs.
         if(on) p.removeAttribute('hidden');
         else p.setAttribute('hidden','');
       });
+      loadFor(id);
     });
   });
+
+  // Kick off the initially-active tab
+  const activeTab=document.querySelector('.props-tab.active');
+  if(activeTab) loadFor(activeTab.dataset.tab);
 })();
 
 // ── ZONE CUSTOM DROPDOWN ──

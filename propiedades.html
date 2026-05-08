@@ -191,6 +191,31 @@ body{font-family:var(--sans);background:#fff;color:#111;overflow-x:hidden}
   color:var(--red);font-weight:600;
 }
 
+/* ── STATES ── */
+.prop-state{
+  grid-column:1/-1;text-align:center;padding:60px 20px;
+  font-family:var(--sans);font-size:13px;color:#888;font-weight:400;
+}
+.prop-state.loading{animation:propPulse 1.6s ease-in-out infinite}
+@keyframes propPulse{0%,100%{opacity:.5}50%{opacity:.95}}
+.prop-state.error{color:#b91c1c}
+.prop-card.highlight{box-shadow:0 0 0 2px var(--gold),0 12px 36px rgba(201,169,110,.25)}
+
+/* ── PAGINATION ── */
+.prop-pagination{
+  display:flex;justify-content:center;gap:6px;flex-wrap:wrap;
+  padding:24px 16px 40px;border-top:1px solid #eee;background:#fff;
+}
+.page-btn{
+  min-width:36px;padding:8px 12px;background:#fff;border:1px solid #e5e5e5;
+  color:#444;font-family:var(--sans);font-size:12px;font-weight:500;
+  border-radius:6px;cursor:pointer;transition:all .25s;
+}
+.page-btn:hover{border-color:#c9a96e;color:#111}
+.page-btn.active{background:#111;color:#fff;border-color:#111;font-weight:600}
+.page-btn:disabled{opacity:.4;cursor:not-allowed}
+.page-info{display:flex;align-items:center;padding:0 12px;font-size:12px;color:#888;font-family:var(--sans)}
+
 /* ── FOOTER NOTE ── */
 .footer-note{
   text-align:center;padding:40px 24px;
@@ -367,159 +392,9 @@ body{font-family:var(--sans);background:#fff;color:#111;overflow-x:hidden}
       </div>
     </div>
 
-    <div class="prop-grid" id="propGrid">
+    <div class="prop-grid" id="propGrid"></div>
 
-      <a class="prop-card" href="#"
-        data-zona="Valle Oriente" data-tipo="En Venta" data-precio="12500000"
-        data-inmueble="Casa" data-rec="5" data-fecha="2024-01-06">
-        <div class="prop-img">
-          <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=700&q=80" alt="Casa Montaña del Valle" loading="lazy">
-          <span class="prop-badge">En Venta</span>
-        </div>
-        <div class="prop-body">
-          <div class="prop-price">$12,500,000 <span class="prop-price-note">MXN</span></div>
-          <div class="prop-specs"><strong>Casa</strong> · En Venta · 5 rec · 6 baños · 620 m²</div>
-          <div class="prop-addr">Valle Oriente, San Pedro Garza García</div>
-          <div class="prop-footer">
-            <span class="prop-tag">Destacada</span>
-            <div class="prop-actions">
-              <button class="prop-btn" title="Agendar visita">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              </button>
-              <button class="prop-btn" title="Compartir">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </a>
-
-      <a class="prop-card" href="#"
-        data-zona="Del Valle" data-tipo="En Venta" data-precio="8900000"
-        data-inmueble="Penthouse" data-rec="3" data-fecha="2024-01-05">
-        <div class="prop-img">
-          <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=700&q=80" alt="Penthouse Vistas" loading="lazy">
-          <span class="prop-badge">En Venta</span>
-        </div>
-        <div class="prop-body">
-          <div class="prop-price">$8,900,000 <span class="prop-price-note">MXN</span></div>
-          <div class="prop-specs"><strong>Penthouse</strong> · En Venta · 3 rec · 3 baños · 280 m²</div>
-          <div class="prop-addr">Del Valle, San Pedro Garza García</div>
-          <div class="prop-footer">
-            <span class="prop-tag">Nuevo</span>
-            <div class="prop-actions">
-              <button class="prop-btn" title="Agendar visita">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              </button>
-              <button class="prop-btn" title="Compartir">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </a>
-
-      <a class="prop-card" href="#"
-        data-zona="San Agustín" data-tipo="En Venta" data-precio="18200000"
-        data-inmueble="Casa" data-rec="6" data-fecha="2024-01-04">
-        <div class="prop-img">
-          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=80" alt="Villa Serena" loading="lazy">
-          <span class="prop-badge exclusive">Exclusiva</span>
-        </div>
-        <div class="prop-body">
-          <div class="prop-price">$18,200,000 <span class="prop-price-note">MXN</span></div>
-          <div class="prop-specs"><strong>Casa</strong> · En Venta · 6 rec · 7 baños · 850 m²</div>
-          <div class="prop-addr">San Agustín, San Pedro Garza García</div>
-          <div class="prop-footer">
-            <span class="prop-tag">Exclusiva</span>
-            <div class="prop-actions">
-              <button class="prop-btn" title="Agendar visita">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              </button>
-              <button class="prop-btn" title="Compartir">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </a>
-
-      <a class="prop-card" href="#"
-        data-zona="Valle Oriente" data-tipo="En Venta" data-precio="4500000"
-        data-inmueble="Departamento" data-rec="2" data-fecha="2024-01-03">
-        <div class="prop-img">
-          <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=700&q=80" alt="Departamento Lux" loading="lazy">
-          <span class="prop-badge">En Venta</span>
-        </div>
-        <div class="prop-body">
-          <div class="prop-price">$4,500,000 <span class="prop-price-note">MXN</span></div>
-          <div class="prop-specs"><strong>Departamento</strong> · En Venta · 2 rec · 2 baños · 140 m²</div>
-          <div class="prop-addr">Valle Oriente, San Pedro Garza García</div>
-          <div class="prop-footer">
-            <span class="prop-tag">Disponible</span>
-            <div class="prop-actions">
-              <button class="prop-btn" title="Agendar visita">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              </button>
-              <button class="prop-btn" title="Compartir">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </a>
-
-      <a class="prop-card" href="#"
-        data-zona="Carretera Nacional" data-tipo="En Venta" data-precio="15800000"
-        data-inmueble="Casa" data-rec="4" data-fecha="2024-01-02">
-        <div class="prop-img">
-          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=700&q=80" alt="Casa Bosque" loading="lazy">
-          <span class="prop-badge">En Venta</span>
-        </div>
-        <div class="prop-body">
-          <div class="prop-price">$15,800,000 <span class="prop-price-note">MXN</span></div>
-          <div class="prop-specs"><strong>Casa</strong> · En Venta · 4 rec · 5 baños · 720 m²</div>
-          <div class="prop-addr">Carretera Nacional, San Pedro Garza García</div>
-          <div class="prop-footer">
-            <span class="prop-tag">Destacada</span>
-            <div class="prop-actions">
-              <button class="prop-btn" title="Agendar visita">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              </button>
-              <button class="prop-btn" title="Compartir">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </a>
-
-      <a class="prop-card" href="#"
-        data-zona="Lomas del Valle" data-tipo="En Venta" data-precio="6200000"
-        data-inmueble="Terreno" data-rec="0" data-fecha="2024-01-01">
-        <div class="prop-img">
-          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=700&q=80" alt="Terreno Premium" loading="lazy">
-          <span class="prop-badge">En Venta</span>
-        </div>
-        <div class="prop-body">
-          <div class="prop-price">$6,200,000 <span class="prop-price-note">MXN</span></div>
-          <div class="prop-specs"><strong>Terreno</strong> · En Venta · 1,200 m²</div>
-          <div class="prop-addr">Lomas del Valle, San Pedro Garza García</div>
-          <div class="prop-footer">
-            <span class="prop-tag">Inversión</span>
-            <div class="prop-actions">
-              <button class="prop-btn" title="Agendar visita">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              </button>
-              <button class="prop-btn" title="Compartir">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </a>
-
-    </div>
+    <div class="prop-pagination" id="propPagination"></div>
 
     <div class="footer-note">
       &copy; 2024 Montana Realty Co. &mdash; San Pedro Garza García, NL &mdash;
@@ -561,78 +436,206 @@ function updateLabel(labelId,sel,defaultLabel){
   applyFilters();
 }
 
-// ── FILTERING ──
-function applyFilters(){
-  const search=document.getElementById('searchInput').value.toLowerCase();
+// ── API-DRIVEN PROPERTY LIST (EasyBroker via /api/properties) ──
+const PER_PAGE=20;
+const state={page:1,total:0,totalPages:1,results:[],highlightId:null};
+const grid=document.getElementById('propGrid');
+const pagWrap=document.getElementById('propPagination');
+
+function escHtml(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+function buildApiParams(){
+  const q=new URLSearchParams();
+  q.set('page',String(state.page));
+  q.set('limit',String(PER_PAGE));
+
+  const search=document.getElementById('searchInput').value.trim();
   const zona=document.getElementById('zonaFilter').value;
   const tipo=document.getElementById('tipoFilter').value;
   const precio=document.getElementById('precioFilter').value;
   const inmueble=document.getElementById('inmuebleFilter').value;
-  const rec=parseInt(document.getElementById('recFilter').value)||0;
 
-  const cards=[...document.querySelectorAll('.prop-card')];
-  let visible=0;
-
-  cards.forEach(card=>{
-    const cZona=card.dataset.zona||'';
-    const cTipo=card.dataset.tipo||'';
-    const cPrecio=parseInt(card.dataset.precio)||0;
-    const cInmueble=card.dataset.inmueble||'';
-    const cRec=parseInt(card.dataset.rec)||0;
-    const cText=(card.textContent||'').toLowerCase();
-
-    let show=true;
-    if(search && !cText.includes(search)) show=false;
-    if(zona && !cZona.includes(zona)) show=false;
-    if(tipo && cTipo!==tipo) show=false;
-    if(inmueble && cInmueble!==inmueble) show=false;
-    if(rec && cRec<rec) show=false;
-    if(precio){
-      const p=cPrecio/1e6;
-      if(precio==='5'  && p>5)  show=false;
-      if(precio==='10' && (p<=5||p>10)) show=false;
-      if(precio==='20' && (p<=10||p>20)) show=false;
-      if(precio==='20+' && p<=20) show=false;
-    }
-
-    card.style.display=show?'flex':'none';
-    if(show) visible++;
-  });
-
-  document.getElementById('countNum').textContent=visible;
+  if(search) q.set('search',search);
+  if(zona) q.set('location',zona);
+  if(inmueble) q.set('property_type',inmueble);
+  if(tipo==='En Venta') q.set('operation_type','sale');
+  else if(tipo==='En Renta') q.set('operation_type','rental');
+  if(precio==='5'){q.set('max_price','5000000');}
+  else if(precio==='10'){q.set('min_price','5000001');q.set('max_price','10000000');}
+  else if(precio==='20'){q.set('min_price','10000001');q.set('max_price','20000000');}
+  else if(precio==='20+'){q.set('min_price','20000001');}
+  return q;
 }
 
-// ── SORT ──
-function sortCards(){
+function applyClientFilters(list){
+  const minRec=parseInt(document.getElementById('recFilter').value)||0;
+  return list.filter(p=>{
+    if(!p.title_image_full) return false;
+    if(minRec && (parseInt(p.bedrooms)||0)<minRec) return false;
+    return true;
+  });
+}
+
+function sortClientSide(list){
   const by=document.getElementById('sortSelect').value;
-  const grid=document.getElementById('propGrid');
-  const cards=[...grid.querySelectorAll('.prop-card')];
-
-  cards.sort((a,b)=>{
-    if(by==='price-asc')  return parseInt(a.dataset.precio)-parseInt(b.dataset.precio);
-    if(by==='price-desc') return parseInt(b.dataset.precio)-parseInt(a.dataset.precio);
-    return new Date(b.dataset.fecha)-new Date(a.dataset.fecha);
+  const out=list.slice();
+  out.sort((a,b)=>{
+    const pa=(a.operations&&a.operations[0]&&a.operations[0].amount)||0;
+    const pb=(b.operations&&b.operations[0]&&b.operations[0].amount)||0;
+    if(by==='price-asc') return pa-pb;
+    if(by==='price-desc') return pb-pa;
+    return new Date(b.updated_at||0)-new Date(a.updated_at||0);
   });
-
-  cards.forEach(c=>grid.appendChild(c));
-  applyFilters();
+  return out;
 }
 
-// Live search
-document.getElementById('searchInput').addEventListener('input',applyFilters);
+function renderProperty(p){
+  const op=(p.operations&&p.operations[0])||{};
+  const opType=op.type==='sale'?'En Venta':(op.type==='rental'?'En Renta':'');
+  const priceStr=op.formatted_amount||'Consultar precio';
+  const m=String(priceStr).match(/^(\$?[\d.,]+)\s*(MXN|USD)?/i);
+  const priceMain=m?m[1]:priceStr;
+  const priceCurr=m&&m[2]?m[2]:(op.currency||'MXN');
+  const locParts=(p.location||'').split(',');
+  const zona=(locParts[0]||'').trim();
+  const ciudad=(locParts[1]||'').trim();
+  const addr=[zona,ciudad].filter(Boolean).join(', ')||'Ubicación reservada';
+  const specs=[];
+  specs.push(`<strong>${escHtml(p.property_type||'Propiedad')}</strong>`);
+  if(opType) specs.push(escHtml(opType));
+  if(p.bedrooms) specs.push(`${p.bedrooms} rec`);
+  if(p.bathrooms) specs.push(`${p.bathrooms} baños`);
+  if(p.construction_size) specs.push(`${p.construction_size} m²`);
+  else if(p.lot_size) specs.push(`${p.lot_size} m² terreno`);
+  const tag=op.type==='rental'?'Renta':(p.property_type==='Terreno'?'Inversión':'Disponible');
+  const id=encodeURIComponent(p.public_id||'');
+  const highlight=(state.highlightId&&p.public_id===state.highlightId)?' highlight':'';
+  const img=p.title_image_full||p.title_image_thumb||'';
+  return `
+    <a class="prop-card${highlight}" href="propiedades.html?id=${id}" data-id="${escHtml(p.public_id||'')}">
+      <div class="prop-img">
+        <img src="${escHtml(img)}" alt="${escHtml(p.title||'Propiedad')}" loading="lazy">
+        ${opType?`<span class="prop-badge">${escHtml(opType)}</span>`:''}
+      </div>
+      <div class="prop-body">
+        <div class="prop-price">${escHtml(priceMain)} <span class="prop-price-note">${escHtml(priceCurr)}</span></div>
+        <div class="prop-specs">${specs.join(' · ')}</div>
+        <div class="prop-addr">${escHtml(addr)}</div>
+        <div class="prop-footer">
+          <span class="prop-tag">${escHtml(tag)}</span>
+          <div class="prop-actions">
+            <button type="button" class="prop-btn" title="Agendar visita" onclick="event.preventDefault();event.stopPropagation();window.location.href='index.html#cta'">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </button>
+            <button type="button" class="prop-btn" title="Compartir" onclick="event.preventDefault();event.stopPropagation();navigator.share?navigator.share({title:'Montana Realty',url:location.origin+'/propiedades.html?id=${id}'}):navigator.clipboard.writeText(location.origin+'/propiedades.html?id=${id}')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </a>`;
+}
 
-// ── PRE-APPLY FILTER FROM URL PARAM (?operacion=venta|renta) ──
+function renderResults(){
+  const filtered=applyClientFilters(state.results);
+  const sorted=sortClientSide(filtered);
+  document.getElementById('countNum').textContent=state.total;
+  if(!sorted.length){
+    grid.innerHTML='<div class="prop-state">Sin resultados que coincidan con tu búsqueda.</div>';
+    return;
+  }
+  grid.innerHTML=sorted.map(renderProperty).join('');
+  if(state.highlightId){
+    const el=grid.querySelector(`.prop-card[data-id="${CSS.escape(state.highlightId)}"]`);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+}
+
+function renderPagination(){
+  if(state.totalPages<=1){pagWrap.innerHTML='';return;}
+  const p=state.page,t=state.totalPages;
+  let h='';
+  h+=`<button class="page-btn" data-page="${p-1}" ${p<=1?'disabled':''}>← Anterior</button>`;
+  const start=Math.max(1,p-2),end=Math.min(t,start+4);
+  for(let i=start;i<=end;i++){
+    h+=`<button class="page-btn${i===p?' active':''}" data-page="${i}">${i}</button>`;
+  }
+  h+=`<span class="page-info">Página ${p} de ${t}</span>`;
+  h+=`<button class="page-btn" data-page="${p+1}" ${p>=t?'disabled':''}>Siguiente →</button>`;
+  pagWrap.innerHTML=h;
+  pagWrap.querySelectorAll('.page-btn[data-page]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const n=parseInt(btn.dataset.page);
+      if(isNaN(n)||n<1||n>t||n===p) return;
+      state.page=n;
+      loadPage();
+      window.scrollTo({top:document.getElementById('searchbar').offsetTop,behavior:'smooth'});
+    });
+  });
+}
+
+let currentReq=0;
+async function loadPage(){
+  const reqId=++currentReq;
+  grid.innerHTML='<div class="prop-state loading">Cargando propiedades…</div>';
+  pagWrap.innerHTML='';
+  try{
+    const r=await fetch('/api/properties?'+buildApiParams().toString());
+    if(reqId!==currentReq) return; // stale response
+    if(!r.ok) throw new Error('API '+r.status);
+    const d=await r.json();
+    state.total=(d.pagination&&d.pagination.total)||0;
+    state.totalPages=Math.max(1,Math.ceil(state.total/PER_PAGE));
+    state.results=d.content||[];
+    renderResults();
+    renderPagination();
+  }catch(e){
+    if(reqId!==currentReq) return;
+    console.error(e);
+    grid.innerHTML='<div class="prop-state error">No se pudieron cargar las propiedades. Intenta de nuevo más tarde.</div>';
+    pagWrap.innerHTML='';
+  }
+}
+
+function applyFilters(){
+  state.page=1;
+  loadPage();
+}
+
+function sortCards(){
+  // Re-render only the current page sorted client-side
+  renderResults();
+}
+
+// Live search (debounced)
+let searchTimer;
+document.getElementById('searchInput').addEventListener('input',()=>{
+  clearTimeout(searchTimer);
+  searchTimer=setTimeout(applyFilters,400);
+});
+
+// ── PRE-APPLY URL PARAMS (?operacion=venta|renta, ?id=XX) ──
 (function(){
-  const op=new URLSearchParams(window.location.search).get('operacion');
-  if(!op) return;
-  const map={venta:'En Venta',renta:'En Renta'};
-  const value=map[op.toLowerCase()];
-  if(!value) return;
-  const tipoFilter=document.getElementById('tipoFilter');
-  if(!tipoFilter) return;
-  tipoFilter.value=value;
-  updateLabel('tipoLabel',tipoFilter,'Tipo');
+  const params=new URLSearchParams(window.location.search);
+  const op=params.get('operacion');
+  if(op){
+    const map={venta:'En Venta',renta:'En Renta'};
+    const v=map[op.toLowerCase()];
+    if(v){
+      const tipoFilter=document.getElementById('tipoFilter');
+      if(tipoFilter){
+        tipoFilter.value=v;
+        const lbl=document.getElementById('tipoLabel');
+        if(lbl) lbl.textContent=v;
+      }
+    }
+  }
+  const id=params.get('id');
+  if(id) state.highlightId=id;
 })();
+
+// Initial load
+loadPage();
 </script>
 
 <script>
