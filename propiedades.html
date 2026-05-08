@@ -422,12 +422,45 @@ body{font-family:var(--sans);background:#fff;color:#111;overflow-x:hidden}
 
 /* ── INTERACTIVE MAP (Leaflet) ── */
 #propertiesMap{width:100%;height:100%;background:#1a1f2e}
-.custom-pin-wrapper{background:transparent;border:none}
-.custom-property-pin{background:#c9a96e;border:3px solid #1a1f2e;border-radius:50%;width:36px;height:36px;box-shadow:0 4px 12px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;color:#1a1f2e;font-family:var(--sans);font-weight:600;font-size:14px;cursor:pointer;transition:all .2s ease}
-.custom-property-pin:hover{transform:scale(1.1);box-shadow:0 6px 20px rgba(201,169,110,.5)}
-.marker-cluster-small,.marker-cluster-medium,.marker-cluster-large{background:rgba(201,169,110,.4)!important}
-.marker-cluster-small div,.marker-cluster-medium div,.marker-cluster-large div{background:#c9a96e!important;color:#1a1f2e!important;font-family:var(--sans)!important;font-weight:600!important;border:3px solid #1a1f2e!important;box-shadow:0 4px 12px rgba(0,0,0,.3)!important}
-.marker-cluster span{font-size:14px!important}
+
+/* Price pin */
+.property-price-pin-wrapper{background:transparent!important;border:none!important}
+.property-price-pin{
+  display:flex;align-items:center;background:#c9a96e;color:#1a1f2e;
+  border:2px solid #1a1f2e;border-radius:6px;padding:4px 8px;
+  font-family:var(--sans);font-weight:700;font-size:12px;white-space:nowrap;
+  box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:pointer;
+  transition:transform .15s ease,background .15s ease;position:relative;
+}
+.property-price-pin::after{
+  content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);
+  width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;
+  border-top:8px solid #1a1f2e;
+}
+.property-price-pin:hover{background:#d4b67e;transform:scale(1.1);z-index:1000}
+.property-price-pin.is-rental{background:#1f3a8a;color:#fff}
+.property-price-pin.is-rental .pin-op-indicator{background:#fff;color:#1f3a8a}
+.property-price-pin.is-rental::after{border-top-color:#fff}
+.property-price-pin.is-foreclosure{background:#b91c1c;color:#fff}
+.property-price-pin.is-foreclosure .pin-op-indicator{background:#fff;color:#b91c1c}
+.property-price-pin.is-foreclosure::after{border-top-color:#fff}
+.pin-op-indicator{
+  background:#1a1f2e;color:#c9a96e;width:16px;height:16px;border-radius:3px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;margin-right:4px;flex-shrink:0;
+}
+.pin-price{letter-spacing:.02em}
+
+/* Clusters */
+.marker-cluster-small,.marker-cluster-medium,.marker-cluster-large{background:rgba(201,169,110,.3)!important}
+.marker-cluster-small div,.marker-cluster-medium div,.marker-cluster-large div{
+  background:#c9a96e!important;color:#1a1f2e!important;
+  border:3px solid #1a1f2e!important;font-family:var(--sans)!important;
+  font-weight:700!important;box-shadow:0 4px 12px rgba(0,0,0,.25)!important;
+}
+.marker-cluster span{font-size:14px!important;line-height:30px!important}
+
+/* Popup */
 .property-popup{font-family:var(--sans);min-width:220px;max-width:260px}
 .property-popup-image{width:100%;height:130px;background:#232a3d;background-size:cover;background-position:center;border-radius:4px;margin-bottom:10px}
 .property-popup-zone{font-size:.7rem;letter-spacing:.1em;color:#c9a96e;text-transform:uppercase;margin-bottom:4px;font-weight:600}
@@ -439,6 +472,43 @@ body{font-family:var(--sans);background:#fff;color:#111;overflow-x:hidden}
 .leaflet-popup-content-wrapper{background:#fff;border-radius:8px!important;padding:12px!important;box-shadow:0 8px 32px rgba(0,0,0,.2)!important}
 .leaflet-popup-content{margin:0!important;width:auto!important}
 .leaflet-popup-tip{background:#fff!important}
+
+/* Hide native Leaflet.draw toolbar (we use our own buttons) */
+.leaflet-draw-toolbar,.leaflet-draw.leaflet-control{display:none!important}
+
+/* Floating map action buttons */
+.map-action-buttons{
+  position:absolute;top:16px;left:50%;transform:translateX(-50%);
+  display:flex;gap:8px;z-index:500;pointer-events:none;
+}
+.map-action-btn{
+  background:#fff;color:#1a1f2e;border:1.5px solid rgba(0,0,0,.1);border-radius:50px;
+  padding:10px 20px;font-family:var(--sans);font-size:13px;font-weight:500;
+  letter-spacing:.03em;cursor:pointer;display:flex;align-items:center;gap:8px;
+  pointer-events:auto;box-shadow:0 4px 12px rgba(0,0,0,.15);
+  transition:transform .2s ease,border-color .2s ease,background .2s ease,color .2s ease;
+  white-space:nowrap;
+}
+.map-action-btn:hover{border-color:#c9a96e;transform:translateY(-1px)}
+.map-action-btn.active{background:#c9a96e;color:#1a1f2e;border-color:#c9a96e}
+.map-action-btn-search{background:#1a1f2e;color:#fff;border-color:#1a1f2e;display:none}
+.map-action-btn-search.visible{display:flex}
+.map-action-btn-search:hover{background:#2a3142;border-color:#c9a96e;color:#fff}
+
+/* Drawn-zone indicator */
+.map-zone-indicator{
+  position:absolute;bottom:16px;left:16px;background:#1a1f2e;color:#c9a96e;
+  padding:8px 16px;border-radius:50px;font-family:var(--sans);font-size:12px;
+  z-index:500;display:none;align-items:center;gap:8px;
+  box-shadow:0 4px 12px rgba(0,0,0,.2);
+}
+.map-zone-indicator.visible{display:flex}
+.map-zone-clear{background:transparent;border:none;color:#c9a96e;cursor:pointer;font-size:18px;padding:0;line-height:1;transition:color .2s}
+.map-zone-clear:hover{color:#fff}
+
+/* Drawing-mode cursor */
+.leaflet-container.leaflet-crosshair,
+.leaflet-container.leaflet-crosshair .leaflet-interactive{cursor:crosshair!important}
 </style>
 <meta name="autofill" content="off">
 
@@ -446,8 +516,10 @@ body{font-family:var(--sans);background:#fff;color:#111;overflow-x:hidden}
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css">
 <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script defer src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script defer src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
 <link rel="stylesheet" href="assets/css/typography.css">
 <link rel="stylesheet" href="assets/css/property-card.css">
 </head>
@@ -714,6 +786,24 @@ body{font-family:var(--sans);background:#fff;color:#111;overflow-x:hidden}
   <!-- MAP -->
   <div id="map-side">
     <div id="propertiesMap"></div>
+
+    <!-- Botones flotantes -->
+    <div class="map-action-buttons">
+      <button type="button" class="map-action-btn" id="drawZoneBtn">
+        <span aria-hidden="true">✏️</span>
+        <span class="map-action-btn-label">Dibujar zona</span>
+      </button>
+      <button type="button" class="map-action-btn map-action-btn-search" id="searchInAreaBtn">
+        <span aria-hidden="true">🔄</span>
+        <span>Buscar en esta zona</span>
+      </button>
+    </div>
+
+    <!-- Indicador de zona activa -->
+    <div class="map-zone-indicator" id="zoneIndicator">
+      <span id="zoneCount">0 propiedades en la zona</span>
+      <button type="button" class="map-zone-clear" id="zoneClearBtn" aria-label="Quitar zona">×</button>
+    </div>
   </div>
 
   <!-- LIST -->
@@ -1372,33 +1462,59 @@ function sortCards(){
   if(id) state.highlightId=id;
 })();
 
-// ── INTERACTIVE MAP (Leaflet + clustering) ──
+// ── INTERACTIVE MAP (Leaflet + clustering + draw zone) ──
 let mapInitialized=false;
 let markersCluster=null;
 let mapReqId=0;
+let allMapMarkers=[];   // every marker created from latest fetch
+let drawnPolygon=null;  // user-drawn polygon (if any)
+let drawHandler=null;   // L.Draw.Polygon handle
+let isDrawing=false;
+let mapMoved=false;     // becomes true after first user-driven moveend
 
 function initPropertiesMap(){
   if(mapInitialized||typeof L==='undefined') return;
   const m=L.map('propertiesMap',{zoomControl:true,scrollWheelZoom:true}).setView([25.6573,-100.4023],12);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
-    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    maxZoom:20,
+
+  // Primary tile layer: Jawg Streets (Google-Maps-like). Falls back to Carto Voyager
+  // automatically if the tiles error out (unreachable / rate-limited).
+  const jawg=L.tileLayer('https://{s}.tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=community',{
+    attribution:'<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom:22,
     subdomains:'abcd'
-  }).addTo(m);
+  });
+  let fellBack=false;
+  jawg.on('tileerror',()=>{
+    if(fellBack) return;
+    fellBack=true;
+    console.warn('Jawg tiles unavailable, falling back to Carto Voyager');
+    m.removeLayer(jawg);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/voyager/{z}/{x}/{y}{r}.png',{
+      attribution:'&copy; OpenStreetMap, &copy; CartoDB',
+      maxZoom:20,
+      subdomains:'abcd'
+    }).addTo(m);
+  });
+  jawg.addTo(m);
+
   markersCluster=L.markerClusterGroup({
     showCoverageOnHover:false,
-    maxClusterRadius:50,
+    maxClusterRadius:60,
+    spiderfyOnMaxZoom:true,
     iconCreateFunction(cluster){
       const count=cluster.getChildCount();
-      let size='small';
-      if(count>=10) size='medium';
-      if(count>=50) size='large';
-      return L.divIcon({html:`<div><span>${count}</span></div>`,className:`marker-cluster marker-cluster-${size}`,iconSize:L.point(40,40)});
+      let size='small',dim=36;
+      if(count>=10){size='medium';dim=44;}
+      if(count>=50){size='large';dim=52;}
+      return L.divIcon({html:`<div><span>${count}</span></div>`,className:`marker-cluster marker-cluster-${size}`,iconSize:L.point(dim,dim)});
     }
   });
   m.addLayer(markersCluster);
   window.propMap=m;
   mapInitialized=true;
+
+  // Initialize draw + search-area UI once the map exists
+  initMapDrawing();
 }
 
 function getCoords(p){
@@ -1413,18 +1529,32 @@ function getCoords(p){
   return [fLat,fLng];
 }
 
+function formatPinPrice(amount){
+  const n=Number(amount)||0;
+  if(n<=0) return 'CONSULTAR';
+  if(n>=1000000) return `$${(n/1000000).toFixed(1).replace(/\.0$/,'')}M`;
+  if(n>=1000) return `$${Math.round(n/1000)}K`;
+  return `$${n}`;
+}
+
 function createPropertyMarker(p){
   const coords=getCoords(p);
   if(!coords) return null;
+  const op=(p.operations&&p.operations[0])||{};
+  const opType=op.type;
+  const opIndicator=opType==='rental'?'R':(opType==='foreclosure'?'X':'V');
+  const opClass=opType==='rental'?' is-rental':(opType==='foreclosure'?' is-foreclosure':'');
+  const priceLabel=formatPinPrice(op.amount);
+  const fullPrice=op.formatted_amount||'Consultar';
+
   const icon=L.divIcon({
-    html:'<div class="custom-property-pin">🏠</div>',
-    className:'custom-pin-wrapper',
-    iconSize:[36,36],
-    iconAnchor:[18,18]
+    html:`<div class="property-price-pin${opClass}"><span class="pin-op-indicator">${opIndicator}</span><span class="pin-price">${priceLabel}</span></div>`,
+    className:'property-price-pin-wrapper',
+    iconSize:[80,32],
+    iconAnchor:[40,32]
   });
   const marker=L.marker(coords,{icon});
-  const op=(p.operations&&p.operations[0])||{};
-  const price=op.formatted_amount||'Consultar';
+
   const title=cleanTitle(p.title||'Propiedad');
   const locStr=(typeof p.location==='string')?p.location:((p.location&&(p.location.name||p.location.full_address))||'');
   const zone=(locStr.split(',')[0]||'').trim();
@@ -1439,11 +1569,11 @@ function createPropertyMarker(p){
       ${img?`<div class="property-popup-image" style="background-image:url('${escHtml(img).replace(/'/g,"\\'")}')"></div>`:''}
       ${zone?`<div class="property-popup-zone">${escHtml(zone)}</div>`:''}
       <h3 class="property-popup-title">${escHtml(title)}</h3>
-      <div class="property-popup-price">${escHtml(price)}</div>
+      <div class="property-popup-price">${escHtml(fullPrice)}</div>
       ${details.length?`<div class="property-popup-details">${escHtml(details.join(' · '))}</div>`:''}
-      <a href="propiedad.html?id=${id}" class="property-popup-link">Ver propiedad</a>
+      <a href="propiedad.html?id=${id}" class="property-popup-link">Ver propiedad →</a>
     </div>`;
-  marker.bindPopup(popup,{maxWidth:300,minWidth:220});
+  marker.bindPopup(popup,{maxWidth:300,minWidth:240,className:'property-popup-container'});
   return marker;
 }
 
@@ -1515,14 +1645,141 @@ async function loadMapMarkers(){
   const markers=[];
   filtered.forEach(p=>{
     const m=createPropertyMarker(p);
-    if(m){markersCluster.addLayer(m);markers.push(m);withCoords++;}
-    else{withoutCoords++;}
+    if(m){markers.push(m);withCoords++;} else {withoutCoords++;}
   });
+  allMapMarkers=markers;
   console.log(`✅ ${withCoords} pins / ❌ ${withoutCoords} sin coords / total ${filtered.length}`);
-  if(markers.length>0){
-    const group=L.featureGroup(markers);
-    window.propMap.fitBounds(group.getBounds(),{padding:[40,40],maxZoom:14});
+
+  // If user has drawn a zone, re-apply that filter; else just add everything
+  if(drawnPolygon){
+    filterPropertiesByZone();
+  } else {
+    markers.forEach(mk=>markersCluster.addLayer(mk));
+    if(markers.length>0){
+      const group=L.featureGroup(markers);
+      // Suppress search-area button when we programmatically fit bounds
+      mapMoved=false;
+      window.propMap.fitBounds(group.getBounds(),{padding:[40,40],maxZoom:14});
+    }
   }
+}
+
+// ── DRAW ZONE + SEARCH-IN-AREA ──
+function initMapDrawing(){
+  const map=window.propMap;
+  if(!map) return;
+  const drawBtn=document.getElementById('drawZoneBtn');
+  const searchBtn=document.getElementById('searchInAreaBtn');
+  const zoneClearBtn=document.getElementById('zoneClearBtn');
+  if(!drawBtn||!searchBtn) return;
+
+  drawBtn.addEventListener('click',()=>{isDrawing?stopDrawing():startDrawing();});
+  searchBtn.addEventListener('click',searchInCurrentView);
+  if(zoneClearBtn) zoneClearBtn.addEventListener('click',clearDrawnZone);
+
+  // Show "search in this area" only after a user-driven moveend
+  map.on('moveend',()=>{
+    if(mapMoved) searchBtn.classList.add('visible');
+    mapMoved=true;
+  });
+
+  // Configure Leaflet.draw if available
+  if(typeof L!=='undefined' && L.Draw && L.Draw.Polygon){
+    drawHandler=new L.Draw.Polygon(map,{
+      shapeOptions:{color:'#c9a96e',fillColor:'#c9a96e',fillOpacity:.18,weight:3},
+      allowIntersection:false,
+      showArea:false
+    });
+    map.on(L.Draw.Event.CREATED,(e)=>{
+      if(drawnPolygon){map.removeLayer(drawnPolygon);}
+      drawnPolygon=e.layer;
+      map.addLayer(drawnPolygon);
+      stopDrawing();
+      filterPropertiesByZone();
+    });
+  } else {
+    console.warn('Leaflet.draw not loaded — drawing disabled');
+    drawBtn.disabled=true;
+    drawBtn.title='Plugin de dibujo no disponible';
+  }
+}
+
+function startDrawing(){
+  if(!drawHandler) return;
+  isDrawing=true;
+  const btn=document.getElementById('drawZoneBtn');
+  btn.classList.add('active');
+  btn.querySelector('.map-action-btn-label').textContent='Termina con doble click';
+  document.getElementById('propertiesMap').classList.add('leaflet-crosshair');
+  drawHandler.enable();
+}
+
+function stopDrawing(){
+  isDrawing=false;
+  const btn=document.getElementById('drawZoneBtn');
+  btn.classList.remove('active');
+  btn.querySelector('.map-action-btn-label').textContent='Dibujar zona';
+  document.getElementById('propertiesMap').classList.remove('leaflet-crosshair');
+  if(drawHandler) drawHandler.disable();
+}
+
+function clearDrawnZone(){
+  if(drawnPolygon){
+    window.propMap.removeLayer(drawnPolygon);
+    drawnPolygon=null;
+  }
+  document.getElementById('zoneIndicator').classList.remove('visible');
+  // Restore all markers (no zone, no view filter)
+  if(markersCluster){
+    markersCluster.clearLayers();
+    allMapMarkers.forEach(m=>markersCluster.addLayer(m));
+  }
+}
+
+function pointInPolygon(point,polygon){
+  let inside=false;
+  for(let i=0,j=polygon.length-1;i<polygon.length;j=i++){
+    const xi=polygon[i].lat,yi=polygon[i].lng;
+    const xj=polygon[j].lat,yj=polygon[j].lng;
+    const intersect=((yi>point.lng)!==(yj>point.lng)) && (point.lat<(xj-xi)*(point.lng-yi)/(yj-yi)+xi);
+    if(intersect) inside=!inside;
+  }
+  return inside;
+}
+
+function filterPropertiesByZone(){
+  if(!drawnPolygon||!markersCluster) return;
+  const ring=drawnPolygon.getLatLngs()[0];
+  markersCluster.clearLayers();
+  let count=0;
+  allMapMarkers.forEach(mk=>{
+    if(pointInPolygon(mk.getLatLng(),ring)){
+      markersCluster.addLayer(mk);
+      count++;
+    }
+  });
+  document.getElementById('zoneCount').textContent=`${count} propiedad${count===1?'':'es'} en la zona`;
+  document.getElementById('zoneIndicator').classList.add('visible');
+  document.getElementById('searchInAreaBtn').classList.remove('visible');
+  mapMoved=false;
+}
+
+function searchInCurrentView(){
+  const map=window.propMap;
+  if(!map||!markersCluster) return;
+  const bounds=map.getBounds();
+  markersCluster.clearLayers();
+  let count=0;
+  allMapMarkers.forEach(mk=>{
+    if(bounds.contains(mk.getLatLng())){
+      markersCluster.addLayer(mk);
+      count++;
+    }
+  });
+  document.getElementById('zoneCount').textContent=`${count} propiedad${count===1?'':'es'} en la vista`;
+  document.getElementById('zoneIndicator').classList.add('visible');
+  document.getElementById('searchInAreaBtn').classList.remove('visible');
+  mapMoved=false;
 }
 
 // Initial load
