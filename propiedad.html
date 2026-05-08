@@ -460,13 +460,15 @@ function renderProperty(p){
   document.getElementById('propertyContent').style.display='block';
 
   const op=(p.operations&&p.operations[0])||{};
-  const opType=op.type==='sale'?'En Venta':(op.type==='rental'?'En Renta':'Consultar');
+  const opType=op.type==='sale'?'En Venta':(op.type==='rental'?'En Renta':(op.type==='foreclosure'?'En Remate':'Consultar'));
   const price=op.formatted_amount||'Consultar precio';
 
   const title=cleanTitle(p.title);
-  const locParts=(p.location||'').split(',');
+  // location puede ser string ("Zone, City, State") o objeto ({name: "..."}) según el endpoint
+  const locStr=(typeof p.location==='string')?p.location:((p.location&&(p.location.name||p.location.full_address))||'');
+  const locParts=locStr.split(',');
   const zone=(locParts[0]||'').trim();
-  const fullLocation=p.location||'';
+  const fullLocation=locStr;
 
   document.title=`${title} | Montana Realty Co.`;
   document.getElementById('propertyZone').textContent=(zone||'Ubicación reservada').toUpperCase();
@@ -515,7 +517,9 @@ function renderDescription(p){
 }
 
 function renderAmenities(p){
-  const list=Array.isArray(p.amenities)?p.amenities:[];
+  // EasyBroker llama a este array `features` en el endpoint de detalle; aceptamos ambos por defensa.
+  const source=Array.isArray(p.features)?p.features:(Array.isArray(p.amenities)?p.amenities:[]);
+  const list=source;
   if(!list.length) return;
   const items=list.map(a=>{
     const text=typeof a==='string'?a:(a&&(a.name||a.value||a.label))||'';
