@@ -25,9 +25,11 @@ export default async function handler(req, res) {
       operation_type
     } = req.query;
 
+    // Pedimos 4x el limit pedido (capado a 50, máx de EasyBroker) para
+    // compensar las propiedades sin public_url que se filtran después.
     const params = new URLSearchParams({
       page: String(page),
-      limit: Math.min(Number(limit), 50).toString()
+      limit: Math.min(Number(limit) * 4, 50).toString()
     });
 
     if (search) params.append('search[query]', search);
@@ -56,6 +58,24 @@ export default async function handler(req, res) {
     }
 
     const data = await response.json();
+
+    // Filtrar solo propiedades publicadas (con public_url no nulo)
+    if (data.content && Array.isArray(data.content)) {
+      const totalBeforeFilter = data.content.length;
+
+      data.content = data.content.filter(property => {
+        return property.public_url && property.public_url !== null;
+      });
+
+      const filteredCount = data.content.length;
+
+      if (data.pagination) {
+        data.pagination.filtered_total = filteredCount;
+        data.pagination.original_total = totalBeforeFilter;
+      }
+
+      console.log(`Filtered: ${filteredCount} of ${totalBeforeFilter} properties`);
+    }
 
     // Cache de 5 minutos en CDN de Vercel
     res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate');
