@@ -1499,6 +1499,9 @@ async function loadPage(){
 }
 
 function applyFilters(){
+  // If a zone (drawn or "search-this-view") is active, the list/map are pinned to it.
+  // The user must clear the zone before any standard filter change reloads the API.
+  if(propertiesInDrawnZone!==null) return;
   state.page=1;
   loadPage();
   loadMapMarkers();
@@ -1535,6 +1538,7 @@ let mapReqId=0;
 let allMapMarkers=[];     // every marker created from latest fetch
 let allMapProperties=[];  // parallel array of property data for stats
 let drawnPolygon=null;    // user-drawn polygon (if any)
+let propertiesInDrawnZone=null; // null = no zone active; array = zone-filtered subset shown in list
 let drawHandler=null;   // L.Draw.Polygon handle
 let isDrawing=false;
 let mapMoved=false;     // becomes true after first user-driven moveend
@@ -1805,6 +1809,9 @@ function clearDrawnZone(){
     markersCluster.clearLayers();
     allMapMarkers.forEach(m=>markersCluster.addLayer(m));
   }
+  // Reset zone state & re-run the regular filter flow so the list is restored
+  propertiesInDrawnZone=null;
+  if(typeof applyFilters==='function') applyFilters();
 }
 
 function pointInPolygon(point,polygon){
@@ -1880,9 +1887,11 @@ function filterPropertiesByZone(){
       if(p) inZoneProps.push(p);
     }
   });
+  propertiesInDrawnZone=inZoneProps;
   updateZoneIndicator(inZoneProps.length,'zone',inZoneProps);
   document.getElementById('searchInAreaBtn').classList.remove('visible');
   mapMoved=false;
+  updatePropertiesListWithZone(inZoneProps);
 }
 
 function searchInCurrentView(){
@@ -1898,9 +1907,40 @@ function searchInCurrentView(){
       if(p) inViewProps.push(p);
     }
   });
+  propertiesInDrawnZone=inViewProps;
   updateZoneIndicator(inViewProps.length,'view',inViewProps);
   document.getElementById('searchInAreaBtn').classList.remove('visible');
   mapMoved=false;
+  updatePropertiesListWithZone(inViewProps);
+}
+
+function updatePropertiesListWithZone(properties){
+  const grid=document.getElementById('propGrid');
+  const countEl=document.getElementById('countNum');
+  const pagination=document.getElementById('propPagination');
+
+  if(countEl) countEl.textContent=String(properties.length);
+
+  if(grid){
+    if(!properties.length){
+      grid.innerHTML=`
+        <div class="prop-state" style="text-align:center;padding:40px 20px">
+          <p style="font-size:1.1rem;color:#1a1f2e;margin-bottom:8px;font-weight:500">No hay propiedades en esta zona</p>
+          <p style="font-size:.9rem;color:#888">Intenta dibujar una zona más amplia o limpia la selección</p>
+        </div>`;
+    } else {
+      grid.innerHTML=properties.map(renderProperty).join('');
+    }
+  }
+
+  // Hide pagination — it doesn't apply when zone overrides API pages
+  if(pagination) pagination.innerHTML='';
+
+  // Smoothly scroll the list back to the top so user sees the new subset
+  const listSide=document.getElementById('list-side');
+  if(listSide && typeof listSide.scrollTo==='function'){
+    listSide.scrollTo({top:0,behavior:'smooth'});
+  }
 }
 
 // Initial load
