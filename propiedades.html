@@ -303,7 +303,7 @@ body{font-family:var(--sans);background:#fff;color:#111;overflow-x:hidden}
 
 /* ── PROPERTY GRID ── */
 .prop-grid{
-  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+  display:grid;grid-template-columns:1fr;gap:16px;
   padding:20px 20px 40px;
 }
 .prop-card{
@@ -449,6 +449,7 @@ body{font-family:var(--sans);background:#fff;color:#111;overflow-x:hidden}
 <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script defer src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 <link rel="stylesheet" href="assets/css/typography.css">
+<link rel="stylesheet" href="assets/css/property-card.css">
 </head>
 <body>
 
@@ -1176,51 +1177,108 @@ function sortClientSide(list){
   return out;
 }
 
+const AMENITY_KEYWORDS=[
+  {keys:['alberca'],label:'Alberca'},
+  {keys:['jardin','jardín'],label:'Jardín'},
+  {keys:['roof garden','roofgarden'],label:'Roof Garden'},
+  {keys:['terraza'],label:'Terraza'},
+  {keys:['gimnasio'],label:'Gimnasio'},
+  {keys:['cuarto de servicio','c. servicio'],label:'C. Servicio'},
+  {keys:['estudio'],label:'Estudio'},
+  {keys:['bodega'],label:'Bodega'},
+  {keys:['seguridad'],label:'Seguridad'},
+  {keys:['circuito cerrado','cctv'],label:'Circuito Cerrado'},
+  {keys:['elevador','ascensor'],label:'Elevador'},
+  {keys:['vista panoramica','vista panorámica'],label:'Vista Panorámica'}
+];
+
+function detectAmenities(p){
+  const text=`${p.title||''} ${p.description||''}`.toLowerCase();
+  if(!text.trim()) return [];
+  const found=[];
+  const seen=new Set();
+  AMENITY_KEYWORDS.forEach(a=>{
+    if(seen.has(a.label)) return;
+    if(a.keys.some(k=>text.includes(k))){found.push(a.label);seen.add(a.label);}
+  });
+  return found;
+}
+
 function renderProperty(p){
   const op=(p.operations&&p.operations[0])||{};
-  const opType=op.type==='sale'?'En Venta':(op.type==='rental'?'En Renta':'');
+  const opType=op.type==='sale'?'EN VENTA':(op.type==='rental'?'EN RENTA':(op.type==='foreclosure'?'EN REMATE':'CONSULTAR'));
   const priceStr=op.formatted_amount||'Consultar precio';
   const m=String(priceStr).match(/^(\$?[\d.,]+)\s*(MXN|USD)?/i);
   const priceMain=m?m[1]:priceStr;
   const priceCurr=m&&m[2]?m[2]:(op.currency||'MXN');
-  const locParts=(p.location||'').split(',');
-  const zona=(locParts[0]||'').trim();
-  const ciudad=(locParts[1]||'').trim();
-  const addr=[zona,ciudad].filter(Boolean).join(', ')||'Ubicación reservada';
-  const specs=[];
-  specs.push(`<strong>${escHtml(p.property_type||'Propiedad')}</strong>`);
-  if(opType) specs.push(escHtml(opType));
-  if(p.bedrooms) specs.push(`${p.bedrooms} rec`);
-  if(p.bathrooms) specs.push(`${p.bathrooms} baños`);
-  if(p.construction_size) specs.push(`${p.construction_size} m²`);
-  else if(p.lot_size) specs.push(`${p.lot_size} m² terreno`);
-  const tag=op.type==='rental'?'Renta':(p.property_type==='Terreno'?'Inversión':'Disponible');
+
+  // Location
+  let zone='',fullLocation='';
+  if(typeof p.location==='string'){
+    fullLocation=p.location;
+    zone=(p.location.split(',')[0]||'').trim();
+  } else if(p.location && typeof p.location==='object'){
+    fullLocation=p.location.name||p.location.full_address||'';
+    zone=(fullLocation.split(',')[0]||'').trim();
+  }
+  const locText=fullLocation||'Ubicación reservada';
+
+  // Title cleanup (remove embedded prices)
+  const cleanTitle=(p.title||'Propiedad').replace(/\$[\d,.]+(\s*M\.?N?\.?)?/gi,'').trim()||'Propiedad';
+
+  // Details
+  const details=[];
+  if(p.bedrooms) details.push(`${p.bedrooms} rec`);
+  if(p.bathrooms) details.push(`${p.bathrooms} baños`);
+  if(p.parking_spaces) details.push(`${p.parking_spaces} estac.`);
+  if(p.construction_size) details.push(`${p.construction_size} m²`);
+  else if(p.lot_size) details.push(`${p.lot_size} m² lote`);
+
+  // Description preview
+  const desc=String(p.description||'').trim();
+  const descPreview=desc.length>120?desc.substring(0,120).trim()+'...':desc;
+
+  // Amenities
+  const amenities=detectAmenities(p);
+  const visibleAmenities=amenities.slice(0,5);
+  const extraCount=amenities.length-visibleAmenities.length;
+
   const id=encodeURIComponent(p.public_id||'');
   const highlight=(state.highlightId&&p.public_id===state.highlightId)?' highlight':'';
   const img=p.title_image_full||p.title_image_thumb||'';
+  const detailUrl=`propiedad.html?id=${id}`;
+
+  // WhatsApp
+  const waText=`Hola Maricela, estoy interesado en la propiedad "${cleanTitle}" (${priceStr}, ID: ${p.public_id||''}). ¿Podemos agendar una visita?`;
+  const waUrl=`https://wa.me/528110448818?text=${encodeURIComponent(waText)}`;
+
   return `
-    <a class="prop-card${highlight}" href="propiedad.html?id=${id}" data-id="${escHtml(p.public_id||'')}">
-      <div class="prop-img">
-        <img src="${escHtml(img)}" alt="${escHtml(p.title||'Propiedad')}" loading="lazy">
-        ${opType?`<span class="prop-badge">${escHtml(opType)}</span>`:''}
-      </div>
-      <div class="prop-body">
-        <div class="prop-price">${escHtml(priceMain)} <span class="prop-price-note">${escHtml(priceCurr)}</span></div>
-        <div class="prop-specs">${specs.join(' · ')}</div>
-        <div class="prop-addr">${escHtml(addr)}</div>
-        <div class="prop-footer">
-          <span class="prop-tag">${escHtml(tag)}</span>
-          <div class="prop-actions">
-            <button type="button" class="prop-btn" title="Agendar visita" onclick="event.preventDefault();event.stopPropagation();window.location.href='index.html#cta'">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            </button>
-            <button type="button" class="prop-btn" title="Compartir" onclick="event.preventDefault();event.stopPropagation();navigator.share?navigator.share({title:'Montana Realty',url:location.origin+'/propiedad.html?id=${id}'}):navigator.clipboard.writeText(location.origin+'/propiedad.html?id=${id}')">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-            </button>
-          </div>
+    <article class="property-card layout-horizontal${highlight}" data-id="${escHtml(p.public_id||'')}">
+      <a href="${detailUrl}" class="property-card-image-link" aria-label="${escHtml(cleanTitle)}">
+        <div class="property-card-image" style="background-image:url('${escHtml(img).replace(/'/g,"\\'")}')">
+          <span class="property-card-badge">${escHtml(opType)}</span>
+          ${p.featured?'<span class="property-card-featured-badge">★ DESTACADA</span>':''}
+        </div>
+      </a>
+      <div class="property-card-content">
+        <div class="property-card-price-row">
+          <h3 class="property-card-price">${escHtml(priceMain)}</h3>
+          <span class="property-card-currency">${escHtml(priceCurr)}</span>
+        </div>
+        ${details.length?`<div class="property-card-details">${escHtml(details.join(' · '))}</div>`:''}
+        <a href="${detailUrl}" class="property-card-title-link">
+          <h4 class="property-card-title">${escHtml(cleanTitle)}</h4>
+        </a>
+        <p class="property-card-location">📍 ${escHtml(locText)}</p>
+        ${visibleAmenities.length?`<div class="property-card-amenities">${visibleAmenities.map(a=>`<span class="property-amenity-pill">${escHtml(a)}</span>`).join('')}${extraCount>0?`<span class="property-amenity-pill property-amenity-more">+${extraCount}</span>`:''}</div>`:''}
+        ${descPreview?`<p class="property-card-description">${escHtml(descPreview)}</p>`:''}
+        <div class="property-card-actions">
+          <a href="tel:+528110448818" class="property-card-btn property-card-btn-phone" title="Llamar a Maricela" aria-label="Llamar">📞</a>
+          <a href="${escHtml(waUrl)}" target="_blank" rel="noopener" class="property-card-btn property-card-btn-whatsapp">💬 WhatsApp</a>
+          <a href="${detailUrl}" class="property-card-btn property-card-btn-contact">Ver detalle →</a>
         </div>
       </div>
-    </a>`;
+    </article>`;
 }
 
 function renderResults(){
@@ -1233,7 +1291,7 @@ function renderResults(){
   }
   grid.innerHTML=sorted.map(renderProperty).join('');
   if(state.highlightId){
-    const el=grid.querySelector(`.prop-card[data-id="${CSS.escape(state.highlightId)}"]`);
+    const el=grid.querySelector(`.property-card[data-id="${CSS.escape(state.highlightId)}"]`);
     if(el) el.scrollIntoView({behavior:'smooth',block:'center'});
   }
 }

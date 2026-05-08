@@ -836,6 +836,7 @@ textarea.fi{min-height:70px;max-height:110px;resize:vertical;line-height:1.5}
 </style>
 <meta name="autofill" content="off">
 <link rel="stylesheet" href="assets/css/typography.css">
+<link rel="stylesheet" href="assets/css/property-card.css">
 </head>
 <body>
 
@@ -1796,38 +1797,107 @@ document.querySelectorAll('.r').forEach(el=>{if(!el.classList.contains('v'))obs.
     return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
 
+  const AMENITY_KEYWORDS=[
+    {keys:['alberca'],label:'Alberca'},
+    {keys:['jardin','jardín'],label:'Jardín'},
+    {keys:['roof garden','roofgarden'],label:'Roof Garden'},
+    {keys:['terraza'],label:'Terraza'},
+    {keys:['gimnasio'],label:'Gimnasio'},
+    {keys:['cuarto de servicio','c. servicio'],label:'C. Servicio'},
+    {keys:['estudio'],label:'Estudio'},
+    {keys:['bodega'],label:'Bodega'},
+    {keys:['seguridad'],label:'Seguridad'},
+    {keys:['circuito cerrado','cctv'],label:'Circuito Cerrado'},
+    {keys:['elevador','ascensor'],label:'Elevador'},
+    {keys:['vista panoramica','vista panorámica'],label:'Vista Panorámica'}
+  ];
+
+  function detectAmenities(p){
+    const text=`${p.title||''} ${p.description||''}`.toLowerCase();
+    if(!text.trim()) return [];
+    const found=[],seen=new Set();
+    AMENITY_KEYWORDS.forEach(a=>{
+      if(seen.has(a.label)) return;
+      if(a.keys.some(k=>text.includes(k))){found.push(a.label);seen.add(a.label);}
+    });
+    return found;
+  }
+
   function renderCard(p, flag){
     const op=p.operations&&p.operations[0]||{};
-    const opType=op.type==='sale'?'Venta':(op.type==='rental'?'Renta':'');
-    const price=op.formatted_amount||'Consultar precio';
+    const opType=op.type==='sale'?'EN VENTA':(op.type==='rental'?'EN RENTA':(op.type==='foreclosure'?'EN REMATE':'CONSULTAR'));
+    const priceStr=op.formatted_amount||'Consultar precio';
     const currency=op.currency||'MXN';
-    // Strip currency suffix if duplicated and split currency for two-tone styling
-    const priceMatch=String(price).match(/^(\$?[\d.,]+)\s*(MXN|USD)?\s*(.*)$/i);
-    const priceMain=priceMatch?priceMatch[1]:price;
+    const priceMatch=String(priceStr).match(/^(\$?[\d.,]+)\s*(MXN|USD)?\s*(.*)$/i);
+    const priceMain=priceMatch?priceMatch[1]:priceStr;
     const priceCurr=priceMatch&&priceMatch[2]?priceMatch[2]:currency;
-    const locParts=(p.location||'').split(',');
-    const zone=(locParts[0]||'').trim()||'Ubicación reservada';
+
+    // Location
+    let zone='',fullLocation='';
+    if(typeof p.location==='string'){
+      fullLocation=p.location;
+      zone=(p.location.split(',')[0]||'').trim();
+    } else if(p.location && typeof p.location==='object'){
+      fullLocation=p.location.name||p.location.full_address||'';
+      zone=(fullLocation.split(',')[0]||'').trim();
+    }
+    const locText=fullLocation||zone||'Ubicación reservada';
+
     const cleanTitle=(p.title||'Propiedad').replace(/\$[\d,.]+(\s*M\.?N?\.?)?/gi,'').trim()||'Propiedad';
-    const specs=[];
-    if(p.bedrooms) specs.push(`${p.bedrooms} rec`);
-    if(p.bathrooms) specs.push(`${p.bathrooms} baños`);
-    if(p.construction_size) specs.push(`${p.construction_size} m²`);
-    else if(p.lot_size) specs.push(`${p.lot_size} m² terreno`);
-    const flagHtml=flag?`<span class="pcard-flag pcard-${flag.cls}">${flag.label}</span>`:(opType?`<span class="pcard-flag pcard-${op.type==='rental'?'rent':'sale'}">${opType}</span>`:'');
+
+    const details=[];
+    if(p.bedrooms) details.push(`${p.bedrooms} rec`);
+    if(p.bathrooms) details.push(`${p.bathrooms} baños`);
+    if(p.parking_spaces) details.push(`${p.parking_spaces} estac.`);
+    if(p.construction_size) details.push(`${p.construction_size} m²`);
+    else if(p.lot_size) details.push(`${p.lot_size} m² lote`);
+
+    const desc=String(p.description||'').trim();
+    const descPreview=desc.length>120?desc.substring(0,120).trim()+'...':desc;
+
+    const amenities=detectAmenities(p);
+    const visibleAmenities=amenities.slice(0,5);
+    const extraCount=amenities.length-visibleAmenities.length;
+
+    const id=encodeURIComponent(p.public_id||'');
+    const detailUrl=`propiedad.html?id=${id}`;
     const img=p.title_image_full||p.title_image_thumb||'';
+
+    // Featured badge: explicit "flag" param wins, else show "Destacada" only when truthy
+    const featuredHtml=flag
+      ? `<span class="property-card-featured-badge">★ ${escapeHtml(flag.label.toUpperCase())}</span>`
+      : (p.featured?'<span class="property-card-featured-badge">★ DESTACADA</span>':'');
+
+    const waText=`Hola Maricela, estoy interesado en la propiedad "${cleanTitle}" (${priceStr}, ID: ${p.public_id||''}). ¿Podemos agendar una visita?`;
+    const waUrl=`https://wa.me/528110448818?text=${encodeURIComponent(waText)}`;
+
     return `
-      <a href="propiedad.html?id=${encodeURIComponent(p.public_id||'')}" class="pcard">
-        <div class="pcard-img">
-          <img src="${escapeHtml(img)}" alt="${escapeHtml(cleanTitle)}" loading="lazy">
-          ${flagHtml}
+      <article class="property-card">
+        <a href="${detailUrl}" class="property-card-image-link" aria-label="${escapeHtml(cleanTitle)}">
+          <div class="property-card-image" style="background-image:url('${escapeHtml(img).replace(/'/g,"\\'")}')">
+            <span class="property-card-badge">${escapeHtml(opType)}</span>
+            ${featuredHtml}
+          </div>
+        </a>
+        <div class="property-card-content">
+          <div class="property-card-price-row">
+            <h3 class="property-card-price">${escapeHtml(priceMain)}</h3>
+            <span class="property-card-currency">${escapeHtml(priceCurr)}</span>
+          </div>
+          ${details.length?`<div class="property-card-details">${escapeHtml(details.join(' · '))}</div>`:''}
+          <a href="${detailUrl}" class="property-card-title-link">
+            <h4 class="property-card-title">${escapeHtml(cleanTitle)}</h4>
+          </a>
+          <p class="property-card-location">📍 ${escapeHtml(locText)}</p>
+          ${visibleAmenities.length?`<div class="property-card-amenities">${visibleAmenities.map(a=>`<span class="property-amenity-pill">${escapeHtml(a)}</span>`).join('')}${extraCount>0?`<span class="property-amenity-pill property-amenity-more">+${extraCount}</span>`:''}</div>`:''}
+          ${descPreview?`<p class="property-card-description">${escapeHtml(descPreview)}</p>`:''}
+          <div class="property-card-actions">
+            <a href="tel:+528110448818" class="property-card-btn property-card-btn-phone" title="Llamar a Maricela" aria-label="Llamar">📞</a>
+            <a href="${escapeHtml(waUrl)}" target="_blank" rel="noopener" class="property-card-btn property-card-btn-whatsapp">💬 WhatsApp</a>
+            <a href="${detailUrl}" class="property-card-btn property-card-btn-contact">Ver detalle →</a>
+          </div>
         </div>
-        <div class="pcard-body">
-          <span class="pcard-zone">${escapeHtml(zone)}</span>
-          <h3 class="pcard-name">${escapeHtml(cleanTitle)}</h3>
-          <span class="pcard-price">${escapeHtml(priceMain)} <span class="pcard-curr">${escapeHtml(priceCurr)}</span></span>
-          ${specs.length?`<div class="pcard-specs">${specs.map((s,i)=>(i>0?'<span>·</span>':'')+`<span>${escapeHtml(s)}</span>`).join('')}</div>`:''}
-        </div>
-      </a>`;
+      </article>`;
   }
 
   function setState(container,html){
