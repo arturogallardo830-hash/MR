@@ -5,8 +5,8 @@
   --white:#fff;
   --black:#0d0d0d;
   --gold:#c9a96e;
-  --serif:'Cormorant Garamond',Georgia,serif;
-  --sans:'Poppins',Helvetica,Arial,sans-serif;
+  --serif:'Cinzel',Georgia,serif;
+  --sans:'Lato',Helvetica,Arial,sans-serif;
 }
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
 body{font-family:var(--sans);background:#fff;color:#111;overflow-x:hidden;font-weight:300}

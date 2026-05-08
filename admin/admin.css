@@ -12,8 +12,8 @@
   --border-soft:#eef0f4;
   --gold:#c9a96e;
   --gold-d:#b8975c;
-  --serif:'Cormorant Garamond',Georgia,serif;
-  --sans:'Poppins',Helvetica,Arial,sans-serif;
+  --serif:'Cinzel',Georgia,serif;
+  --sans:'Lato',Helvetica,Arial,sans-serif;
   --shadow-sm:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.03);
   --shadow:0 4px 14px rgba(20,26,44,.06),0 2px 4px rgba(20,26,44,.04);
   --shadow-lg:0 14px 40px rgba(20,26,44,.10);
@@ -164,7 +164,7 @@ body{
   font-size:10px;letter-spacing:.22em;text-transform:uppercase;
   color:var(--text-mute);font-weight:600;
 }
-/* Numeric value — Poppins 600 (clear digit shapes; distinguishes 0 from O) */
+/* Numeric value — Lato 700 (clear digit shapes; distinguishes 0 from O) */
 .stat-value{
   font-family:var(--sans);
   font-size:38px;font-weight:600;line-height:1;

@@ -13,8 +13,8 @@
   --soft:rgba(232,230,225,.7);
   --gold:#c9a96e;
   --gold-soft:rgba(201,169,110,.2);
-  --serif:'Cormorant Garamond',Georgia,serif;
-  --sans:'Poppins',Helvetica,Arial,sans-serif;
+  --serif:'Cinzel',Georgia,serif;
+  --sans:'Lato',Helvetica,Arial,sans-serif;
 }
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;overflow-x:hidden;line-height:1.7}

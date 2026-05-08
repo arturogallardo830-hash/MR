@@ -1,0 +1,92 @@
+/* ============================================================
+   CINZEL + LATO TYPOGRAPHY ADJUSTMENTS
+   Loaded LAST in the cascade so positive tracking and uppercase
+   transforms win against the inline page styles (which were
+   tuned for Cormorant Garamond's wider natural metrics).
+   ============================================================ */
+
+body,
+p,
+li,
+.hero-sub,
+.hero-sub-dark,
+.hero-sub-light {
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
+  font-weight: 300;
+}
+
+p,
+li {
+  line-height: 1.7;
+}
+
+h1, h2, h3, h4,
+.hero-title,
+.tw-name,
+.svc-title,
+.kpi-title,
+.sup-modal-title,
+.sell-modal-title,
+.apply-modal-title,
+.rent-title,
+.art-modal-title,
+.rct-title,
+.comp-title,
+.big,
+.h1, .h2, .h3 {
+  font-family: 'Cinzel', Georgia, serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.hero-title,
+.tw-name,
+.kpi-title,
+.big {
+  letter-spacing: 0.03em;
+  font-weight: 400;
+}
+
+.hero-eyebrow,
+.property-eyebrow,
+.contact-eyebrow,
+.sell-modal-eyebrow,
+.apply-modal-eyebrow,
+.section-eyebrow,
+.eyebrow,
+.tw-city,
+.why-label {
+  font-family: 'Cinzel', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.nav-links a,
+.nav-sub,
+.nav-logo-sub {
+  font-family: 'Cinzel', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.btn-hero,
+.btn-primary,
+.button-primary,
+.nav-action,
+.hero-search .hs-btn,
+button.primary {
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.hero-title em,
+.tw-slogan,
+.footer-brand .footer-tagline,
+.blog-title {
+  font-style: italic;
+}
