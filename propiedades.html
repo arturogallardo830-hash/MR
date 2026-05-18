@@ -1006,7 +1006,8 @@ let currentFilters={
   surfaceType:'construction',
   surfaceMin:'',
   surfaceMax:'',
-  amenities:[]
+  amenities:[],
+  heroZones:[]
 };
 
 const FALLBACK_ZONES=[
@@ -1102,7 +1103,7 @@ function clearAllFilters(){
     search:'',operation:'sale',propertyTypes:[],
     bedroomsMin:'',bedroomsMax:'',bathrooms:'',parking:'',
     priceMin:'',priceMax:'',currency:'MXN',
-    surfaceType:'construction',surfaceMin:'',surfaceMax:'',amenities:[]
+    surfaceType:'construction',surfaceMin:'',surfaceMax:'',amenities:[],heroZones:[]
   };
   document.getElementById('filterSearch').value='';
   const saleRadio=document.querySelector('input[name="operation"][value="sale"]');
@@ -1412,6 +1413,16 @@ function applyClientFilters(list){
       if(!haystack.includes(searchTerm)) return false;
     }
 
+    // Hero-bar zones (multi-select from homepage): match any selected zone name
+    if(currentFilters.heroZones && currentFilters.heroZones.length){
+      const nrm=v=>String(v||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+      const locStr=typeof p.location==='string'
+        ? p.location
+        : ((p.location && (p.location.name||p.location.full_address))||'');
+      const hay=nrm(`${locStr} ${p.title||''} ${p.description||''}`);
+      if(!currentFilters.heroZones.some(z=>hay.includes(nrm(z)))) return false;
+    }
+
     // Multi property type
     if(currentFilters.propertyTypes.length>1){
       if(!currentFilters.propertyTypes.includes(p.property_type)) return false;
@@ -1668,9 +1679,11 @@ function sortCards(){
   renderResults();
 }
 
-// ── PRE-APPLY URL PARAMS (?operacion=venta|renta|remates, ?id=XX) ──
+// ── PRE-APPLY URL PARAMS (hero filter bar + ?operacion / ?id) ──
 (function(){
   const params=new URLSearchParams(window.location.search);
+
+  // operacion: venta|renta|remates
   const op=params.get('operacion');
   if(op){
     const map={venta:'sale',renta:'rental',remates:'foreclosure'};
@@ -1683,6 +1696,87 @@ function sortCards(){
       updateFilterValue('operation',labels[v]);
     }
   }
+
+  // zona: slugs from the hero bar → display names matched client-side
+  const ZONE_NAMES={
+    'valle-oriente':'Valle Oriente','valle-del-campestre':'Valle del Campestre',
+    'del-valle':'Del Valle','san-agustin':'San Agustín','centrito-valle':'Centrito Valle',
+    'lomas-del-valle':'Lomas del Valle','fuentes-del-valle':'Fuentes del Valle',
+    'chipinque':'Chipinque','rincon-del-valle':'Rincón del Valle',
+    'carretera-nacional':'Carretera Nacional','colinas-de-san-jeronimo':'Colinas de San Jerónimo',
+    'cumbres':'Cumbres','tampiquito':'Tampiquito','san-pedro-centro':'San Pedro Centro',
+    'privanzas':'Privanzas'
+  };
+  const zona=params.get('zona');
+  if(zona){
+    const names=zona.split(',').map(s=>ZONE_NAMES[s.trim()]).filter(Boolean);
+    if(names.length){
+      currentFilters.heroZones=names;
+      const si=document.getElementById('filterSearch');
+      if(si) si.value=names.length===1?names[0]:names.length+' zonas seleccionadas';
+    }
+  }
+
+  // tipo: slugs → property-type checkbox values
+  const TYPE_MAP={
+    casa:'Casa',departamento:'Departamento',penthouse:'Penthouse',oficina:'Oficina',
+    local:'Local comercial',bodega:'Bodega comercial',terreno:'Terreno'
+  };
+  const tipo=params.get('tipo');
+  if(tipo){
+    const vals=[...new Set(tipo.split(',').map(s=>TYPE_MAP[s.trim()]).filter(Boolean))];
+    if(vals.length){
+      currentFilters.propertyTypes=vals;
+      vals.forEach(v=>{
+        const cb=document.querySelector(`input[name="propertyType"][value="${v}"]`);
+        if(cb) cb.checked=true;
+      });
+      const txt=vals.length===1?vals[0]:`${vals.length} seleccionados`;
+      updateFilterValue('propertyType',txt);
+    }
+  }
+
+  // rec: minimum bedrooms
+  const rec=params.get('rec');
+  if(rec){
+    currentFilters.bedroomsMin=rec;
+    const sel=document.getElementById('bedroomsMin');
+    if(sel) sel.value=rec;
+    updateBedroomsLabel();
+  }
+
+  // banos: minimum bathrooms (pill)
+  const banos=params.get('banos');
+  if(banos){
+    currentFilters.bathrooms=banos;
+    document.querySelectorAll('#bathroomsPills .filter-pill').forEach(p=>{
+      p.classList.toggle('active',p.dataset.value===banos);
+    });
+  }
+
+  // est: minimum parking spaces (pill)
+  const est=params.get('est');
+  if(est){
+    currentFilters.parking=est;
+    document.querySelectorAll('#parkingPills .filter-pill').forEach(p=>{
+      p.classList.toggle('active',p.dataset.value===est);
+    });
+  }
+
+  // precio_min / precio_max
+  const pMin=params.get('precio_min'),pMax=params.get('precio_max');
+  if(pMin){
+    currentFilters.priceMin=pMin;
+    const el=document.getElementById('priceMin');if(el) el.value=pMin;
+  }
+  if(pMax){
+    currentFilters.priceMax=pMax;
+    const el=document.getElementById('priceMax');if(el) el.value=pMax;
+  }
+  if(pMin||pMax) updatePriceLabel();
+
+  if(banos||est) updateMoreFiltersCount();
+
   const id=params.get('id');
   if(id) state.highlightId=id;
 })();

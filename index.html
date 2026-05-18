@@ -188,8 +188,10 @@ body{background:var(--black);color:var(--white);font-family:var(--sans);font-wei
 .mob-action{font-size:12px!important;letter-spacing:.2em!important;text-transform:uppercase;font-family:var(--sans)!important;border:1px solid rgba(0,0,0,.2)!important;padding:14px 40px;color:#111!important}
 
 /* HERO */
-.hero{position:relative;height:200vh}
-.hero-sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:#e8d5c0}
+.hero{position:relative;height:100vh}
+.hero-sticky{position:relative;top:0;height:100vh;overflow:hidden;background:#000}
+#hero-video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hero-vid-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;background:linear-gradient(to bottom,rgba(0,0,0,.4) 0%,rgba(0,0,0,.2) 50%,rgba(0,0,0,.5) 100%)}
 .hero-bg{position:absolute;inset:0;z-index:0;background:linear-gradient(to top,#f0d5c8 0%,#f5e0d0 28%,#d4e4f0 65%,#eaf0f8 100%)}
 /* Contenedores de nubes */
 .hero-clouds-bk{position:absolute;inset:0;z-index:1;pointer-events:none;will-change:transform}
@@ -218,30 +220,106 @@ body{background:var(--black);color:var(--white);font-family:var(--sans);font-wei
 .fog-lat-l{left:0;background:radial-gradient(ellipse 100% 80% at 0% 88%,rgba(240,213,200,.82) 0%,rgba(245,224,208,.42) 44%,transparent 74%)}
 .fog-lat-r{right:0;background:radial-gradient(ellipse 100% 80% at 100% 88%,rgba(240,213,200,.82) 0%,rgba(245,224,208,.42) 44%,transparent 74%)}
 /* Texto principal */
-.hero-cnt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;z-index:6;padding:0 24px;padding-top:72px;will-change:opacity,transform}
-.hero-eyebrow{font-family:var(--sans);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:rgba(80,50,30,.48);margin-bottom:14px}
-.hero-title{font-family:var(--serif);font-size:clamp(52px,8vw,100px);font-weight:400;line-height:.97;letter-spacing:-.03em;margin:0 0 18px;color:#111}
+.hero-cnt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;z-index:2;padding:0 24px;padding-top:72px;will-change:opacity,transform}
+.hero-eyebrow{font-family:var(--sans);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:14px}
+.hero-title{font-family:var(--serif);font-size:clamp(52px,8vw,100px);font-weight:400;line-height:.97;letter-spacing:-.03em;margin:0 0 18px;color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.35)}
 .hero-title em{font-style:italic;font-weight:600}
-.hero-sub{font-family:var(--sans);font-size:15px;max-width:480px;line-height:1.8;font-weight:400}
-.hero-sub-dark{color:#111;font-weight:600}
-.hero-sub-light{color:#999}
+.hero-sub{font-family:var(--sans);font-size:15px;max-width:480px;line-height:1.8;font-weight:400;text-shadow:0 1px 12px rgba(0,0,0,.4)}
+.hero-sub-dark{color:#fff;font-weight:600}
+.hero-sub-light{color:rgba(255,255,255,.72)}
 .btn-hero{display:inline-flex;align-items:center;gap:12px;margin-top:36px;font-family:var(--sans);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#111;text-decoration:none;border:1.5px solid rgba(0,0,0,.32);padding:14px 38px;border-radius:100px;transition:all .3s;font-weight:500}
 .btn-hero:hover{background:#111;color:#fff;border-color:#111}
-/* HERO SEARCH BAR — floating fixed pill at bottom */
-.hero-search{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);z-index:998;display:flex;align-items:stretch;gap:0;background:#ffffff;border:1px solid rgba(0,0,0,.05);border-radius:50px;padding:8px 8px 8px 22px;box-shadow:0 16px 48px rgba(0,0,0,0.35);width:90%;max-width:800px}
-.hero-search .hs-field{flex:1;display:flex;flex-direction:column;justify-content:center;padding:4px 18px;min-width:0}
-.hero-search .hs-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(20,20,20,.55);font-weight:500;margin-bottom:2px}
-.hero-search .hs-field input,.hero-search .hs-field select{width:100%;border:none;background:transparent;font-family:var(--sans);font-size:13px;font-weight:400;color:#111;outline:none;padding:2px 0;appearance:none;-webkit-appearance:none;cursor:pointer;text-overflow:ellipsis}
-.hero-search .hs-field input{cursor:text}
-.hero-search .hs-field input::placeholder{color:rgba(20,20,20,.38)}
-.hero-search .hs-sep{width:1px;background:rgba(20,20,20,.12);margin:10px 0;flex-shrink:0}
-.hero-search .hs-btn{background:#111;color:#fff;border:none;border-radius:100px;padding:0 32px;font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;cursor:pointer;transition:all .3s;flex-shrink:0}
+/* HERO SEARCH BAR — premium floating filter bar */
+.hero-search{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);z-index:998;display:flex;align-items:stretch;gap:0;background:rgba(255,255,255,.95);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:1px solid rgba(0,0,0,.04);border-radius:60px;padding:8px 12px;box-shadow:0 8px 40px rgba(0,0,0,.12);width:92%;max-width:900px}
+.hero-search .hs-field{position:relative;flex:1;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:10px 20px;min-width:0;border:none;background:transparent;text-align:left;cursor:pointer;border-radius:40px;transition:background .2s;font-family:var(--sans)}
+.hero-search .hs-field:hover,.hero-search .hs-field.open{background:rgba(0,0,0,.03)}
+.hero-search .hs-label{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#999;font-weight:600;line-height:1}
+.hero-search .hs-value{font-size:14px;color:#333;font-weight:500;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hero-search .hs-value.placeholder{color:#bbb;font-weight:400}
+.hero-search .hs-sep{width:1px;background:#e0e0e0;margin:12px 0;flex-shrink:0;align-self:stretch}
+.hero-search .hs-btn{display:flex;align-items:center;gap:9px;background:#111;color:#fff;border:none;border-radius:50px;padding:12px 32px;font-family:var(--sans);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;cursor:pointer;transition:all .3s;flex-shrink:0;margin-left:6px}
+.hero-search .hs-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
 .hero-search .hs-btn:hover{background:var(--gold);color:#111}
-@media(max-width:720px){
-  .hero-search{flex-direction:column;border-radius:22px;padding:14px;gap:4px;width:94%;bottom:60px}
-  .hero-search .hs-field{padding:8px 12px}
-  .hero-search .hs-sep{width:100%;height:1px;margin:0}
-  .hero-search .hs-btn{width:100%;padding:14px 0;margin-top:6px;border-radius:14px}
+
+/* Dropdown panels */
+.hs-pop{position:absolute;bottom:calc(100% + 16px);left:0;min-width:300px;background:#fff;border-radius:16px;box-shadow:0 12px 48px rgba(0,0,0,.15);padding:16px;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .2s ease,transform .2s ease,visibility .2s;z-index:1001;cursor:default;font-family:var(--sans)}
+.hs-pop.open{opacity:1;visibility:visible;transform:translateY(0);animation:hsPopIn .2s ease}
+@keyframes hsPopIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.hs-pop.hs-pop-r{left:auto;right:0}
+.hs-pop-title{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#999;font-weight:600;margin:0 0 12px}
+.hs-pop-sub{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#999;font-weight:600;margin:16px 0 9px}
+.hs-pop-sub:first-child{margin-top:0}
+
+/* Location search + list */
+.hs-search-inp{width:100%;border:1px solid #e6e6e6;border-radius:10px;padding:10px 12px;font-family:var(--sans);font-size:13px;color:#333;outline:none;margin-bottom:10px;box-sizing:border-box}
+.hs-search-inp:focus{border-color:var(--gold)}
+.hs-zlist{max-height:230px;overflow-y:auto;margin:0 -4px;padding:0 4px}
+.hs-zitem{display:flex;align-items:center;gap:10px;padding:9px 8px;border-radius:8px;cursor:pointer;transition:background .15s}
+.hs-zitem:hover{background:rgba(0,0,0,.03)}
+.hs-zitem input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.hs-box{width:17px;height:17px;border:1.5px solid #ccc;border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.hs-zitem input:checked~.hs-box,.hs-titem input:checked~.hs-box{background:#111;border-color:#111}
+.hs-box svg{width:11px;height:11px;stroke:#fff;fill:none;stroke-width:3;opacity:0}
+.hs-zitem input:checked~.hs-box svg,.hs-titem input:checked~.hs-box svg{opacity:1}
+.hs-zdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.hs-zname{font-size:13.5px;color:#333;font-weight:500;flex:1}
+.hs-dot-ok{background:#3fae6a}
+.hs-dot-mid{background:var(--gold)}
+.hs-dot-hi{background:#d05a5a}
+.hs-noz{padding:18px 8px;font-size:13px;color:#999;text-align:center}
+.hs-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid #eee;font-size:10.5px;color:#999}
+.hs-legend span{display:flex;align-items:center;gap:5px}
+.hs-legend i{width:7px;height:7px;border-radius:50%;display:inline-block}
+
+/* Type list with svg icons */
+.hs-tlist{display:flex;flex-direction:column;gap:2px}
+.hs-titem{display:flex;align-items:center;gap:12px;padding:10px 8px;border-radius:8px;cursor:pointer;transition:background .15s}
+.hs-titem:hover{background:rgba(0,0,0,.03)}
+.hs-titem input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.hs-ticon{width:20px;height:20px;flex-shrink:0;color:#888;display:flex;align-items:center;justify-content:center}
+.hs-ticon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.hs-tname{font-size:13.5px;color:#333;font-weight:500;flex:1}
+.hs-titem input:checked~.hs-tname{color:#111;font-weight:600}
+.hs-titem input:checked~.hs-ticon{color:var(--gold)}
+
+/* Inline pill buttons (rec/baños/est) */
+.hs-pills{display:flex;flex-wrap:wrap;gap:8px}
+.hs-pill{flex:1;min-width:46px;border:none;background:#f0f0f0;color:#555;font-family:var(--sans);font-size:13px;font-weight:600;padding:10px 6px;border-radius:9px;cursor:pointer;transition:all .15s}
+.hs-pill:hover{background:#e6e6e6}
+.hs-pill.active{background:#111;color:#fff}
+
+/* Price slider */
+.hs-price-vals{font-size:15px;color:#333;font-weight:600;text-align:center;margin-bottom:18px}
+.hs-slider{position:relative;height:28px;margin:0 9px}
+.hs-track{position:absolute;top:12px;left:0;right:0;height:4px;background:#e6e6e6;border-radius:2px}
+.hs-range{position:absolute;top:12px;height:4px;background:var(--gold);border-radius:2px}
+.hs-slider input[type=range]{position:absolute;top:0;left:-9px;right:-9px;width:calc(100% + 18px);height:28px;margin:0;background:none;pointer-events:none;-webkit-appearance:none;appearance:none}
+.hs-slider input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;pointer-events:all;width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid #111;box-shadow:0 2px 6px rgba(0,0,0,.2);cursor:pointer}
+.hs-slider input[type=range]::-moz-range-thumb{pointer-events:all;width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid #111;box-shadow:0 2px 6px rgba(0,0,0,.2);cursor:pointer}
+.hs-slider input[type=range]::-moz-range-track{background:none;border:none}
+.hs-slider-ends{display:flex;justify-content:space-between;font-size:11px;color:#999;margin:8px 4px 0}
+.hs-optoggle{display:flex;gap:8px;margin-top:18px}
+
+/* Apply button inside pop */
+.hs-apply{width:100%;background:#111;color:#fff;border:none;border-radius:10px;padding:12px;font-family:var(--sans);font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;cursor:pointer;margin-top:16px;transition:all .3s}
+.hs-apply:hover{background:var(--gold);color:#111}
+
+/* Mobile trigger + modal */
+.hs-mobile-trigger{display:none}
+.hs-modal{display:none}
+@media(max-width:768px){
+  .hero-search{display:none}
+  .hs-mobile-trigger{position:fixed;left:50%;bottom:32px;transform:translateX(-50%);z-index:998;display:flex;align-items:center;justify-content:center;gap:10px;background:rgba(255,255,255,.95);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:1px solid rgba(0,0,0,.04);border-radius:50px;padding:16px 32px;box-shadow:0 8px 40px rgba(0,0,0,.18);font-family:var(--sans);font-size:14px;font-weight:600;color:#222;cursor:pointer}
+  .hs-mobile-trigger svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:2}
+  .hs-modal.open{display:flex;flex-direction:column;position:fixed;inset:0;z-index:2000;background:#fff;animation:hsPopIn .25s ease}
+  .hs-modal-head{display:flex;align-items:center;justify-content:space-between;padding:20px 22px;border-bottom:1px solid #eee;flex-shrink:0}
+  .hs-modal-head h2{font-family:var(--serif);font-size:20px;font-weight:400;margin:0;color:#111}
+  .hs-modal-close{background:none;border:none;font-size:28px;line-height:1;color:#888;cursor:pointer;padding:0 4px}
+  .hs-modal-body{flex:1;overflow-y:auto;padding:22px;display:flex;flex-direction:column;gap:28px}
+  .hs-msec-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#999;font-weight:700;margin:0 0 12px}
+  .hs-modal .hs-zlist{max-height:260px}
+  .hs-modal-foot{flex-shrink:0;padding:16px 22px;border-top:1px solid #eee}
+  .hs-modal-foot .hs-apply{margin-top:0}
 }
 /* Overlay y typewriter reveal */
 .hero-overlay{position:absolute;inset:0;z-index:9;background:#111;opacity:0;pointer-events:none}
@@ -1000,57 +1078,20 @@ textarea.fi{min-height:70px;max-height:110px;resize:vertical;line-height:1.5}
 <section class="hero" id="hero">
   <div class="hero-sticky" id="heroSticky">
 
-  <!-- Capa 0: Gradiente cielo claro -->
-  <div class="hero-bg"></div>
+  <!-- Capa 0: Video de fondo -->
+  <video autoplay muted loop playsinline id="hero-video">
+    <source src="video-inicio.mp4" type="video/mp4">
+  </video>
 
-  <!-- Capa 1: Nubes detrás de la casa -->
-  <div class="hero-clouds-bk" id="heroCloudsBk">
-    <img class="cloud-img cb1" src="assets/cloud.png" alt="">
-    <img class="cloud-img cb2" src="assets/cloud.png" alt="">
-    <img class="cloud-img cb3" src="assets/cloud.png" alt="">
-  </div>
+  <!-- Capa 1: Overlay oscuro para legibilidad del texto -->
+  <div class="hero-vid-overlay" aria-hidden="true"></div>
 
-  <!-- Capa 2: Casa — sube + zoom al scroll -->
-  <div class="hero-house" id="heroHouse">
-    <img src="casa.png" alt="Casa Montana Realty" loading="eager">
-  </div>
-
-  <!-- Capa 3: Niebla base + humo lateral -->
-  <div class="hero-fog-wrap" id="heroFog">
-    <div class="hero-fog"></div>
-    <div class="fog-lat fog-lat-l"></div>
-    <div class="fog-lat fog-lat-r"></div>
-    <img class="cloud-img sm1" src="assets/smoke.png" alt="">
-    <img class="cloud-img sm2" src="assets/smoke.png" alt="">
-  </div>
-
-  <!-- Capa 4: Nubes delante de la casa -->
-  <div class="hero-clouds-fr" id="heroCloudsF">
-    <img class="cloud-img cf1" src="assets/cloud.png" alt="">
-    <img class="cloud-img cf2" src="assets/cloud.png" alt="">
-  </div>
-
-  <!-- Capa 5: Texto principal -->
+  <!-- Capa 2: Texto principal -->
   <div class="hero-cnt" id="heroCnt">
     <p class="hero-eyebrow r v">Montana Realty Co · San Pedro Garza García</p>
     <h1 class="hero-title r v d1">Creando Tu<br>Sueño<br>Inmobiliario</h1>
     <p class="hero-sub r v d2"><span class="hero-sub-dark">Agentes expertos. Asesoría real.</span> <span class="hero-sub-light">El camino hacia tu próximo hogar.</span></p>
   </div>
-
-  <!-- Overlay oscuro para typewriter -->
-  <div class="hero-overlay" id="heroOverlay"></div>
-
-  <!-- Typewriter reveal -->
-  <div class="hero-reveal" id="heroReveal">
-    <svg class="reveal-icon" id="revealIcon" width="60" height="40" viewBox="0 0 60 40" fill="none">
-      <polygon points="0,40 18,6 30,22 42,6 60,40" fill="rgba(201,169,110,.18)"/>
-      <polyline points="0,40 18,6 30,22 42,6 60,40" stroke="#c9a96e" stroke-width="2.5" stroke-linejoin="round" fill="none"/>
-      <line x1="0" y1="40" x2="60" y2="40" stroke="#c9a96e" stroke-width="1" opacity="0.3"/>
-    </svg>
-    <div class="tw-city" id="twCity"></div>
-    <img src="assets/logo.png" alt="Montana Realty" id="twName" style="height:160px;width:auto;opacity:0;transition:opacity 0.3s;margin-top:16px">
-  </div>
-
 
   </div>
 </section>
@@ -1084,11 +1125,6 @@ textarea.fi{min-height:70px;max-height:110px;resize:vertical;line-height:1.5}
       <source src="video-montana.mp4" type="video/mp4">
     </video>
     <div class="why-video-overlay" aria-hidden="true"></div>
-    <button class="why-video-btn" id="whyVideoBtn" type="button" aria-label="Activar sonido">
-      <svg class="wvb-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="7,4.5 20,12 7,19.5"/></svg>
-      <svg class="wvb-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
-      <svg class="wvb-unmute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-    </button>
   </div>
 </section>
 
@@ -1741,17 +1777,7 @@ textarea.fi{min-height:70px;max-height:110px;resize:vertical;line-height:1.5}
 window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>50),{passive:true});
 
 // ── HERO SEARCH ──
-function heroSearchSubmit(e){
-  e.preventDefault();
-  const f=e.target;
-  const params=new URLSearchParams();
-  if(f.ubicacion.value)params.set('ubicacion',f.ubicacion.value);
-  if(f.tipo.value)params.set('tipo',f.tipo.value);
-  if(f.recamaras.value)params.set('recamaras',f.recamaras.value);
-  if(f.precio.value)params.set('precio',f.precio.value);
-  const qs=params.toString();
-  window.location.href='propiedades.html'+(qs?'?'+qs:'');
-}
+// Hero filter bar logic lives in the dedicated module near its markup (see #heroSearch).
 
 // ── MOBILE MENU ──
 function toggleMob(){
@@ -1812,7 +1838,7 @@ function closeMob(){
     }
 
     // Nav adaptativo: dark-hero cuando el overlay es visible (y aún estamos en el hero)
-    if(nav) nav.classList.toggle('dark-hero', progress>0.55 && sy<=vh);
+    if(nav) nav.classList.toggle('dark-hero', sy<=50);
 
     // Overlay oscurece (progress 0.55→0.75)
     if(heroOverlay) heroOverlay.style.opacity=String(remap(progress,.55,.75)*.85);
@@ -3201,57 +3227,363 @@ document.querySelectorAll('.svc-card').forEach(card=>{
 </script>
 
 <!-- Barra flotante fija (siempre visible) -->
-<form class="hero-search" id="heroSearch" onsubmit="heroSearchSubmit(event)" autocomplete="off" data-form-type="other" data-lpignore="true">
-  <div class="hs-field">
+<div class="hero-search" id="heroSearch">
+  <div class="hs-field" data-pop="loc" role="button" tabindex="0" aria-haspopup="true">
     <span class="hs-label">Ubicación</span>
-    <select name="ubicacion">
-      <option value="">Todas las zonas</option>
-      <option>Valle Oriente</option>
-      <option>Del Valle</option>
-      <option>San Agustín</option>
-      <option>Colinas de San Jerónimo</option>
-      <option>Carretera Nacional</option>
-      <option>Centrito Valle</option>
-    </select>
+    <span class="hs-value placeholder" id="hsLocVal">Todas las zonas</span>
+    <div class="hs-pop" id="hsPopLoc">
+      <input type="text" class="hs-search-inp" id="hsZoneSearch" placeholder="Buscar zona..." autocomplete="off" data-lpignore="true" data-form-type="other">
+      <div class="hs-zlist" id="hsZoneList"></div>
+      <div class="hs-legend">
+        <span><i class="hs-dot-ok"></i>Accesible</span>
+        <span><i class="hs-dot-mid"></i>Premium</span>
+        <span><i class="hs-dot-hi"></i>Ultra premium</span>
+      </div>
+      <button type="button" class="hs-apply" data-apply="loc">Aplicar</button>
+    </div>
   </div>
   <div class="hs-sep"></div>
-  <div class="hs-field">
+  <div class="hs-field" data-pop="type" role="button" tabindex="0" aria-haspopup="true">
     <span class="hs-label">Tipo</span>
-    <select name="tipo">
-      <option value="">Todos</option>
-      <option>Casa</option>
-      <option>Departamento</option>
-      <option>Terreno</option>
-      <option>Local Comercial</option>
-      <option>Oficina</option>
-    </select>
+    <span class="hs-value placeholder" id="hsTypeVal">Todos</span>
+    <div class="hs-pop" id="hsPopType">
+      <div class="hs-tlist" id="hsTypeList"></div>
+      <button type="button" class="hs-apply" data-apply="type">Aplicar</button>
+    </div>
   </div>
   <div class="hs-sep"></div>
-  <div class="hs-field">
+  <div class="hs-field" data-pop="rec" role="button" tabindex="0" aria-haspopup="true">
     <span class="hs-label">Recámaras</span>
-    <select name="recamaras">
-      <option value="">Cualquiera</option>
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4+</option>
-    </select>
+    <span class="hs-value placeholder" id="hsRecVal">Cualquiera</span>
+    <div class="hs-pop" id="hsPopRec">
+      <div class="hs-pop-sub">Recámaras</div>
+      <div class="hs-pills" data-group="rec"></div>
+      <div class="hs-pop-sub">Baños</div>
+      <div class="hs-pills" data-group="banos"></div>
+      <div class="hs-pop-sub">Estacionamientos</div>
+      <div class="hs-pills" data-group="est"></div>
+      <button type="button" class="hs-apply" data-apply="rec">Aplicar</button>
+    </div>
   </div>
   <div class="hs-sep"></div>
-  <div class="hs-field">
+  <div class="hs-field" data-pop="price" role="button" tabindex="0" aria-haspopup="true">
     <span class="hs-label">Precio</span>
-    <select name="precio">
-      <option value="">Cualquier precio</option>
-      <option>Hasta $3M</option>
-      <option>$3M - $8M</option>
-      <option>$8M - $15M</option>
-      <option>$15M+</option>
-    </select>
+    <span class="hs-value placeholder" id="hsPriceVal">Cualquier precio</span>
+    <div class="hs-pop hs-pop-r" id="hsPopPrice">
+      <div class="hs-pop-title">Rango de precio</div>
+      <div class="hs-price-vals" id="hsPriceLabel">$1M — $100M MXN</div>
+      <div class="hs-slider">
+        <div class="hs-track"></div>
+        <div class="hs-range" id="hsPriceFill"></div>
+        <input type="range" id="hsPriceMin" min="0" max="13" step="1" value="0">
+        <input type="range" id="hsPriceMax" min="0" max="13" step="1" value="13">
+      </div>
+      <div class="hs-slider-ends"><span id="hsPriceEndMin">$1M</span><span id="hsPriceEndMax">$100M</span></div>
+      <div class="hs-optoggle hs-pills" data-group="op">
+        <button type="button" class="hs-pill active" data-value="venta">Venta</button>
+        <button type="button" class="hs-pill" data-value="renta">Renta</button>
+      </div>
+      <button type="button" class="hs-apply" data-apply="price">Aplicar</button>
+    </div>
   </div>
-  <button type="submit" class="hs-btn">Buscar</button>
-</form>
+  <button type="button" class="hs-btn" id="hsSearchBtn">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line></svg>
+    Buscar
+  </button>
+</div>
+
+<!-- Mobile: trigger + modal fullscreen -->
+<button type="button" class="hs-mobile-trigger" id="hsMobileTrigger">
+  <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line></svg>
+  Buscar propiedad
+</button>
+<div class="hs-modal" id="hsModal" aria-hidden="true">
+  <div class="hs-modal-head">
+    <h2>Buscar propiedad</h2>
+    <button type="button" class="hs-modal-close" id="hsModalClose" aria-label="Cerrar">&times;</button>
+  </div>
+  <div class="hs-modal-body">
+    <div>
+      <div class="hs-msec-label">Ubicación</div>
+      <input type="text" class="hs-search-inp" id="hsZoneSearchM" placeholder="Buscar zona..." autocomplete="off" data-lpignore="true" data-form-type="other">
+      <div class="hs-zlist" id="hsZoneListM"></div>
+      <div class="hs-legend">
+        <span><i class="hs-dot-ok"></i>Accesible</span>
+        <span><i class="hs-dot-mid"></i>Premium</span>
+        <span><i class="hs-dot-hi"></i>Ultra premium</span>
+      </div>
+    </div>
+    <div>
+      <div class="hs-msec-label">Tipo</div>
+      <div class="hs-tlist" id="hsTypeListM"></div>
+    </div>
+    <div>
+      <div class="hs-msec-label">Recámaras</div>
+      <div class="hs-pills" data-group="rec"></div>
+      <div class="hs-msec-label" style="margin-top:18px">Baños</div>
+      <div class="hs-pills" data-group="banos"></div>
+      <div class="hs-msec-label" style="margin-top:18px">Estacionamientos</div>
+      <div class="hs-pills" data-group="est"></div>
+    </div>
+    <div>
+      <div class="hs-msec-label">Precio</div>
+      <div class="hs-price-vals" id="hsPriceLabelM">$1M — $100M MXN</div>
+      <div class="hs-slider">
+        <div class="hs-track"></div>
+        <div class="hs-range" id="hsPriceFillM"></div>
+        <input type="range" id="hsPriceMinM" min="0" max="13" step="1" value="0">
+        <input type="range" id="hsPriceMaxM" min="0" max="13" step="1" value="13">
+      </div>
+      <div class="hs-slider-ends"><span id="hsPriceEndMinM">$1M</span><span id="hsPriceEndMaxM">$100M</span></div>
+      <div class="hs-optoggle hs-pills" data-group="op">
+        <button type="button" class="hs-pill active" data-value="venta">Venta</button>
+        <button type="button" class="hs-pill" data-value="renta">Renta</button>
+      </div>
+    </div>
+  </div>
+  <div class="hs-modal-foot">
+    <button type="button" class="hs-apply" id="hsModalApply">Ver resultados</button>
+  </div>
+</div>
 
 <script>
+/* ════════ HERO FILTER BAR — premium custom dropdowns ════════ */
+(function(){
+  const bar=document.getElementById('heroSearch');
+  if(!bar) return;
+
+  const I=s=>'<svg viewBox="0 0 24 24">'+s+'</svg>';
+  const CHECK='<svg viewBox="0 0 24 24"><polyline points="4 12 9 17 20 6"></polyline></svg>';
+
+  const ZONES=[
+    {n:'Valle Oriente',s:'valle-oriente',t:'hi'},
+    {n:'Valle del Campestre',s:'valle-del-campestre',t:'mid'},
+    {n:'Del Valle',s:'del-valle',t:'mid'},
+    {n:'San Agustín',s:'san-agustin',t:'hi'},
+    {n:'Centrito Valle',s:'centrito-valle',t:'mid'},
+    {n:'Lomas del Valle',s:'lomas-del-valle',t:'mid'},
+    {n:'Fuentes del Valle',s:'fuentes-del-valle',t:'mid'},
+    {n:'Chipinque',s:'chipinque',t:'hi'},
+    {n:'Rincón del Valle',s:'rincon-del-valle',t:'mid'},
+    {n:'Carretera Nacional',s:'carretera-nacional',t:'hi'},
+    {n:'Colinas de San Jerónimo',s:'colinas-de-san-jeronimo',t:'ok'},
+    {n:'Cumbres',s:'cumbres',t:'ok'},
+    {n:'Tampiquito',s:'tampiquito',t:'ok'},
+    {n:'San Pedro Centro',s:'san-pedro-centro',t:'mid'},
+    {n:'Privanzas',s:'privanzas',t:'mid'}
+  ];
+  const TYPES=[
+    {n:'Casa',s:'casa',i:I('<path d="M4 11 12 4l8 7"/><path d="M6 10v9h12v-9"/>')},
+    {n:'Departamento',s:'departamento',i:I('<rect x="6" y="3" width="12" height="18"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2"/>')},
+    {n:'Penthouse',s:'penthouse',i:I('<path d="M5 21V9l7-5 7 5v12"/><path d="M9 21v-5h6v5"/>')},
+    {n:'Oficina',s:'oficina',i:I('<rect x="4" y="3" width="16" height="18"/><path d="M8 7h2M14 7h2M8 11h2M14 11h2M8 15h2M14 15h2"/>')},
+    {n:'Local Comercial',s:'local',i:I('<path d="M4 9 5 4h14l1 5"/><path d="M5 9v11h14V9"/><path d="M10 20v-5h4v5"/>')},
+    {n:'Bodega',s:'bodega',i:I('<path d="M3 9 12 4l9 5v11H3z"/><path d="M7 20v-7h10v7"/>')},
+    {n:'Terreno',s:'terreno',i:I('<path d="M3 20h18"/><path d="M12 20v-6"/><path d="M12 14c0-3-2-4-2-6a2 2 0 0 1 4 0c0 2-2 3-2 6Z"/>')},
+    {n:'Desarrollo',s:'desarrollo',i:I('<rect x="3" y="8" width="7" height="13"/><rect x="13" y="3" width="8" height="18"/><path d="M6 12h1M16 7h2M16 11h2M16 15h2"/>')}
+  ];
+  const PILLS={
+    rec:[['','Cualquiera'],['1','1'],['2','2'],['3','3'],['4','4'],['5','5+']],
+    banos:[['','Cualquiera'],['1','1'],['2','2'],['3','3'],['4','4+']],
+    est:[['','Cualquiera'],['1','1'],['2','2'],['3','3+']]
+  };
+  const STEPS={
+    venta:[1e6,2e6,3e6,5e6,8e6,10e6,15e6,20e6,25e6,30e6,35e6,50e6,75e6,100e6],
+    renta:[5000,10000,15000,20000,30000,40000,50000,75000,100000,150000,200000]
+  };
+
+  const state={zones:new Set(),types:new Set(),rec:'',banos:'',est:'',op:'venta',pMin:0,pMax:STEPS.venta.length-1,pTouched:false};
+
+  const norm=s=>(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+  const $$=s=>Array.from(document.querySelectorAll(s));
+
+  /* ---- render zone + type lists into desktop pop & mobile modal ---- */
+  $$('.hs-zlist').forEach(box=>{
+    box.innerHTML=ZONES.map(z=>
+      `<label class="hs-zitem" data-slug="${z.s}" data-norm="${norm(z.n)}">
+         <input type="checkbox" value="${z.s}">
+         <span class="hs-box">${CHECK}</span>
+         <i class="hs-zdot hs-dot-${z.t}"></i>
+         <span class="hs-zname">${z.n}</span>
+       </label>`).join('');
+  });
+  $$('.hs-tlist').forEach(box=>{
+    box.innerHTML=TYPES.map(t=>
+      `<label class="hs-titem" data-slug="${t.s}">
+         <input type="checkbox" value="${t.s}">
+         <span class="hs-ticon">${t.i}</span>
+         <span class="hs-tname">${t.n}</span>
+         <span class="hs-box">${CHECK}</span>
+       </label>`).join('');
+  });
+  $$('.hs-pills[data-group]').forEach(box=>{
+    const g=box.dataset.group;
+    if(g==='op') return;
+    box.innerHTML=PILLS[g].map(([v,t],i)=>
+      `<button type="button" class="hs-pill${v===''?' active':''}" data-value="${v}">${t}</button>`).join('');
+  });
+
+  /* ---- label helpers ---- */
+  const setVal=(id,txt,isPh)=>{
+    document.querySelectorAll('#'+id).forEach(el=>{
+      el.textContent=txt;el.classList.toggle('placeholder',!!isPh);
+    });
+  };
+  function fmtMoney(v){
+    return state.op==='venta'
+      ? '$'+(v/1e6).toLocaleString('en-US',{maximumFractionDigits:1})+'M'
+      : '$'+v.toLocaleString('en-US');
+  }
+  function priceText(){
+    const a=STEPS[state.op],lo=fmtMoney(a[state.pMin]),hi=fmtMoney(a[state.pMax]);
+    return lo+' — '+hi+(state.op==='venta'?' MXN':' MXN/mes');
+  }
+  function refreshLabels(){
+    // location
+    const zc=state.zones.size;
+    setVal('hsLocVal',zc===0?'Todas las zonas':zc===1?ZONES.find(z=>z.s===[...state.zones][0]).n:zc+' zonas',zc===0);
+    // type
+    const tc=state.types.size;
+    setVal('hsTypeVal',tc===0?'Todos':tc===1?TYPES.find(t=>t.s===[...state.types][0]).n:tc+' tipos',tc===0);
+    // rec / baños / est
+    const parts=[];
+    if(state.rec) parts.push(state.rec+(state.rec==='5'?'+':'')+' rec');
+    if(state.banos) parts.push(state.banos+(state.banos==='4'?'+':'')+' baños');
+    if(state.est) parts.push(state.est+(state.est==='3'?'+':'')+' est');
+    setVal('hsRecVal',parts.length?parts.join(' · '):'Cualquiera',!parts.length);
+    // price
+    setVal('hsPriceVal',state.pTouched?priceText():'Cualquier precio',!state.pTouched);
+  }
+
+  /* ---- slider ---- */
+  function renderSlider(){
+    const a=STEPS[state.op],max=a.length-1,pct=i=>(i/max)*100;
+    ['','M'].forEach(sfx=>{
+      const mn=document.getElementById('hsPriceMin'+sfx),mx=document.getElementById('hsPriceMax'+sfx);
+      if(!mn) return;
+      mn.max=mx.max=max;mn.value=state.pMin;mx.value=state.pMax;
+      const fill=document.getElementById('hsPriceFill'+sfx);
+      fill.style.left=pct(state.pMin)+'%';
+      fill.style.width=(pct(state.pMax)-pct(state.pMin))+'%';
+      const lbl=document.getElementById('hsPriceLabel'+sfx);if(lbl) lbl.textContent=priceText();
+      const e0=document.getElementById('hsPriceEndMin'+sfx),e1=document.getElementById('hsPriceEndMax'+sfx);
+      if(e0) e0.textContent=fmtMoney(a[0]);
+      if(e1) e1.textContent=fmtMoney(a[max]);
+    });
+    refreshLabels();
+  }
+  ['','M'].forEach(sfx=>{
+    const mn=document.getElementById('hsPriceMin'+sfx),mx=document.getElementById('hsPriceMax'+sfx);
+    if(!mn) return;
+    const onIn=()=>{
+      let lo=+mn.value,hi=+mx.value;
+      if(lo>hi){ if(document.activeElement===mn) lo=hi; else hi=lo; }
+      state.pMin=lo;state.pMax=hi;state.pTouched=true;renderSlider();
+    };
+    mn.addEventListener('input',onIn);mx.addEventListener('input',onIn);
+  });
+
+  /* ---- delegated change/click handlers ---- */
+  document.addEventListener('change',e=>{
+    const zi=e.target.closest('.hs-zitem');
+    if(zi){
+      const s=zi.dataset.slug;
+      e.target.checked?state.zones.add(s):state.zones.delete(s);
+      $$('.hs-zitem[data-slug="'+s+'"] input').forEach(i=>i.checked=state.zones.has(s));
+      refreshLabels();return;
+    }
+    const ti=e.target.closest('.hs-titem');
+    if(ti){
+      const s=ti.dataset.slug;
+      e.target.checked?state.types.add(s):state.types.delete(s);
+      $$('.hs-titem[data-slug="'+s+'"] input').forEach(i=>i.checked=state.types.has(s));
+      refreshLabels();return;
+    }
+  });
+  document.addEventListener('click',e=>{
+    const pill=e.target.closest('.hs-pill');
+    if(pill && pill.closest('.hs-pills')){
+      const g=pill.closest('.hs-pills').dataset.group,v=pill.dataset.value;
+      if(g==='op'){
+        if(state.op===v) return;
+        state.op=v;state.pMin=0;state.pMax=STEPS[v].length-1;state.pTouched=true;
+        $$('.hs-pills[data-group="op"] .hs-pill').forEach(p=>p.classList.toggle('active',p.dataset.value===v));
+        renderSlider();
+      }else{
+        state[g]=v;
+        $$('.hs-pills[data-group="'+g+'"] .hs-pill').forEach(p=>p.classList.toggle('active',p.dataset.value===v));
+        refreshLabels();
+      }
+    }
+  });
+
+  /* ---- zone search filter ---- */
+  ['hsZoneSearch','hsZoneSearchM'].forEach(id=>{
+    const inp=document.getElementById(id);if(!inp) return;
+    inp.addEventListener('input',()=>{
+      const q=norm(inp.value),list=inp.parentElement.querySelector('.hs-zlist');
+      let any=false;
+      list.querySelectorAll('.hs-zitem').forEach(it=>{
+        const ok=it.dataset.norm.includes(q);it.style.display=ok?'':'none';if(ok) any=true;
+      });
+      let nz=list.querySelector('.hs-noz');
+      if(!any){ if(!nz){nz=document.createElement('div');nz.className='hs-noz';nz.textContent='Sin coincidencias';list.appendChild(nz);} }
+      else if(nz) nz.remove();
+    });
+  });
+
+  /* ---- desktop dropdown open/close ---- */
+  function closeAll(){
+    $$('.hero-search .hs-field.open').forEach(f=>f.classList.remove('open'));
+    $$('.hero-search .hs-pop.open').forEach(p=>p.classList.remove('open'));
+  }
+  $$('.hero-search .hs-field').forEach(field=>{
+    field.addEventListener('click',e=>{
+      if(e.target.closest('.hs-pop')) return; // clicks inside panel never toggle
+      const pop=field.querySelector('.hs-pop'),isOpen=field.classList.contains('open');
+      closeAll();
+      if(!isOpen){ field.classList.add('open');pop.classList.add('open'); }
+    });
+    field.addEventListener('keydown',e=>{
+      if(e.key==='Enter'||e.key===' '){ if(e.target.closest('.hs-pop')) return; e.preventDefault();field.click(); }
+    });
+  });
+  document.addEventListener('click',e=>{
+    if(!e.target.closest('.hero-search .hs-field')) closeAll();
+  });
+  $$('.hs-apply[data-apply]').forEach(b=>b.addEventListener('click',closeAll));
+
+  /* ---- build URL + navigate ---- */
+  function go(){
+    const p=new URLSearchParams();
+    if(state.zones.size) p.set('zona',[...state.zones].join(','));
+    if(state.types.size) p.set('tipo',[...state.types].join(','));
+    if(state.rec) p.set('rec',state.rec);
+    if(state.banos) p.set('banos',state.banos);
+    if(state.est) p.set('est',state.est);
+    if(state.pTouched){
+      const a=STEPS[state.op];
+      p.set('precio_min',String(a[state.pMin]));
+      p.set('precio_max',String(a[state.pMax]));
+    }
+    p.set('operacion',state.op);
+    window.location.href='propiedades.html?'+p.toString();
+  }
+  document.getElementById('hsSearchBtn').addEventListener('click',go);
+  document.getElementById('hsModalApply').addEventListener('click',go);
+
+  /* ---- mobile modal ---- */
+  const modal=document.getElementById('hsModal');
+  document.getElementById('hsMobileTrigger').addEventListener('click',()=>{
+    modal.classList.add('open');document.body.style.overflow='hidden';
+  });
+  document.getElementById('hsModalClose').addEventListener('click',()=>{
+    modal.classList.remove('open');document.body.style.overflow='';
+  });
+
+  renderSlider();
+})();
+
 // Anti-autofill: strip autofill hints from all inputs to prevent iCloud/Safari/LastPass password popup
 document.querySelectorAll('input').forEach(input => {
   input.setAttribute('autocomplete', 'off');
