@@ -712,12 +712,13 @@ body{font-family:var(--sans);background:#fff;color:#111;overflow-x:hidden}
     <div class="filter-dropdown" data-filter="operation">
       <button class="filter-trigger" type="button">
         <span class="filter-label">Operación</span>
-        <span class="filter-value" data-default="Comprar">Comprar</span>
+        <span class="filter-value" data-default="Todas">Todas</span>
         <span class="filter-chevron">▾</span>
       </button>
       <div class="filter-panel">
         <div class="filter-panel-title">Tipo de operación</div>
-        <label class="filter-radio"><input type="radio" name="operation" value="sale" checked><span>Comprar</span></label>
+        <label class="filter-radio"><input type="radio" name="operation" value="all" checked><span>Todas</span></label>
+        <label class="filter-radio"><input type="radio" name="operation" value="sale"><span>Comprar</span></label>
         <label class="filter-radio"><input type="radio" name="operation" value="rental"><span>Rentar</span></label>
         <label class="filter-radio"><input type="radio" name="operation" value="foreclosure"><span>Remates</span></label>
       </div>
@@ -1013,7 +1014,7 @@ function setView(v){
 // ── ADVANCED FILTERS STATE ──
 let currentFilters={
   search:'',
-  operation:'sale',
+  operation:'all',
   propertyTypes:[],
   bedroomsMin:'',
   bedroomsMax:'',
@@ -1119,14 +1120,14 @@ function clearFilter(filterType){
 
 function clearAllFilters(){
   currentFilters={
-    search:'',operation:'sale',propertyTypes:[],
+    search:'',operation:'all',propertyTypes:[],
     bedroomsMin:'',bedroomsMax:'',bathrooms:'',parking:'',
     priceMin:'',priceMax:'',currency:'MXN',
     surfaceType:'construction',surfaceMin:'',surfaceMax:'',amenities:[],heroZones:[]
   };
   document.getElementById('filterSearch').value='';
-  const saleRadio=document.querySelector('input[name="operation"][value="sale"]');
-  if(saleRadio) saleRadio.checked=true;
+  const allOpRadio=document.querySelector('input[name="operation"][value="all"]');
+  if(allOpRadio) allOpRadio.checked=true;
   document.querySelectorAll('input[name="propertyType"]').forEach(c=>c.checked=false);
   document.getElementById('bedroomsMin').value='';
   document.getElementById('bedroomsMax').value='';
@@ -1145,7 +1146,7 @@ function clearAllFilters(){
   const constrRadio=document.querySelector('input[name="surfaceType"][value="construction"]');
   if(constrRadio) constrRadio.checked=true;
   document.querySelectorAll('input[name="amenity"]').forEach(c=>c.checked=false);
-  updateFilterValue('operation','Comprar');
+  updateFilterValue('operation','Todas');
   updateFilterValue('propertyType','Todos');
   updateBedroomsLabel();
   updatePriceLabel();
@@ -1271,8 +1272,8 @@ function initFilters(){
   document.querySelectorAll('input[name="operation"]').forEach(radio=>{
     radio.addEventListener('change',(e)=>{
       currentFilters.operation=e.target.value;
-      const labels={sale:'Comprar',rental:'Rentar',foreclosure:'Remates'};
-      updateFilterValue('operation',labels[e.target.value]||'Comprar');
+      const labels={all:'Todas',sale:'Comprar',rental:'Rentar',foreclosure:'Remates'};
+      updateFilterValue('operation',labels[e.target.value]||'Todas');
       applyFilters();
     });
   });
@@ -1400,11 +1401,10 @@ function buildApiParams(){
   const searchActive=!!(currentFilters.search||'').trim();
   q.set('limit',String(searchActive?50:PER_PAGE));
 
-  // operation_type: 'sale' | 'rental' (foreclosure passes through; backend may ignore)
-  if(currentFilters.operation && currentFilters.operation!=='foreclosure'){
-    q.set('operation_type',currentFilters.operation);
-  } else if(currentFilters.operation==='foreclosure'){
-    q.set('operation_type','foreclosure');
+  // operation_type: solo si NO es "all/todas". 'sale' | 'rental' | 'foreclosure'.
+  const _op=currentFilters.operation;
+  if(_op && _op!=='all'){
+    q.set('operation_type',_op);
   }
 
   // property_type: only one supported by API; multi-select handled client-side
@@ -1559,7 +1559,7 @@ function pcStatusBadge(p,op){
     return {label:'PRÓXIMAMENTE',cls:'st-soon',dim:true};
   // published (o estado no reconocido): badge por tipo de operación
   if(ot==='rental') return {label:'EN RENTA',cls:'st-rent',dim:false};
-  if(ot==='foreclosure') return {label:'EN REMATE',cls:'st-foreclosure',dim:false};
+  if(ot==='foreclosure'||ot==='auction') return {label:'REMATE',cls:'st-foreclosure',dim:false};
   return {label:'EN VENTA',cls:'st-sale',dim:false};
 }
 
@@ -1651,20 +1651,32 @@ function renderProperty(p){
 
 // Expande propiedades → "listings": 1 entrada por operación (venta/renta),
 // igual que Pincali cuenta por anuncio. Respeta el filtro Comprar/Rentar.
+function opBadge(t){
+  if(t==='sale') return 'EN VENTA';
+  if(t==='rental') return 'EN RENTA';
+  if(t==='foreclosure'||t==='auction') return 'REMATE';
+  return 'CONSULTAR';
+}
+// ¿La operación coincide con el filtro elegido? 'all' = todas.
+function opMatchesFilter(t,f){
+  if(!f||f==='all') return true;
+  if(f==='foreclosure') return t==='foreclosure'||t==='auction'; // EasyBroker usa uno u otro
+  return t===f;
+}
 function buildListings(props){
-  const opFilter=currentFilters.operation||''; // ''=ambas | 'sale' | 'rental' | 'foreclosure'
+  const opFilter=currentFilters.operation||'all'; // 'all' | 'sale' | 'rental' | 'foreclosure'
   const out=[];
   for(const p of props){
     const ops=(p&&p.operations)||[];
     if(!ops.length) continue; // sin operaciones → no se muestra
     for(const op of ops){
-      if(opFilter && op.type!==opFilter) continue;
+      if(!opMatchesFilter(op.type,opFilter)) continue;
       out.push(Object.assign({},p,{
         __op:op,
         operationType:op.type,
         operationAmount:op.amount,
         operationCurrency:op.currency,
-        badge:op.type==='sale'?'EN VENTA':(op.type==='rental'?'EN RENTA':(op.type==='foreclosure'?'EN REMATE':'CONSULTAR'))
+        badge:opBadge(op.type)
       }));
     }
   }
@@ -1900,18 +1912,16 @@ function sortCards(){
 (function(){
   const params=new URLSearchParams(window.location.search);
 
-  // operacion: venta|renta|remates
+  // operacion: todas|venta|renta|remates  (sin parámetro → "Todas")
   const op=params.get('operacion');
-  if(op){
-    const map={venta:'sale',renta:'rental',remates:'foreclosure'};
-    const v=map[op.toLowerCase()];
-    if(v){
-      currentFilters.operation=v;
-      const radio=document.querySelector(`input[name="operation"][value="${v}"]`);
-      if(radio) radio.checked=true;
-      const labels={sale:'Comprar',rental:'Rentar',foreclosure:'Remates'};
-      updateFilterValue('operation',labels[v]);
-    }
+  {
+    const map={todas:'all',venta:'sale',renta:'rental',remates:'foreclosure'};
+    const v=(op&&map[op.toLowerCase()])||'all'; // default / desconocido → Todas
+    currentFilters.operation=v;
+    const radio=document.querySelector(`input[name="operation"][value="${v}"]`);
+    if(radio) radio.checked=true;
+    const labels={all:'Todas',sale:'Comprar',rental:'Rentar',foreclosure:'Remates'};
+    updateFilterValue('operation',labels[v]||'Todas');
   }
 
   // zona: slugs from the hero bar → display names matched client-side
