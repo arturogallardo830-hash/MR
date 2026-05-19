@@ -127,7 +127,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Lato:wght@300;400;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/components.css">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -560,30 +560,27 @@ em{font-style:italic}
 }
 
 /* TESTIMONIALS v2 — FIND style, light bg */
-.testi-v2{background:#f9fafb;color:#111;padding:48px 48px;position:relative}
+.testi-v2{background:#f9fafb;color:#111;padding:120px 48px;position:relative}
 .testi-v2 .testi-title{font-family:var(--sans);font-weight:800;font-size:clamp(24px,3.4vw,36px);line-height:1.15;letter-spacing:-.018em;max-width:1100px;margin:0 0 24px;text-align:left}
 .testi-v2 .testi-title .tt-word{display:inline-block;color:#d0d0d0;transition:color .3s ease;will-change:color}
 .testi-v2 .testi-title .tt-word.on{color:#111}
 .testi-v2 .tt-chunk{display:inline}
 
-.testi-v2-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center;max-width:1400px;margin:0 auto}
-.testi-v2-img{position:relative;height:280px;max-height:280px;width:auto;max-width:100%;aspect-ratio:3/4;border-radius:8px;overflow:hidden;background:#e5e7eb;justify-self:start}
-.testi-v2-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s cubic-bezier(.25,.46,.45,.94)}
-.testi-v2-img img.on{opacity:1}
+.testi-v2-grid{display:block;max-width:900px;margin:0 auto}
 
-.testi-v2-right{display:flex;flex-direction:column;justify-content:center;padding:8px 0}
+.testi-v2-right{display:flex;flex-direction:column;justify-content:center;padding:8px 0;text-align:center}
 .testi-v2-divider{width:100%;height:1px;background:#e5e7eb;margin-bottom:16px}
-.testi-v2-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:20px}
-.testi-v2-pager{display:flex;gap:10px;align-items:center}
+.testi-v2-topbar{position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:20px;gap:20px}
+.testi-v2-pager{display:flex;gap:10px;align-items:center;justify-content:center}
 .tpg{width:32px;height:32px;border-radius:50%;border:1.5px solid #d1d5db;background:transparent;color:#9ca3af;font-family:var(--sans);font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s cubic-bezier(.25,.46,.45,.94);padding:0}
 .tpg:hover{border-color:#6b7280;color:#4b5563}
 .tpg.active{border-color:#111;border-width:2px;color:#111;font-weight:600}
-.testi-v2-quotes{font-family:var(--serif);font-size:36px;line-height:1;color:#111;font-weight:600;margin-left:auto;user-select:none}
+.testi-v2-quotes{font-family:var(--serif);font-size:36px;line-height:1;color:#111;font-weight:600;position:absolute;right:0;top:50%;transform:translateY(-50%);user-select:none}
 
 .testi-v2-quote{min-height:140px;opacity:1;transition:opacity .3s cubic-bezier(.25,.46,.45,.94)}
 .testi-v2-quote.fading{opacity:0}
-.testi-v2-text{font-family:'Cinzel',Georgia,serif;font-size:18px;line-height:1.55;color:#333;font-weight:400;margin:0 0 20px}
-.testi-v2-author{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.testi-v2-text{font-family:'Cinzel',Georgia,serif;font-size:18px;line-height:1.55;color:#333;font-weight:400;max-width:800px;margin:0 auto 20px;text-align:center}
+.testi-v2-author{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
 .testi-v2-name{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#111}
 .testi-v2-slash{color:#9ca3af;font-weight:400}
 .testi-v2-stars{color:#111;font-size:14px;letter-spacing:3px}
@@ -1007,10 +1004,8 @@ textarea.fi{min-height:70px;max-height:110px;resize:vertical;line-height:1.5}
   footer,.footer-main,.footer-bottom{padding-left:24px;padding-right:24px}
   .footer-main{grid-template-columns:1fr;gap:32px;padding-top:48px;padding-bottom:48px}
   .footer-bottom{flex-direction:column;gap:14px}
-  .testi-v2{padding:40px 22px}
+  .testi-v2{padding:72px 22px}
   .testi-v2 .testi-title{margin:0 0 18px}
-  .testi-v2-grid{grid-template-columns:1fr;gap:20px}
-  .testi-v2-img{aspect-ratio:4/3;height:auto;max-height:220px;width:100%;justify-self:stretch}
   .testi-v2-right{padding:0}
   .testi-v2-text{font-size:16px}
   .testi-v2-quotes{font-size:28px}
@@ -1331,14 +1326,6 @@ textarea.fi{min-height:70px;max-height:110px;resize:vertical;line-height:1.5}
       data-muted="Lo dicen nuestros clientes."></h2>
 
   <div class="testi-v2-grid">
-    <div class="testi-v2-img" id="testiImg">
-      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=85" alt="Cliente Montana Realty" class="on" data-idx="0">
-      <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=900&q=85" alt="Cliente Montana Realty" data-idx="1">
-      <img src="https://images.unsplash.com/photo-1557862921-37829c790f19?w=900&q=85" alt="Cliente Montana Realty" data-idx="2">
-      <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=900&q=85" alt="Cliente Montana Realty" data-idx="3">
-      <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=900&q=85" alt="Cliente Montana Realty" data-idx="4">
-    </div>
-
     <div class="testi-v2-right">
       <div class="testi-v2-divider"></div>
       <div class="testi-v2-topbar">
@@ -1367,7 +1354,7 @@ textarea.fi{min-height:70px;max-height:110px;resize:vertical;line-height:1.5}
     <div class="rct-hero-overlay"></div>
     <div class="rct-hero-cnt">
       <span class="rct-eye r">Únete al equipo</span>
-      <h2 class="rct-title r d1">Sé parte de <em>Montana Realty Co.</em></h2>
+      <h2 class="rct-title r d1">Sé parte de <em style="display:inline-block;white-space:nowrap">Montana Realty Co.</em></h2>
       <p class="rct-sub r d2">El equipo que está redefiniendo el lujo en San Pedro.</p>
       <button type="button" onclick="openApplyModal()" class="rct-cta-primary r d3">Aplica ahora <span aria-hidden="true">→</span></button>
     </div>

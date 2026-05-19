@@ -73,7 +73,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Lato:wght@300;400;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -1505,6 +1505,17 @@ function detectAmenities(p){
   return found;
 }
 
+const PC_ICONS={
+  bed:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9v10"/><path d="M2 13h20"/><path d="M22 19V9a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v4"/></svg>',
+  bath:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3z"/><path d="M6 12V6a2 2 0 0 1 2-2 2 2 0 0 1 2 2"/><path d="M9 6h2"/><path d="M7 19l-1 2"/><path d="M18 19l1 2"/></svg>',
+  car:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14l1.5-5A2 2 0 0 1 7.4 7.5h9.2a2 2 0 0 1 1.9 1.5L20 14"/><rect x="4" y="14" width="16" height="3.5" rx="0.5"/><path d="M6 17.5v1.5"/><path d="M18 17.5v1.5"/><circle cx="7.5" cy="15.7" r="1"/><circle cx="16.5" cy="15.7" r="1"/></svg>',
+  area:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M9 4v5H4"/><path d="M20 15h-5v5"/></svg>',
+  pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>'
+};
+function pcFeat(ico,label){
+  return `<span class="property-card-feat">${PC_ICONS[ico]}<span>${escHtml(label)}</span></span>`;
+}
+
 function renderProperty(p){
   const op=(p.operations&&p.operations[0])||{};
   const opType=op.type==='sale'?'EN VENTA':(op.type==='rental'?'EN RENTA':(op.type==='foreclosure'?'EN REMATE':'CONSULTAR'));
@@ -1527,13 +1538,13 @@ function renderProperty(p){
   // Title cleanup (remove embedded prices)
   const cleanTitle=(p.title||'Propiedad').replace(/\$[\d,.]+(\s*M\.?N?\.?)?/gi,'').trim()||'Propiedad';
 
-  // Details
-  const details=[];
-  if(p.bedrooms) details.push(`${p.bedrooms} rec`);
-  if(p.bathrooms) details.push(`${p.bathrooms} baños`);
-  if(p.parking_spaces) details.push(`${p.parking_spaces} estac.`);
-  if(p.construction_size) details.push(`${p.construction_size} m²`);
-  else if(p.lot_size) details.push(`${p.lot_size} m² lote`);
+  // Details (con íconos SVG)
+  const feats=[];
+  if(p.bedrooms) feats.push(pcFeat('bed',`${p.bedrooms} rec`));
+  if(p.bathrooms) feats.push(pcFeat('bath',`${p.bathrooms} baños`));
+  if(p.parking_spaces) feats.push(pcFeat('car',`${p.parking_spaces} estac`));
+  if(p.construction_size) feats.push(pcFeat('area',`${p.construction_size} m²`));
+  else if(p.lot_size) feats.push(pcFeat('area',`${p.lot_size} m² lote`));
 
   // Description preview
   const desc=String(p.description||'').trim();
@@ -1566,11 +1577,11 @@ function renderProperty(p){
           <h3 class="property-card-price">${escHtml(priceMain)}</h3>
           <span class="property-card-currency">${escHtml(priceCurr)}</span>
         </div>
-        ${details.length?`<div class="property-card-details">${escHtml(details.join(' · '))}</div>`:''}
+        ${feats.length?`<div class="property-card-details">${feats.join('')}</div>`:''}
         <a href="${detailUrl}" class="property-card-title-link">
-          <h4 class="property-card-title">${escHtml(cleanTitle)}</h4>
+          <h4 class="property-card-title">${escHtml(cleanTitle.toLowerCase())}</h4>
         </a>
-        <p class="property-card-location">📍 ${escHtml(locText)}</p>
+        <p class="property-card-location">${PC_ICONS.pin}<span>${escHtml(locText)}</span></p>
         ${visibleAmenities.length?`<div class="property-card-amenities">${visibleAmenities.map(a=>`<span class="property-amenity-pill">${escHtml(a)}</span>`).join('')}${extraCount>0?`<span class="property-amenity-pill property-amenity-more">+${extraCount}</span>`:''}</div>`:''}
         ${descPreview?`<p class="property-card-description">${escHtml(descPreview)}</p>`:''}
         <div class="property-card-actions">
