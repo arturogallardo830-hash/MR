@@ -20,5 +20,15 @@
     "premium": true,
     "price": 75000000,
     "operation": "sale"
+  },
+  "casa-torreon": {
+    "propertyId": "BUSCAR_EN_CRM",
+    "slug": "casa-torreon",
+    "title": "Casa Hacienda del Rosario",
+    "path": "/tours/casa-torreon/",
+    "active": true,
+    "premium": true,
+    "operation": "sale",
+    "location": "Torreón, Coahuila"
   }
 }
