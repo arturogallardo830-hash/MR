@@ -3,8 +3,22 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Casa Alfonso Reyes · $13.5M MXN · Palo Blanco · Montana Realty Co. 🎬</title>
-<meta name="description" content="Casa en venta en Palo Blanco, San Pedro Garza García. 350 m² de construcción · 5 recámaras · 4.5 baños · paneles solares · acceso a parque privado. Exclusiva de Montana Realty Co." />
+<title>Casa Alfonso Reyes | $13.5M MXN | Montana Realty Co.</title>
+<meta name="description" content="Residencia de 350 m² sobre Av. Alfonso Reyes, Palo Blanco. 4 recámaras, paneles solares, acceso a parque privado. $13.5M MXN." />
+<link rel="canonical" href="https://montanaweb.vercel.app/tours/casa-alfonso-reyes/" />
+
+<!-- Open Graph (WhatsApp / Instagram / Facebook) -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Montana Realty Co." />
+<meta property="og:title" content="Casa Alfonso Reyes - $13.5M MXN" />
+<meta property="og:description" content="Residencia de 350 m² sobre Av. Alfonso Reyes, Palo Blanco. 4 recámaras, paneles solares, acceso a parque privado. $13.5M MXN." />
+<meta property="og:image" content="https://assets.easybroker.com/property_images/5977877/105384484/EB-VY7877.jpeg?version=1778029275" />
+<meta property="og:url" content="https://montanaweb.vercel.app/tours/casa-alfonso-reyes/" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Casa Alfonso Reyes - $13.5M MXN" />
+<meta name="twitter:description" content="Residencia de 350 m² sobre Av. Alfonso Reyes, Palo Blanco. 4 recámaras, paneles solares, acceso a parque privado. $13.5M MXN." />
+<meta name="twitter:image" content="https://assets.easybroker.com/property_images/5977877/105384484/EB-VY7877.jpeg?version=1778029275" />
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
@@ -76,30 +90,24 @@ body::before {
   transition: padding 0.3s ease;
 }
 .nav.scrolled { padding-top: 12px; padding-bottom: 12px; }
-.nav__brand { display: flex; align-items: center; gap: 18px; }
-.nav__logo-text {
-  font-family: var(--serif);
-  font-size: 18px;
+/* Cluster izquierdo: Volver + separador + logo MR (consistente con Casa Carrizalejo) */
+.nav__left { display: flex; align-items: center; gap: 14px; }
+.nav__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--sans);
+  font-size: 11px;
   font-weight: 500;
-  color: var(--gold);
-  letter-spacing: 1px;
-  display: block;
-}
-.nav__brand-meta {
-  border-left: 1px solid var(--line);
-  padding-left: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.nav__brand-prop {
-  font-family: var(--display);
-  font-size: 14px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ink);
-  line-height: 1;
+  color: var(--ink-2);
+  transition: color 0.25s;
 }
+.nav__back:hover { color: var(--gold); }
+.nav__sep { width: 1px; height: 22px; background: var(--line-strong); display: block; }
+.nav__home { display: inline-flex; align-items: center; }
+.nav__logo-img { height: 30px; width: auto; display: block; }
 .nav__center {
   display: flex;
   gap: 36px;
@@ -139,7 +147,6 @@ body::before {
 .nav__cta svg { width: 14px; height: 14px; }
 @media (max-width: 900px) {
   .nav__center { display: none; }
-  .nav__brand-meta { display: none; }
 }
 
 /* ════════════════════════════════════════════════ HERO ════════════════════════════════════════════════ */
@@ -1566,12 +1573,15 @@ section { position: relative; }
 
 <!-- NAV -->
 <nav class="nav" id="nav">
-  <a href="#" class="nav__brand">
-    <span class="nav__logo-text">Montana Realty Co</span>
-    <div class="nav__brand-meta">
-      <div class="nav__brand-prop">Casa Alfonso Reyes</div>
-    </div>
-  </a>
+  <div class="nav__left">
+    <a href="/propiedades.html" class="nav__back">
+      <span aria-hidden="true">&larr;</span> Volver
+    </a>
+    <span class="nav__sep" aria-hidden="true"></span>
+    <a href="/" class="nav__home" aria-label="Montana Realty Co. &mdash; Inicio">
+      <img src="/assets/logo-mr.png" alt="Montana Realty Co." class="nav__logo-img" />
+    </a>
+  </div>
   <div class="nav__center">
     <a href="#reel">Pieza</a>
     <a href="#overview">Propiedad</a>

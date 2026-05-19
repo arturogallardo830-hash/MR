@@ -1,11 +1,15 @@
 {
   "casa-alfonso-reyes": {
-    "propertyId": "BUSCAR_EN_CRM",
+    "propertyId": "EB-VY7877",
     "slug": "casa-alfonso-reyes",
     "title": "Casa Alfonso Reyes",
     "path": "/tours/casa-alfonso-reyes/",
     "active": true,
-    "premium": true
+    "premium": true,
+    "price": 13500000,
+    "operation": "sale",
+    "location": "Palo Blanco, San Pedro Garza García",
+    "address": "Av. Alfonso Reyes"
   },
   "casa-carrizalejo": {
     "propertyId": "EB-TZ4590",
