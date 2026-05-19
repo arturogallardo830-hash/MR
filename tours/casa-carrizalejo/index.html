@@ -97,43 +97,7 @@ body::before {
 }
 .nav.scrolled { padding-top: 12px; padding-bottom: 12px; }
 
-.nav__brand { display: flex; align-items: center; gap: 18px; }
-.nav__logo {
-  height: 38px;
-  width: auto;
-  display: block;
-  filter: drop-shadow(0 0 8px rgba(0,0,0,0.3));
-}
-.nav__logo-text {
-  font-family: var(--serif);
-  font-size: 18px;
-  font-weight: 500;
-  color: var(--gold);
-  letter-spacing: 1px;
-  display: block;
-}
-.nav__brand-meta {
-  border-left: 1px solid var(--line);
-  padding-left: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.nav__brand-prop {
-  font-family: var(--display);
-  font-size: 14px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink);
-  line-height: 1;
-}
-.nav__brand-sub {
-  font-family: var(--sans);
-  font-size: 9px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
+/* (CSS del antiguo nav__brand eliminado: ahora se usa nav__left) */
 
 .nav__center {
   display: flex;
@@ -177,10 +141,74 @@ body::before {
 }
 .nav__cta svg { width: 14px; height: 14px; }
 
+/* Cluster izquierdo: Volver + separador + logo MR */
+.nav__left { display: flex; align-items: center; gap: 14px; }
+.nav__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  transition: color 0.25s;
+}
+.nav__back:hover { color: var(--gold); }
+.nav__sep { width: 1px; height: 22px; background: var(--line-strong); display: block; }
+.nav__home { display: inline-flex; align-items: center; }
+.nav__logo-img { height: 30px; width: auto; display: block; }
+
+/* Hamburger (solo mobile) */
+.nav__burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 7px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.nav__burger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.nav__burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav__burger.open span:nth-child(2) { opacity: 0; }
+.nav__burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
 @media (max-width: 900px) {
-  .nav__center { display: none; }
-  .nav__brand-meta { display: none; }
-  .nav__logo { height: 34px; }
+  .nav__sep { display: none; }
+  .nav__cta { display: none; }
+  .nav__burger { display: flex; }
+  .nav__logo-img { height: 28px; }
+  .nav__center {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: min(78vw, 320px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 28px;
+    padding: 88px 36px 40px;
+    font-size: 15px;
+    background: rgba(245, 244, 240, 0.98);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: -12px 0 40px rgba(0, 0, 0, 0.18);
+    transform: translateX(100%);
+    transition: transform 0.35s ease;
+    z-index: 10000;
+  }
+  .nav__center.open { transform: translateX(0); }
 }
 
 /* ════════════════════════════════════════════════
@@ -1790,18 +1818,7 @@ section { position: relative; }
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════
-     MINI-NAVBAR MONTANA REALTY (complemento — no
-     reemplaza el navbar interno de la landing)
-     ═══════════════════════════════════════════════ -->
-<div id="mrXtBar" style="position:fixed;top:0;left:0;right:0;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(14px,3vw,28px);z-index:99999;pointer-events:none;background:linear-gradient(to bottom,rgba(15,15,15,.55) 0%,rgba(15,15,15,.28) 55%,rgba(15,15,15,0) 100%)">
-  <a href="/propiedades.html" style="pointer-events:auto;display:inline-flex;align-items:center;gap:7px;font-family:'Outfit',system-ui,sans-serif;font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.34);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.28);padding:9px 16px;border-radius:50px;transition:background .25s">
-    <span aria-hidden="true">←</span> Volver a Propiedades
-  </a>
-  <a href="/" aria-label="Montana Realty Co. — Inicio" style="pointer-events:auto;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:inline-flex;align-items:center">
-    <img src="img/montana-logo-sm.png" alt="Montana Realty Co." style="height:26px;width:auto;display:block;filter:brightness(0) invert(1) drop-shadow(0 1px 3px rgba(0,0,0,.4))" />
-  </a>
-</div>
+<!-- mini-navbar Montana Realty eliminado: integrado en el nav único de la landing -->
 
 <!-- ═══════════════════════════════════════════════
      LOGO (inline SVG — Montana Realty MR mark)
@@ -1833,13 +1850,16 @@ section { position: relative; }
      NAV
      ═══════════════════════════════════════════════ -->
 <nav class="nav" id="nav">
-  <a href="#" class="nav__brand">
-    <span class="nav__logo-text">Montana Realty Co</span>
-    <div class="nav__brand-meta">
-      <div class="nav__brand-prop">Casa Carrizalejo</div>
-    </div>
-  </a>
-  <div class="nav__center">
+  <div class="nav__left">
+    <a href="/propiedades.html" class="nav__back">
+      <span aria-hidden="true">&larr;</span> Volver
+    </a>
+    <span class="nav__sep" aria-hidden="true"></span>
+    <a href="/" class="nav__home" aria-label="Montana Realty Co. &mdash; Inicio">
+      <img src="img/montana-logo-sm.png" alt="Montana Realty Co." class="nav__logo-img" />
+    </a>
+  </div>
+  <div class="nav__center" id="navCenter">
     <a href="#reel">Pieza</a>
     <a href="#overview">Propiedad</a>
     <a href="#gallery">Galería</a>
@@ -1851,6 +1871,9 @@ section { position: relative; }
     Agendar visita
     <svg><use href="#arrow"/></svg>
   </a>
+  <button class="nav__burger" id="navBurger" type="button" aria-label="Abrir menú" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- ═══════════════════════════════════════════════
@@ -2758,6 +2781,23 @@ const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 40);
 }, { passive: true });
+
+// Mobile hamburger toggle
+const navBurger = document.getElementById('navBurger');
+const navCenter = document.getElementById('navCenter');
+if (navBurger && navCenter) {
+  const setMenu = (open) => {
+    navCenter.classList.toggle('open', open);
+    navBurger.classList.toggle('open', open);
+    navBurger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  };
+  navBurger.addEventListener('click', () => {
+    setMenu(!navCenter.classList.contains('open'));
+  });
+  navCenter.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => setMenu(false));
+  });
+}
 
 // ════════════════════════════════════════════════
 // REVEAL on scroll
