@@ -687,6 +687,14 @@ em{font-style:italic}
 .sell-modal-submit{background:var(--gold);color:#1a1f2e;border:none;border-radius:50px;padding:16px 32px;font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;margin-top:16px;transition:all .3s ease}
 .sell-modal-submit:hover{background:#d4b67e;transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,169,110,.3)}
 .sell-modal-disclaimer{text-align:center;color:#6b7280;font-family:var(--sans);font-size:11px;margin:8px 0 0;line-height:1.5;font-weight:400}
+.sell-modal .form-group textarea{background:#232a3d;border:1px solid rgba(201,169,110,.15);border-radius:4px;padding:14px 16px;color:#e8e6e1;font-family:var(--sans);font-size:14px;font-weight:400;outline:none;transition:border-color .3s ease,box-shadow .3s ease,background .3s ease;width:100%;resize:vertical;line-height:1.5}
+.sell-modal .form-group textarea::placeholder{color:rgba(232,230,225,.4)}
+.sell-modal .form-group textarea:hover{border-color:rgba(201,169,110,.4)}
+.sell-modal .form-group textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,169,110,.12)}
+.sell-op-pills{display:flex;flex-wrap:wrap;gap:10px}
+.sell-op-pill{flex:1 1 auto;min-width:90px;background:transparent;border:1px solid var(--gold);border-radius:50px;padding:12px 18px;color:#e8e6e1;font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:all .3s ease;text-align:center}
+.sell-op-pill:hover{background:rgba(201,169,110,.12)}
+.sell-op-pill.active{background:var(--gold);color:#0d0d0d;border-color:var(--gold)}
 @media(max-width:640px){
   .sell-modal{padding:16px}
   .sell-modal-content{padding:32px 22px;border-radius:8px}
@@ -1428,6 +1436,15 @@ textarea.fi{min-height:70px;max-height:110px;resize:vertical;line-height:1.5}
     </div>
     <form class="sell-modal-form" id="sellForm" onsubmit="sendSellToWhatsApp(event)" autocomplete="off" data-form-type="other" data-lpignore="true">
       <div class="form-group">
+        <label>Tipo de operación *</label>
+        <div class="sell-op-pills" id="sellOpPills" role="radiogroup" aria-label="Tipo de operación">
+          <button type="button" class="sell-op-pill active" data-op="Venta" role="radio" aria-checked="true" onclick="selectSellOp(this)">Venta</button>
+          <button type="button" class="sell-op-pill" data-op="Renta" role="radio" aria-checked="false" onclick="selectSellOp(this)">Renta</button>
+          <button type="button" class="sell-op-pill" data-op="Venta o Renta" role="radio" aria-checked="false" onclick="selectSellOp(this)">Venta o Renta</button>
+        </div>
+        <input type="hidden" id="sellOperation" name="operation" value="Venta">
+      </div>
+      <div class="form-group">
         <label for="sellName">Nombre completo *</label>
         <input type="text" id="sellName" name="name" required placeholder="Tu nombre completo">
       </div>
@@ -1448,39 +1465,8 @@ textarea.fi{min-height:70px;max-height:110px;resize:vertical;line-height:1.5}
         </select>
       </div>
       <div class="form-group">
-        <label for="sellZone">Zona / Colonia *</label>
-        <select id="sellZone" name="zone" required>
-          <option value="">Selecciona una zona</option>
-          <option value="Valle Oriente">Valle Oriente</option>
-          <option value="Valle del Campestre">Valle del Campestre</option>
-          <option value="Del Valle">Del Valle</option>
-          <option value="San Agustín">San Agustín</option>
-          <option value="Centrito Valle">Centrito Valle</option>
-          <option value="Lomas del Valle">Lomas del Valle</option>
-          <option value="Chipinque">Chipinque</option>
-          <option value="Carretera Nacional">Carretera Nacional</option>
-          <option value="Colinas de San Jerónimo">Colinas de San Jerónimo</option>
-          <option value="Carrizalejo">Carrizalejo</option>
-          <option value="Bosques del Valle">Bosques del Valle</option>
-          <option value="Cumbres">Cumbres</option>
-          <option value="Otra">Otra (especificar en mensaje)</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="sellBedrooms">Recámaras</label>
-        <select id="sellBedrooms" name="bedrooms">
-          <option value="N/A">No aplica (terreno/local)</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6+">6 o más</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="sellMeters">Metros cuadrados aproximados *</label>
-        <input type="text" id="sellMeters" name="meters" required placeholder="Ej: 380 m² construcción / 500 m² terreno">
+        <label for="sellZone">Colonia *</label>
+        <input type="text" id="sellZone" name="zone" required placeholder="Ej: Valle del Campestre, Del Valle, Lomas del Valle...">
       </div>
       <div class="form-group">
         <label for="sellPrice">Precio esperado (MXN) *</label>
@@ -1507,6 +1493,10 @@ textarea.fi{min-height:70px;max-height:110px;resize:vertical;line-height:1.5}
           <option value="6-12 meses">6-12 meses</option>
           <option value="Sin prisa, explorando opciones">Sin prisa, explorando opciones</option>
         </select>
+      </div>
+      <div class="form-group">
+        <label for="sellDescription">Descripción breve de la propiedad (opcional)</label>
+        <textarea id="sellDescription" name="description" rows="4" placeholder="Cuéntanos brevemente sobre tu propiedad: características destacadas, amenidades, antigüedad..."></textarea>
       </div>
       <button type="submit" class="sell-modal-submit">Enviar a asesor →</button>
       <p class="sell-modal-disclaimer">Al enviar, se abrirá WhatsApp con tu mensaje listo para enviar a Federico Mecutchen, Director de Ventas.</p>
@@ -2491,29 +2481,40 @@ function closeSellModal(){
   m.setAttribute('aria-hidden','true');
   document.body.style.overflow='';
 }
+function selectSellOp(btn){
+  const pills=document.querySelectorAll('#sellOpPills .sell-op-pill');
+  pills.forEach(function(p){
+    p.classList.remove('active');
+    p.setAttribute('aria-checked','false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-checked','true');
+  document.getElementById('sellOperation').value=btn.dataset.op;
+}
 function sendSellToWhatsApp(event){
   event.preventDefault();
+  const operation=document.getElementById('sellOperation').value;
   const name=document.getElementById('sellName').value.trim();
   const phone=document.getElementById('sellPhone').value.trim();
   const type=document.getElementById('sellType').value;
-  const zone=document.getElementById('sellZone').value;
-  const bedrooms=document.getElementById('sellBedrooms').value;
-  const meters=document.getElementById('sellMeters').value.trim();
+  const zone=document.getElementById('sellZone').value.trim();
   const price=document.getElementById('sellPrice').value;
   const urgency=document.getElementById('sellUrgency').value;
+  const description=document.getElementById('sellDescription').value.trim();
 
-  let message='Hola Federico, vi en el sitio web de Montana Realty Co. y quiero LISTAR MI PROPIEDAD para venta.\n\n';
+  let message='Hola Federico, vi en el sitio web de Montana Realty Co. y quiero LISTAR MI PROPIEDAD.\n\n';
   message+='📋 INFORMACIÓN DE CONTACTO:\n';
+  message+='• Tipo de operación: '+operation+'\n';
   message+='• Nombre: '+name+'\n';
   message+='• Teléfono: '+phone+'\n\n';
   message+='🏠 INFORMACIÓN DE LA PROPIEDAD:\n';
   message+='• Tipo: '+type+'\n';
-  message+='• Zona: '+zone+'\n';
-  if(bedrooms&&bedrooms!=='N/A'){
-    message+='• Recámaras: '+bedrooms+'\n';
-  }
-  message+='• m² aproximados: '+meters+'\n';
+  message+='• Colonia: '+zone+'\n';
   message+='• Precio esperado: '+price+'\n\n';
+  if(description){
+    message+='📝 DESCRIPCIÓN:\n';
+    message+='• '+description+'\n\n';
+  }
   if(urgency){
     message+='⏰ URGENCIA:\n';
     message+='• Quiero vender en: '+urgency+'\n\n';
@@ -2525,6 +2526,8 @@ function sendSellToWhatsApp(event){
   setTimeout(function(){
     closeSellModal();
     document.getElementById('sellForm').reset();
+    const firstPill=document.querySelector('#sellOpPills .sell-op-pill');
+    if(firstPill)selectSellOp(firstPill);
   },500);
 }
 document.addEventListener('keydown',function(e){

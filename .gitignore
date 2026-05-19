@@ -4,3 +4,5 @@ data/
 .env*
 # Large media — exceeds GitHub's 100MB hard limit; host on a CDN/Vercel Blob
 video-inicio.mp4
+
+.vercel
