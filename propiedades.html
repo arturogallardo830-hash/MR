@@ -1399,11 +1399,23 @@ function buildApiParams(){
   return q;
 }
 
+// Estados que NO se consideran "activos" (no aparecen en Pincali). Se piden
+// published+not_published al CRM y aquí descartamos solo los realmente dados de
+// baja. Cualquier otro estado (published, available, on_the_market, reserved,
+// not_published, etc.) se MUESTRA. Editable para afinar el conteo vs Pincali.
+const EXCLUDED_STATUSES=new Set([
+  'sold','rented','leased','draft','archived','withdrawn',
+  'cancelled','canceled','suspended','deleted','inactive','expired'
+]);
+
 function applyClientFilters(list){
   const searchTerm=(currentFilters.search||'').trim().toLowerCase();
   return list.filter(p=>{
     // NOTA: ya NO se descarta por falta de imagen. Antes `if(!p.title_image_full) return false;`
     // ocultaba ~25 propiedades sin foto principal. renderProperty usa un placeholder.
+
+    // Excluir solo estados dados de baja (para igualar el inventario activo de Pincali)
+    if(EXCLUDED_STATUSES.has(String(p.status||'').toLowerCase())) return false;
 
     // Free-text search across title, description, location, and public_id
     if(searchTerm){
@@ -1722,13 +1734,18 @@ async function loadPage(){
     state.total=apiTotal||all.length;
     state.totalPages=1; // todo se muestra en una sola vista (sin paginación de servidor)
     state.page=1;
-    // ── DIAGNÓSTICO (post-fix: ahora se piden published + not_published) ──
+    // ── DIAGNÓSTICO (objetivo: igualar las ~159 activas de Pincali) ──
+    const PINCALI_TARGET=159;
+    const activos=all.filter(p=>!EXCLUDED_STATUSES.has(String(p.status||'').toLowerCase()));
+    console.log('Total objetivo (Pincali):',PINCALI_TARGET);
+    console.log('Total actual del API (crudo published+not_published):',all.length);
+    console.log('Total activos (tras excluir sold/rented/draft/etc.):',activos.length);
+    console.log('Diferencia vs Pincali:',PINCALI_TARGET-activos.length);
     console.log('Estados encontrados:',[...new Set(all.map(p=>p.status))]);
-    console.log('Total después del fix:',all.length,'(API pagination.total:',apiTotal,')');
-    console.log('IDs únicos:',new Set(all.map(p=>p.public_id||p.id)).size,'/ duplicados descartados:',dupes);
     console.log('Operaciones encontradas:',[...new Set(all.flatMap(p=>(p.operations||[]).map(o=>o.type)))]);
     const conteoPorEstado=all.reduce((a,p)=>{const s=p.status||'(sin status)';a[s]=(a[s]||0)+1;return a;},{});
-    console.log('Conteo por estado:',conteoPorEstado);
+    console.log('Conteo por estado (crudo):',conteoPorEstado);
+    console.log('IDs únicos:',new Set(all.map(p=>p.public_id||p.id)).size,'/ duplicados descartados:',dupes);
     const sinImagen=all.filter(p=>!p.title_image_full).length;
     console.log('Propiedades SIN imagen principal:',sinImagen,'(se muestran con placeholder)');
     renderResults();
