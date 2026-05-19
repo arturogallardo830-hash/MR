@@ -1734,20 +1734,58 @@ async function loadPage(){
     state.total=apiTotal||all.length;
     state.totalPages=1; // todo se muestra en una sola vista (sin paginación de servidor)
     state.page=1;
-    // ── DIAGNÓSTICO (objetivo: igualar las ~159 activas de Pincali) ──
+    // ════════════════════════════════════════════════════════════════
+    // DIAGNÓSTICO PROFUNDO — ¿qué campo separa las 159 de Pincali de
+    // las 408 que devuelve la API? (status no sirve: todas comparten 1)
+    // ════════════════════════════════════════════════════════════════
     const PINCALI_TARGET=159;
-    const activos=all.filter(p=>!EXCLUDED_STATUSES.has(String(p.status||'').toLowerCase()));
+    const tally=(arr,fn)=>arr.reduce((a,p)=>{const k=fn(p);a[k]=(a[k]||0)+1;return a;},{});
+    console.log('═══════ DIAGNÓSTICO 408 vs 159 (Pincali) ═══════');
     console.log('Total objetivo (Pincali):',PINCALI_TARGET);
-    console.log('Total actual del API (crudo published+not_published):',all.length);
-    console.log('Total activos (tras excluir sold/rented/draft/etc.):',activos.length);
-    console.log('Diferencia vs Pincali:',PINCALI_TARGET-activos.length);
+    console.log('Total actual del API:',all.length);
+    console.log('Diferencia:',PINCALI_TARGET-all.length);
+    console.log('Estado único encontrado:',all[0]&&all[0].status);
     console.log('Estados encontrados:',[...new Set(all.map(p=>p.status))]);
     console.log('Operaciones encontradas:',[...new Set(all.flatMap(p=>(p.operations||[]).map(o=>o.type)))]);
-    const conteoPorEstado=all.reduce((a,p)=>{const s=p.status||'(sin status)';a[s]=(a[s]||0)+1;return a;},{});
-    console.log('Conteo por estado (crudo):',conteoPorEstado);
+
+    // Campos candidatos para distinguir el feed público de Montana:
+    console.log('Conteo por agent.id:',tally(all,p=>(p.agent&&p.agent.id)||'sin_agent'));
+    console.log('Conteo por agent.name:',tally(all,p=>(p.agent&&p.agent.name)||'sin_agent'));
+    console.log('Conteo por broker:',tally(all,p=>(p.broker&&p.broker.name)||'sin_broker'));
+    console.log('Conteo por agency_id:',tally(all,p=>p.agency_id||'sin_agency'));
+    console.log('Conteo por property_type:',tally(all,p=>p.property_type||'sin_tipo'));
+    console.log('Show address en feed:',{
+      true:all.filter(p=>p.show_address).length,
+      false:all.filter(p=>!p.show_address).length
+    });
+    console.log('Con published_at:',all.filter(p=>p.published_at).length,
+                '/ SIN published_at:',all.filter(p=>!p.published_at).length);
+    console.log('Con created_at:',all.filter(p=>p.created_at).length,
+                '/ Con updated_at:',all.filter(p=>p.updated_at).length);
+    console.log('public !== false:',all.filter(p=>p.public!==false).length,
+                '/ public === false:',all.filter(p=>p.public===false).length);
+    console.log('Con title_image_full:',all.filter(p=>p.title_image_full).length,
+                '/ SIN imagen:',all.filter(p=>!p.title_image_full).length);
+    console.log('Operaciones por tipo (conteo de propiedades):',{
+      soloVenta:all.filter(p=>(p.operations||[]).every(o=>o.type==='sale')&&(p.operations||[]).length>0).length,
+      soloRenta:all.filter(p=>(p.operations||[]).every(o=>o.type==='rental')&&(p.operations||[]).length>0).length,
+      ambas:all.filter(p=>{const t=new Set((p.operations||[]).map(o=>o.type));return t.has('sale')&&t.has('rental');}).length,
+      sinOperacion:all.filter(p=>!(p.operations||[]).length).length
+    });
+
+    // TODAS las claves presentes en al menos una propiedad (para ver qué
+    // campos expone el endpoint de listado de EasyBroker):
+    const allKeys=new Set();
+    all.forEach(p=>Object.keys(p||{}).forEach(k=>allKeys.add(k)));
+    console.log('Claves disponibles en las propiedades:',[...allKeys].sort());
+
+    // Estructura completa de las 2 primeras propiedades:
+    console.log('Estructura completa [0]:',JSON.stringify(all[0],null,2));
+    console.log('Estructura completa [1]:',JSON.stringify(all[1],null,2));
+    console.log('Objeto agent de [0]:',all[0]&&all[0].agent);
+
     console.log('IDs únicos:',new Set(all.map(p=>p.public_id||p.id)).size,'/ duplicados descartados:',dupes);
-    const sinImagen=all.filter(p=>!p.title_image_full).length;
-    console.log('Propiedades SIN imagen principal:',sinImagen,'(se muestran con placeholder)');
+    console.log('═══════════════════════════════════════════════');
     renderResults();
     renderPagination(); // no-op cuando totalPages<=1
   }catch(e){
