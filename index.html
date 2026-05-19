@@ -303,11 +303,40 @@ body{background:var(--black);color:var(--white);font-family:var(--sans);font-wei
 .hs-apply{width:100%;background:#111;color:#fff;border:none;border-radius:10px;padding:12px;font-family:var(--sans);font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;cursor:pointer;margin-top:16px;transition:all .3s}
 .hs-apply:hover{background:var(--gold);color:#111}
 
+/* + Filtros button + expanded panel */
+.hero-search .hs-more{display:flex;align-items:center;gap:7px;background:none;border:none;font-family:var(--sans);font-size:13px;font-weight:600;color:#666;cursor:pointer;padding:0 18px;flex-shrink:0;white-space:nowrap;transition:color .2s;align-self:center}
+.hero-search .hs-more:hover,.hero-search .hs-more.active{color:#111}
+.hs-more-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);display:none;flex-shrink:0}
+.hs-more.has-active .hs-more-dot{display:block}
+.hs-panel{position:fixed;left:50%;bottom:172px;transform:translateX(-50%) translateY(12px);width:92%;max-width:700px;max-height:70vh;overflow-y:auto;background:#fff;border-radius:20px;box-shadow:0 12px 48px rgba(0,0,0,.15);padding:28px;z-index:1001;opacity:0;visibility:hidden;transition:opacity .3s ease,transform .3s ease,visibility .3s;font-family:var(--sans)}
+.hs-panel.open{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);animation:hsPanelIn .3s ease}
+@keyframes hsPanelIn{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.hs-panel-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px 36px}
+.hs-panel-col{display:flex;flex-direction:column;gap:20px}
+.hs-panel-sub{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#999;font-weight:600;margin:0 0 9px}
+.hs-panel .hs-pills{flex-wrap:wrap}
+.hs-panel .hs-pill{flex:1 1 auto}
+.hs-surf{display:flex;gap:10px}
+.hs-surf input{flex:1;min-width:0;border:1px solid #e6e6e6;border-radius:8px;padding:9px 12px;font-family:var(--sans);font-size:13px;color:#333;outline:none;box-sizing:border-box}
+.hs-surf input:focus{border-color:var(--gold)}
+.hs-amen{display:grid;grid-template-columns:1fr 1fr;gap:9px 14px}
+.hs-amen-item{display:flex;align-items:center;gap:9px;cursor:pointer;font-size:13px;color:#333}
+.hs-amen-item input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.hs-amen-item .hs-box{width:16px;height:16px}
+.hs-amen-item input:checked~.hs-box{background:#111;border-color:#111}
+.hs-amen-item input:checked~.hs-box svg{opacity:1}
+.hs-panel-foot{display:flex;align-items:center;justify-content:space-between;margin-top:24px;padding-top:20px;border-top:1px solid #eee}
+.hs-clear{background:none;border:none;font-family:var(--sans);font-size:13px;color:#999;cursor:pointer;padding:0;transition:color .2s}
+.hs-clear:hover{color:#333;text-decoration:underline}
+.hs-panel-apply{background:#111;color:#fff;border:none;border-radius:50px;padding:12px 32px;font-family:var(--sans);font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;cursor:pointer;transition:all .3s}
+.hs-panel-apply:hover{background:var(--gold);color:#111}
+
 /* Mobile trigger + modal */
 .hs-mobile-trigger{display:none}
 .hs-modal{display:none}
 @media(max-width:768px){
   .hero-search{display:none}
+  .hs-panel{display:none}
   .hs-mobile-trigger{position:fixed;left:50%;bottom:32px;transform:translateX(-50%);z-index:998;display:flex;align-items:center;justify-content:center;gap:10px;background:rgba(255,255,255,.95);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:1px solid rgba(0,0,0,.04);border-radius:50px;padding:16px 32px;box-shadow:0 8px 40px rgba(0,0,0,.18);font-family:var(--sans);font-size:14px;font-weight:600;color:#222;cursor:pointer}
   .hs-mobile-trigger svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:2}
   .hs-modal.open{display:flex;flex-direction:column;position:fixed;inset:0;z-index:2000;background:#fff;animation:hsPopIn .25s ease}
@@ -3294,10 +3323,6 @@ document.querySelectorAll('.svc-card').forEach(card=>{
     <div class="hs-pop" id="hsPopRec">
       <div class="hs-pop-sub">Recámaras</div>
       <div class="hs-pills" data-group="rec"></div>
-      <div class="hs-pop-sub">Baños</div>
-      <div class="hs-pills" data-group="banos"></div>
-      <div class="hs-pop-sub">Estacionamientos</div>
-      <div class="hs-pills" data-group="est"></div>
       <button type="button" class="hs-apply" data-apply="rec">Aplicar</button>
     </div>
   </div>
@@ -3322,10 +3347,59 @@ document.querySelectorAll('.svc-card').forEach(card=>{
       <button type="button" class="hs-apply" data-apply="price">Aplicar</button>
     </div>
   </div>
+  <div class="hs-sep"></div>
+  <button type="button" class="hs-more" id="hsMoreBtn" aria-haspopup="true">
+    <span class="hs-more-dot"></span>
+    <span id="hsMoreTxt">+ Filtros</span>
+  </button>
   <button type="button" class="hs-btn" id="hsSearchBtn">
     <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line></svg>
     Buscar
   </button>
+</div>
+
+<!-- + Filtros: panel expandido -->
+<div class="hs-panel" id="hsPanel" aria-hidden="true">
+  <div class="hs-panel-grid">
+    <div class="hs-panel-col">
+      <div>
+        <div class="hs-panel-sub">Operación</div>
+        <div class="hs-pills" data-group="op">
+          <button type="button" class="hs-pill active" data-value="venta">Comprar</button>
+          <button type="button" class="hs-pill" data-value="renta">Rentar</button>
+        </div>
+      </div>
+      <div>
+        <div class="hs-panel-sub">Baños</div>
+        <div class="hs-pills" data-group="banos"></div>
+      </div>
+      <div>
+        <div class="hs-panel-sub">Estacionamientos</div>
+        <div class="hs-pills" data-group="est"></div>
+      </div>
+      <div>
+        <div class="hs-panel-sub">Superficie (m²)</div>
+        <div class="hs-surf">
+          <input type="text" inputmode="numeric" id="hsSurfMin" placeholder="Desde 50" autocomplete="off" data-lpignore="true" data-form-type="other">
+          <input type="text" inputmode="numeric" id="hsSurfMax" placeholder="Hasta 2000" autocomplete="off" data-lpignore="true" data-form-type="other">
+        </div>
+      </div>
+    </div>
+    <div class="hs-panel-col">
+      <div>
+        <div class="hs-panel-sub">Antigüedad</div>
+        <div class="hs-pills" data-group="antig"></div>
+      </div>
+      <div>
+        <div class="hs-panel-sub">Amenidades</div>
+        <div class="hs-amen" data-amen></div>
+      </div>
+    </div>
+  </div>
+  <div class="hs-panel-foot">
+    <button type="button" class="hs-clear" id="hsPanelClear">Limpiar filtros</button>
+    <button type="button" class="hs-panel-apply" id="hsPanelApply">Aplicar filtros</button>
+  </div>
 </div>
 
 <!-- Mobile: trigger + modal fullscreen -->
@@ -3360,6 +3434,15 @@ document.querySelectorAll('.svc-card').forEach(card=>{
       <div class="hs-pills" data-group="banos"></div>
       <div class="hs-msec-label" style="margin-top:18px">Estacionamientos</div>
       <div class="hs-pills" data-group="est"></div>
+      <div class="hs-msec-label" style="margin-top:18px">Superficie (m²)</div>
+      <div class="hs-surf">
+        <input type="text" inputmode="numeric" id="hsSurfMinM" placeholder="Desde 50" autocomplete="off" data-lpignore="true" data-form-type="other">
+        <input type="text" inputmode="numeric" id="hsSurfMaxM" placeholder="Hasta 2000" autocomplete="off" data-lpignore="true" data-form-type="other">
+      </div>
+      <div class="hs-msec-label" style="margin-top:18px">Antigüedad</div>
+      <div class="hs-pills" data-group="antig"></div>
+      <div class="hs-msec-label" style="margin-top:18px">Amenidades</div>
+      <div class="hs-amen" data-amen></div>
     </div>
     <div>
       <div class="hs-msec-label">Precio</div>
@@ -3421,14 +3504,21 @@ document.querySelectorAll('.svc-card').forEach(card=>{
   const PILLS={
     rec:[['','Todos'],['1','1'],['2','2'],['3','3'],['4','4'],['5','5+']],
     banos:[['','Todos'],['1','1'],['2','2'],['3','3'],['4','4+']],
-    est:[['','Todos'],['1','1'],['2','2'],['3','3+']]
+    est:[['','Todos'],['1','1'],['2','2'],['3','3+']],
+    antig:[['','Cualquiera'],['nueva','Nueva'],['1-5','1-5 años'],['5-10','5-10 años'],['10+','+10 años']]
   };
+  const AMEN=[
+    ['alberca','Alberca'],['gimnasio','Gimnasio'],
+    ['seguridad','Seguridad 24/7'],['elevador','Elevador'],
+    ['terraza','Terraza'],['vista','Vista panorámica'],
+    ['estac-techado','Estacionamiento techado'],['mascotas','Acepta mascotas']
+  ];
   const STEPS={
     venta:[1e6,2e6,3e6,5e6,8e6,10e6,15e6,20e6,25e6,30e6,35e6,50e6,75e6,100e6],
     renta:[5000,10000,15000,20000,30000,40000,50000,75000,100000,150000,200000]
   };
 
-  const state={zones:new Set(),types:new Set(),rec:'',banos:'',est:'',op:'venta',pMin:0,pMax:STEPS.venta.length-1,pTouched:false};
+  const state={zones:new Set(),types:new Set(),rec:'',banos:'',est:'',op:'venta',pMin:0,pMax:STEPS.venta.length-1,pTouched:false,surfMin:'',surfMax:'',antig:'',amen:new Set()};
 
   const norm=s=>(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
   const $$=s=>Array.from(document.querySelectorAll(s));
@@ -3458,6 +3548,14 @@ document.querySelectorAll('.svc-card').forEach(card=>{
     box.innerHTML=PILLS[g].map(([v,t],i)=>
       `<button type="button" class="hs-pill${v===''?' active':''}" data-value="${v}">${t}</button>`).join('');
   });
+  $$('.hs-amen[data-amen]').forEach(box=>{
+    box.innerHTML=AMEN.map(([v,t])=>
+      `<label class="hs-amen-item" data-amen="${v}">
+         <input type="checkbox" value="${v}">
+         <span class="hs-box">${CHECK}</span>
+         <span>${t}</span>
+       </label>`).join('');
+  });
 
   /* ---- label helpers ---- */
   const setVal=(id,txt,isPh)=>{
@@ -3465,6 +3563,28 @@ document.querySelectorAll('.svc-card').forEach(card=>{
       el.textContent=txt;el.classList.toggle('placeholder',!!isPh);
     });
   };
+  function panelCount(){
+    let n=0;
+    if(state.op==='renta') n++;
+    if(state.banos) n++;
+    if(state.est) n++;
+    if(state.surfMin||state.surfMax) n++;
+    if(state.antig) n++;
+    n+=state.amen.size;
+    return n;
+  }
+  function updateMore(){
+    const b=document.getElementById('hsMoreBtn');if(!b) return;
+    const n=panelCount();
+    document.getElementById('hsMoreTxt').textContent=n>0?('Filtros ('+n+')'):'+ Filtros';
+    b.classList.toggle('has-active',n>0);
+  }
+  function mirrorSurf(){
+    ['','M'].forEach(sfx=>{
+      const a=document.getElementById('hsSurfMin'+sfx),b=document.getElementById('hsSurfMax'+sfx);
+      if(a)a.value=state.surfMin;if(b)b.value=state.surfMax;
+    });
+  }
   function fmtMoney(v){
     return state.op==='venta'
       ? '$'+(v/1e6).toLocaleString('en-US',{maximumFractionDigits:1})+'M'
@@ -3481,12 +3601,9 @@ document.querySelectorAll('.svc-card').forEach(card=>{
     // type
     const tc=state.types.size;
     setVal('hsTypeVal',tc===0?'Todos':tc===1?TYPES.find(t=>t.s===[...state.types][0]).n:tc+' tipos',tc===0);
-    // rec / baños / est
-    const parts=[];
-    if(state.rec) parts.push(state.rec+(state.rec==='5'?'+':'')+' rec');
-    if(state.banos) parts.push(state.banos+(state.banos==='4'?'+':'')+' baños');
-    if(state.est) parts.push(state.est+(state.est==='3'?'+':'')+' est');
-    setVal('hsRecVal',parts.length?parts.join(' · '):'Todos',!parts.length);
+    // recámaras (baños/est ahora viven en el panel + Filtros)
+    setVal('hsRecVal',state.rec?((state.rec==='5'?'5+':state.rec)+' rec'):'Todos',!state.rec);
+    updateMore();
     // price
     setVal('hsPriceVal',state.pTouched?priceText():'Cualquier precio',!state.pTouched);
   }
@@ -3518,6 +3635,12 @@ document.querySelectorAll('.svc-card').forEach(card=>{
     };
     mn.addEventListener('input',onIn);mx.addEventListener('input',onIn);
   });
+  ['','M'].forEach(sfx=>{
+    const smn=document.getElementById('hsSurfMin'+sfx),smx=document.getElementById('hsSurfMax'+sfx);
+    if(!smn) return;
+    smn.addEventListener('input',()=>{state.surfMin=smn.value.replace(/\D/g,'');mirrorSurf();updateMore();});
+    smx.addEventListener('input',()=>{state.surfMax=smx.value.replace(/\D/g,'');mirrorSurf();updateMore();});
+  });
 
   /* ---- delegated change/click handlers ---- */
   document.addEventListener('change',e=>{
@@ -3534,6 +3657,13 @@ document.querySelectorAll('.svc-card').forEach(card=>{
       e.target.checked?state.types.add(s):state.types.delete(s);
       $$('.hs-titem[data-slug="'+s+'"] input').forEach(i=>i.checked=state.types.has(s));
       refreshLabels();return;
+    }
+    const ai=e.target.closest('.hs-amen-item');
+    if(ai){
+      const s=ai.dataset.amen;
+      e.target.checked?state.amen.add(s):state.amen.delete(s);
+      $$('.hs-amen-item[data-amen="'+s+'"] input').forEach(i=>i.checked=state.amen.has(s));
+      updateMore();return;
     }
   });
   document.addEventListener('click',e=>{
@@ -3569,9 +3699,12 @@ document.querySelectorAll('.svc-card').forEach(card=>{
   });
 
   /* ---- desktop dropdown open/close ---- */
+  const moreBtn=document.getElementById('hsMoreBtn'),panel=document.getElementById('hsPanel');
   function closeAll(){
     $$('.hero-search .hs-field.open').forEach(f=>f.classList.remove('open'));
     $$('.hero-search .hs-pop.open').forEach(p=>p.classList.remove('open'));
+    if(panel){panel.classList.remove('open');panel.setAttribute('aria-hidden','true');}
+    if(moreBtn)moreBtn.classList.remove('active');
   }
   $$('.hero-search .hs-field').forEach(field=>{
     field.addEventListener('click',e=>{
@@ -3585,9 +3718,33 @@ document.querySelectorAll('.svc-card').forEach(card=>{
     });
   });
   document.addEventListener('click',e=>{
-    if(!e.target.closest('.hero-search .hs-field')) closeAll();
+    if(e.target.closest('.hero-search .hs-field')) return;
+    if(e.target.closest('#hsPanel')||e.target.closest('#hsMoreBtn')) return;
+    closeAll();
   });
   $$('.hs-apply[data-apply]').forEach(b=>b.addEventListener('click',closeAll));
+
+  /* ---- + Filtros panel ---- */
+  if(moreBtn&&panel){
+    moreBtn.addEventListener('click',e=>{
+      e.stopPropagation();
+      const isOpen=panel.classList.contains('open');
+      closeAll();
+      if(!isOpen){panel.classList.add('open');panel.setAttribute('aria-hidden','false');moreBtn.classList.add('active');}
+    });
+    document.getElementById('hsPanelApply').addEventListener('click',closeAll);
+    document.getElementById('hsPanelClear').addEventListener('click',()=>{
+      state.op='venta';state.banos='';state.est='';state.surfMin='';state.surfMax='';state.antig='';state.amen.clear();
+      state.pMin=0;state.pMax=STEPS.venta.length-1;
+      ['op','banos','est','antig'].forEach(g=>{
+        const def=g==='op'?'venta':'';
+        $$('.hs-pills[data-group="'+g+'"] .hs-pill').forEach(p=>p.classList.toggle('active',p.dataset.value===def));
+      });
+      $$('.hs-amen-item input').forEach(i=>i.checked=false);
+      mirrorSurf();
+      renderSlider();
+    });
+  }
 
   /* ---- build URL + navigate ---- */
   function go(){
@@ -3597,6 +3754,10 @@ document.querySelectorAll('.svc-card').forEach(card=>{
     if(state.rec) p.set('rec',state.rec);
     if(state.banos) p.set('banos',state.banos);
     if(state.est) p.set('est',state.est);
+    if(state.surfMin) p.set('sup_min',state.surfMin);
+    if(state.surfMax) p.set('sup_max',state.surfMax);
+    if(state.antig) p.set('antiguedad',state.antig);
+    if(state.amen.size) p.set('amenidades',[...state.amen].join(','));
     if(state.pTouched){
       const a=STEPS[state.op];
       p.set('precio_min',String(a[state.pMin]));
