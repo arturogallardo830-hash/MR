@@ -429,6 +429,23 @@ body{font-family:var(--sans);background:#fff;color:#111;overflow-x:hidden}
 .prop-state.loading{animation:propPulse 1.6s ease-in-out infinite}
 @keyframes propPulse{0%,100%{opacity:.5}50%{opacity:.95}}
 .prop-state.error{color:#b91c1c}
+
+/* Skeleton loaders */
+.prop-skel{background:#fff;border:1px solid #eee;border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.prop-skel-img{background:#ececec;width:100%;aspect-ratio:16/10}
+.prop-skel-body{flex:1;padding:24px;display:flex;flex-direction:column;gap:14px}
+.prop-skel-line{height:16px;border-radius:6px;background:#ececec}
+.prop-skel-line.w40{width:40%;height:26px}
+.prop-skel-line.w70{width:70%}
+.prop-skel-line.w55{width:55%}
+.prop-skel,.prop-skel-line,.prop-skel-img{animation:propSkelPulse 1.4s ease-in-out infinite}
+@keyframes propSkelPulse{0%,100%{opacity:1}50%{opacity:.5}}
+@media(min-width:1024px){
+  .prop-skel{flex-direction:row}
+  .prop-skel-img{flex:0 0 320px;aspect-ratio:auto;min-height:220px}
+}
+/* Footer "cargando más…" mientras se transmiten páginas en background */
+.prop-stream-footer{text-align:center;padding:18px 12px 36px;font-family:var(--sans);font-size:12px;color:#888;letter-spacing:.04em;font-weight:400}
 .prop-card.highlight{box-shadow:0 0 0 2px var(--gold),0 12px 36px rgba(201,169,110,.25)}
 
 /* ── PAGINATION ── */
@@ -1624,19 +1641,21 @@ function renderProperty(p){
 }
 
 function renderResults(){
-  const filtered=applyClientFilters(state.results);
+  const filtered=applyClientFilters(state.results||[]);
   const sorted=sortClientSide(filtered);
-  // ── DIAGNÓSTICO de filtrado ──
-  console.log('Después de filtros base (API):',state.results.length);
-  console.log('Después de filtros cliente:',filtered.length,
-    filtered.length<state.results.length?`(se ocultaron ${state.results.length-filtered.length} por filtros activos)`:'(sin reducción)');
-  // Show post-filter count (more honest than API total once client filters narrow it)
   document.getElementById('countNum').textContent=String(sorted.length);
   if(!sorted.length){
     grid.innerHTML=renderNoResultsEmptyState();
     return;
   }
-  grid.innerHTML=sorted.map(renderProperty).join('');
+  // Render defensivo: una propiedad con forma inesperada NO debe tumbar
+  // todo el panel (antes un throw aquí mostraba "No se pudieron cargar").
+  const html=[];
+  for(const p of sorted){
+    try{ html.push(renderProperty(p)); }
+    catch(err){ console.warn('[propiedades] card omitida por error de render:',p&&p.public_id,err); }
+  }
+  grid.innerHTML=html.join('');
   if(state.highlightId){
     const el=grid.querySelector(`.property-card[data-id="${CSS.escape(state.highlightId)}"]`);
     if(el) el.scrollIntoView({behavior:'smooth',block:'center'});
@@ -1687,112 +1706,143 @@ function renderPagination(){
   });
 }
 
+// ── CACHÉ DE SESIÓN (evita recargar todo al navegar entre páginas) ──
+const PROP_CACHE_TTL=10*60*1000; // 10 min
+function propCacheKey(){
+  // Una entrada por combinación de filtros de servidor (sin page/limit).
+  const p=buildApiParams();
+  p.delete('page'); p.delete('limit');
+  return 'mr_props_v1::'+p.toString();
+}
+function readPropCache(){
+  try{
+    const raw=sessionStorage.getItem(propCacheKey());
+    if(!raw) return null;
+    const o=JSON.parse(raw);
+    if(!o||!Array.isArray(o.data)) return null;
+    return o; // {data,timestamp}
+  }catch(_){ return null; }
+}
+function writePropCache(data){
+  try{ sessionStorage.setItem(propCacheKey(),JSON.stringify({data,timestamp:Date.now()})); }
+  catch(_){ /* quota / modo privado: ignorar */ }
+}
+
+function renderSkeletons(n){
+  let h='';
+  for(let i=0;i<n;i++){
+    h+='<div class="prop-skel" aria-hidden="true"><div class="prop-skel-img"></div>'+
+       '<div class="prop-skel-body"><div class="prop-skel-line w40"></div>'+
+       '<div class="prop-skel-line w70"></div><div class="prop-skel-line w55"></div></div></div>';
+  }
+  grid.innerHTML=h;
+}
+function setStreamFooter(text){
+  let el=document.getElementById('propStreamFooter');
+  if(!text){ if(el) el.remove(); return; }
+  if(!el){
+    el=document.createElement('div');
+    el.id='propStreamFooter';
+    el.className='prop-stream-footer';
+    grid.insertAdjacentElement('afterend',el);
+  }
+  el.textContent=text;
+}
+async function fetchPropPage(params,pg){
+  params.set('page',String(pg));
+  const r=await fetch('/api/properties?'+params.toString());
+  if(!r.ok) throw new Error('API '+r.status);
+  return r.json();
+}
+
 let currentReq=0;
 async function loadPage(){
   const reqId=++currentReq;
-  grid.innerHTML='<div class="prop-state loading">Cargando propiedades…</div>';
   pagWrap.innerHTML='';
+  state.page=1;
+
+  // 1) Caché de sesión: pinta al instante si la hay.
+  const cached=readPropCache();
+  if(cached&&cached.data.length){
+    state.results=cached.data;
+    state.total=cached.data.length;
+    state.totalPages=1;
+    renderResults();
+    const ageMs=Date.now()-(cached.timestamp||0);
+    if(ageMs<PROP_CACHE_TTL){
+      setStreamFooter(null);
+      console.log(`[propiedades] caché de sesión OK (${Math.round(ageMs/1000)}s, ${cached.data.length} props) — sin red.`);
+      return; // fresco: nada que recargar
+    }
+    console.log('[propiedades] caché caducado — refrescando en background…');
+  }else{
+    renderSkeletons(6); // 4) skeletons en vez de mensaje de error/carga
+  }
+
+  // 2) Carga PROGRESIVA: primera página se muestra ya; el resto se va sumando.
   try{
-    // Trae TODAS las propiedades del CRM paginando en loop (el proxy capa el limit en 50).
     const params=buildApiParams();
     params.set('limit','50');
     const all=[];
     const seenIds=new Set();
-    let dupes=0;
     let apiTotal=0;
-    const MAX_PAGES=60; // safety: 60 * 50 = 3000 propiedades máx
+    let firstOk=false;
+    const MAX_PAGES=60; // safety: 60 * 50 = 3000 máx
     for(let pg=1;pg<=MAX_PAGES;pg++){
-      if(reqId!==currentReq) return; // stale: cambió el filtro mientras paginábamos
-      params.set('page',String(pg));
-      const r=await fetch('/api/properties?'+params.toString());
-      if(reqId!==currentReq) return;
-      if(!r.ok) throw new Error('API '+r.status);
-      const d=await r.json();
-      const list=d.content||[];
-      apiTotal=(d.pagination&&d.pagination.total)||apiTotal;
-      // Dedup por public_id (el loop podría repetir si la API solapa páginas)
-      let added=0;
-      for(const p of list){
-        const key=p.public_id||p.id||JSON.stringify(p);
-        if(seenIds.has(key)){dupes++;continue;}
-        seenIds.add(key);
-        all.push(p);
-        added++;
+      if(reqId!==currentReq) return; // stale: cambió el filtro
+      let d;
+      try{
+        d=await fetchPropPage(params,pg);
+      }catch(err){
+        if(reqId!==currentReq) return;
+        if(!firstOk){
+          // 5) Solo error real si NI la primera página cargó (y no había caché).
+          console.error('[propiedades] fallo al cargar la primera página:',err);
+          if(!state.results||!state.results.length){
+            grid.innerHTML='<div class="prop-state error">No se pudieron cargar las propiedades. Intenta de nuevo más tarde.</div>';
+          }
+          setStreamFooter(null);
+          return;
+        }
+        // Ya había resultados → conservamos lo cargado y paramos.
+        console.warn(`[propiedades] página ${pg} falló; se muestran ${all.length} ya cargadas.`,err);
+        break;
       }
-      console.log(`Página ${pg}: ${list.length} propiedades (nuevas: ${added}, duplicadas: ${list.length-added})`);
-      console.log(`Total acumulado: ${all.length}`);
-      const next=d.pagination&&d.pagination.next_page;
-      // Parar SOLO cuando: no hay página siguiente, la página vino vacía,
-      // o ya acumulamos el total que reporta la API. (No usar list.length<limit:
-      // la última página puede traer exactamente 50.)
-      if(list.length===0) break;
-      if(apiTotal && all.length>=apiTotal) break;
-      if(!next) break;
+      if(reqId!==currentReq) return;
+      const list=(d&&d.content)||[];
+      apiTotal=(d&&d.pagination&&d.pagination.total)||apiTotal;
+      for(const p of list){
+        const key=p.public_id||p.id;
+        if(key&&seenIds.has(key)) continue;
+        if(key) seenIds.add(key);
+        all.push(p);
+      }
+      firstOk=true;
+      console.log(`[propiedades] página ${pg}: +${list.length} → acumulado ${all.length}${apiTotal?` / ${apiTotal}`:''}`);
+      // Render incremental: el usuario ve resultados desde la 1ª página y
+      // el contador sube solo (50 → 100 → … → total).
+      state.results=all.slice();
+      state.total=apiTotal||all.length;
+      state.totalPages=1;
+      renderResults();
+      const next=d&&d.pagination&&d.pagination.next_page;
+      if(list.length===0||!next||(apiTotal&&all.length>=apiTotal)) break;
+      setStreamFooter(`Cargando más propiedades… (${all.length}${apiTotal?` / ${apiTotal}`:''})`);
     }
     if(reqId!==currentReq) return;
-    state.results=all;
-    state.total=apiTotal||all.length;
-    state.totalPages=1; // todo se muestra en una sola vista (sin paginación de servidor)
-    state.page=1;
-    // ════════════════════════════════════════════════════════════════
-    // DIAGNÓSTICO PROFUNDO — ¿qué campo separa las 159 de Pincali de
-    // las 408 que devuelve la API? (status no sirve: todas comparten 1)
-    // ════════════════════════════════════════════════════════════════
-    const PINCALI_TARGET=159;
-    const tally=(arr,fn)=>arr.reduce((a,p)=>{const k=fn(p);a[k]=(a[k]||0)+1;return a;},{});
-    console.log('═══════ DIAGNÓSTICO 408 vs 159 (Pincali) ═══════');
-    console.log('Total objetivo (Pincali):',PINCALI_TARGET);
-    console.log('Total actual del API:',all.length);
-    console.log('Diferencia:',PINCALI_TARGET-all.length);
-    console.log('Estado único encontrado:',all[0]&&all[0].status);
-    console.log('Estados encontrados:',[...new Set(all.map(p=>p.status))]);
-    console.log('Operaciones encontradas:',[...new Set(all.flatMap(p=>(p.operations||[]).map(o=>o.type)))]);
-
-    // Campos candidatos para distinguir el feed público de Montana:
-    console.log('Conteo por agent.id:',tally(all,p=>(p.agent&&p.agent.id)||'sin_agent'));
-    console.log('Conteo por agent.name:',tally(all,p=>(p.agent&&p.agent.name)||'sin_agent'));
-    console.log('Conteo por broker:',tally(all,p=>(p.broker&&p.broker.name)||'sin_broker'));
-    console.log('Conteo por agency_id:',tally(all,p=>p.agency_id||'sin_agency'));
-    console.log('Conteo por property_type:',tally(all,p=>p.property_type||'sin_tipo'));
-    console.log('Show address en feed:',{
-      true:all.filter(p=>p.show_address).length,
-      false:all.filter(p=>!p.show_address).length
-    });
-    console.log('Con published_at:',all.filter(p=>p.published_at).length,
-                '/ SIN published_at:',all.filter(p=>!p.published_at).length);
-    console.log('Con created_at:',all.filter(p=>p.created_at).length,
-                '/ Con updated_at:',all.filter(p=>p.updated_at).length);
-    console.log('public !== false:',all.filter(p=>p.public!==false).length,
-                '/ public === false:',all.filter(p=>p.public===false).length);
-    console.log('Con title_image_full:',all.filter(p=>p.title_image_full).length,
-                '/ SIN imagen:',all.filter(p=>!p.title_image_full).length);
-    console.log('Operaciones por tipo (conteo de propiedades):',{
-      soloVenta:all.filter(p=>(p.operations||[]).every(o=>o.type==='sale')&&(p.operations||[]).length>0).length,
-      soloRenta:all.filter(p=>(p.operations||[]).every(o=>o.type==='rental')&&(p.operations||[]).length>0).length,
-      ambas:all.filter(p=>{const t=new Set((p.operations||[]).map(o=>o.type));return t.has('sale')&&t.has('rental');}).length,
-      sinOperacion:all.filter(p=>!(p.operations||[]).length).length
-    });
-
-    // TODAS las claves presentes en al menos una propiedad (para ver qué
-    // campos expone el endpoint de listado de EasyBroker):
-    const allKeys=new Set();
-    all.forEach(p=>Object.keys(p||{}).forEach(k=>allKeys.add(k)));
-    console.log('Claves disponibles en las propiedades:',[...allKeys].sort());
-
-    // Estructura completa de las 2 primeras propiedades:
-    console.log('Estructura completa [0]:',JSON.stringify(all[0],null,2));
-    console.log('Estructura completa [1]:',JSON.stringify(all[1],null,2));
-    console.log('Objeto agent de [0]:',all[0]&&all[0].agent);
-
-    console.log('IDs únicos:',new Set(all.map(p=>p.public_id||p.id)).size,'/ duplicados descartados:',dupes);
-    console.log('═══════════════════════════════════════════════');
-    renderResults();
-    renderPagination(); // no-op cuando totalPages<=1
+    setStreamFooter(null);
+    // Logs ligeros (solo conteos numéricos).
+    console.log('[propiedades] TOTAL API:',all.length,
+      '| estados:',[...new Set(all.map(p=>p.status))],
+      '| operaciones:',[...new Set(all.flatMap(p=>(p.operations||[]).map(o=>o.type)))]);
+    writePropCache(all); // 3) cache para próximas navegaciones
   }catch(e){
     if(reqId!==currentReq) return;
-    console.error(e);
-    grid.innerHTML='<div class="prop-state error">No se pudieron cargar las propiedades. Intenta de nuevo más tarde.</div>';
-    pagWrap.innerHTML='';
+    console.error('[propiedades] error inesperado en loadPage:',e);
+    setStreamFooter(null);
+    if(!state.results||!state.results.length){
+      grid.innerHTML='<div class="prop-state error">No se pudieron cargar las propiedades. Intenta de nuevo más tarde.</div>';
+    }
   }
 }
 
