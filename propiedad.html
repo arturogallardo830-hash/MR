@@ -148,7 +148,8 @@ em{font-style:italic}
 /* Features */
 .property-features{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:48px;padding:28px;background:rgba(255,255,255,.02);border:1px solid rgba(201,169,110,.12);border-radius:8px}
 .property-feature{display:flex;align-items:center;gap:14px}
-.property-feature-icon{font-size:22px;flex-shrink:0;width:36px;text-align:center}
+.property-feature-icon{flex-shrink:0;width:36px;display:flex;align-items:center;justify-content:center;color:var(--gold)}
+.property-feature-icon svg{width:22px;height:22px;display:block}
 .property-feature-text{display:flex;flex-direction:column;min-width:0}
 .property-feature-label{font-family:var(--sans);font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:#a8a8a8;font-weight:500;margin-bottom:2px}
 .property-feature-value{font-family:var(--serif);font-size:1.3rem;color:#e8e6e1;font-weight:400;line-height:1.2}
@@ -475,6 +476,16 @@ let currentProperty=null;
 
 const AGENT={name:'Federico Mecutchen',role:'Director de Ventas y Marketing',phone:'528123532365',phoneDisplay:'+52 81 2353 2365'};
 
+// SVG icons (Feather/Lucide style — stroke 1.7, monocromático con currentColor)
+const ICONS={
+  bed:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9v10"/><path d="M2 13h20"/><path d="M22 19V9a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v4"/></svg>',
+  bath:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3z"/><path d="M6 12V6a2 2 0 0 1 2-2 2 2 0 0 1 2 2"/><path d="M9 6h2"/><path d="M7 19l-1 2"/><path d="M18 19l1 2"/></svg>',
+  car:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14l1.5-5A2 2 0 0 1 7.4 7.5h9.2a2 2 0 0 1 1.9 1.5L20 14"/><rect x="4" y="14" width="16" height="3.5" rx="0.5"/><path d="M6 17.5v1.5"/><path d="M18 17.5v1.5"/><circle cx="7.5" cy="15.7" r="1"/><circle cx="16.5" cy="15.7" r="1"/></svg>',
+  area:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M9 4v5H4"/><path d="M20 15h-5v5"/></svg>',
+  tree:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l-5 7h3l-4 6h4l-2 4h8l-2-4h4l-4-6h3z"/><path d="M12 20v2"/></svg>',
+  home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>'
+};
+
 function escapeHtml(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
 function getPropertyId(){
@@ -594,12 +605,12 @@ function renderProperty(p){
 
 function renderFeatures(p){
   const feats=[];
-  if(p.bedrooms) feats.push({icon:'🛏️',label:'Recámaras',value:p.bedrooms});
-  if(p.bathrooms) feats.push({icon:'🚿',label:'Baños',value:p.bathrooms});
-  if(p.parking_spaces) feats.push({icon:'🚗',label:'Estacionamientos',value:p.parking_spaces});
-  if(p.construction_size) feats.push({icon:'📐',label:'Construcción',value:`${p.construction_size} m²`});
-  if(p.lot_size) feats.push({icon:'🌳',label:'Terreno',value:`${p.lot_size} m²`});
-  if(p.property_type) feats.push({icon:'🏠',label:'Tipo',value:p.property_type});
+  if(p.bedrooms) feats.push({icon:ICONS.bed,label:'Recámaras',value:p.bedrooms});
+  if(p.bathrooms) feats.push({icon:ICONS.bath,label:'Baños',value:p.bathrooms});
+  if(p.parking_spaces) feats.push({icon:ICONS.car,label:'Estacionamientos',value:p.parking_spaces});
+  if(p.construction_size) feats.push({icon:ICONS.area,label:'Construcción',value:`${p.construction_size} m²`});
+  if(p.lot_size) feats.push({icon:ICONS.tree,label:'Terreno',value:`${p.lot_size} m²`});
+  if(p.property_type) feats.push({icon:ICONS.home,label:'Tipo',value:p.property_type});
   const html=feats.map(f=>`
     <div class="property-feature">
       <span class="property-feature-icon" aria-hidden="true">${f.icon}</span>
@@ -745,11 +756,11 @@ async function submitPropertyContact(event){
   const propertyId=currentProperty.public_id||'';
 
   let waMsg=`Hola ${AGENT.name.split(' ')[0]}, solicito información sobre una propiedad del sitio:\n\n`;
-  waMsg+=`🏠 PROPIEDAD:\n• ${title}\n`;
+  waMsg+=`PROPIEDAD:\n• ${title}\n`;
   if(price) waMsg+=`• ${price}\n`;
   waMsg+=`• ID: ${propertyId}\n\n`;
-  waMsg+=`📋 MIS DATOS:\n• Nombre: ${name}\n• Teléfono: ${phone}\n• Email: ${email}\n`;
-  if(message) waMsg+=`\n💬 MENSAJE:\n${message}\n`;
+  waMsg+=`MIS DATOS:\n• Nombre: ${name}\n• Teléfono: ${phone}\n• Email: ${email}\n`;
+  if(message) waMsg+=`\nMENSAJE:\n${message}\n`;
   waMsg+=`\nEnlace de la propiedad: ${window.location.href}`;
 
   // Fire-and-forget the EasyBroker contact request — don't block WhatsApp on it

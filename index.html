@@ -2066,7 +2066,16 @@ document.querySelectorAll('.r').forEach(el=>{if(!el.classList.contains('v'))obs.
     const id=encodeURIComponent(p.public_id||'');
     const detailUrl=opts.detailUrlOverride || `propiedad.html?id=${id}`;
     const isPremiumLanding=!!opts.detailUrlOverride;
-    const img=p.title_image_full||p.title_image_thumb||'';
+    // El endpoint /api/property-detail devuelve property_images[] sin title_image_*,
+    // mientras que /api/properties (listado) sí trae title_image_full. Aceptamos ambos.
+    let img=p.title_image_full||p.title_image_thumb||'';
+    if(!img && Array.isArray(p.property_images) && p.property_images.length){
+      const first=p.property_images[0];
+      img=(typeof first==='string')?first:(first&&(first.url_full||first.url||first.url_small))||'';
+    }
+    if(img && img.startsWith('http://')) img='https://'+img.slice(7);
+    const placeholderImg='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect width="800" height="600" fill="#0f1419"/><text x="50%" y="50%" font-family="Cinzel,serif" font-size="32" fill="#c9a96e" text-anchor="middle" dy=".3em">Imagen no disponible</text></svg>');
+    if(!img) img=placeholderImg;
 
     // Badge: el "TOUR PREMIUM" reemplaza al genérico cuando hay landing.
     const featuredHtml=isPremiumLanding
