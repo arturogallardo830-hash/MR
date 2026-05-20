@@ -670,6 +670,9 @@ em{font-style:italic}
 .sell-modal-title{font-family:var(--serif);font-size:clamp(28px,4vw,40px);font-weight:400;line-height:1.1;color:#e8e6e1;margin:0 0 12px;letter-spacing:-.012em}
 .sell-modal-title em{color:var(--gold);font-style:italic;font-weight:500}
 .sell-modal-subtitle{font-family:var(--sans);color:#a8a8a8;font-size:14px;line-height:1.55;margin:0;font-weight:300}
+.sell-modal-direct-contact{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin:12px auto 0;color:#c9a96e;font-family:var(--sans);font-size:15px;font-weight:500;text-decoration:none;text-align:center;transition:color .25s ease,text-decoration-color .25s ease}
+.sell-modal-direct-contact:hover{color:#d9b97e;text-decoration:underline;text-decoration-color:#d9b97e}
+.sell-modal-direct-contact svg{flex-shrink:0;width:18px;height:18px;fill:#25D366}
 .sell-modal-form{display:flex;flex-direction:column;gap:20px}
 .sell-modal .form-group{display:flex;flex-direction:column}
 .sell-modal .form-group label{font-family:var(--sans);color:#a8a8a8;font-size:10px;letter-spacing:.2em;margin-bottom:8px;text-transform:uppercase;font-weight:500}
@@ -1421,6 +1424,10 @@ textarea.fi{min-height:70px;max-height:110px;resize:vertical;line-height:1.5}
       <span class="sell-modal-eyebrow">Vender propiedad</span>
       <h2 class="sell-modal-title" id="sellModalTitle">Listemos tu <em>propiedad.</em></h2>
       <p class="sell-modal-subtitle">Comparte la información de tu inmueble y nuestro asesor Federico Mecutchen te contactará para iniciar el proceso de venta.</p>
+      <a class="sell-modal-direct-contact" href="https://wa.me/528123532365?text=Hola%20Federico,%20quiero%20listar%20mi%20propiedad%20con%20Montana%20Realty" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.04 0C5.5 0 .2 5.3.2 11.84c0 2.09.55 4.13 1.6 5.93L0 24l6.4-1.68a11.83 11.83 0 0 0 5.64 1.44h.01c6.54 0 11.84-5.3 11.84-11.84 0-3.16-1.23-6.13-3.37-8.44ZM12.05 21.5h-.01a9.65 9.65 0 0 1-4.92-1.35l-.35-.21-3.8 1 1.02-3.7-.23-.38a9.66 9.66 0 0 1-1.48-5.12c0-5.34 4.35-9.69 9.7-9.69 2.59 0 5.02 1.01 6.85 2.84a9.61 9.61 0 0 1 2.83 6.86c0 5.34-4.35 9.75-9.61 9.75Zm5.32-7.27c-.29-.15-1.72-.85-1.99-.95-.27-.1-.46-.15-.66.15-.19.29-.76.95-.93 1.14-.17.19-.34.22-.63.07-.29-.15-1.23-.45-2.34-1.45-.86-.77-1.45-1.72-1.62-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.43-.5.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.15-.66-1.6-.91-2.19-.24-.57-.48-.5-.66-.51-.17-.01-.36-.01-.55-.01-.19 0-.5.07-.76.36-.26.29-1 1-1 2.44 0 1.44 1.03 2.83 1.17 3.02.14.19 2.02 3.09 4.9 4.34.69.3 1.22.48 1.64.61.69.22 1.31.19 1.81.12.55-.08 1.72-.7 1.96-1.38.24-.68.24-1.26.17-1.38-.07-.12-.26-.19-.55-.34Z"/></svg>
+        Contacto directo: +52 81 2353 2365
+      </a>
     </div>
     <form class="sell-modal-form" id="sellForm" onsubmit="sendSellToWhatsApp(event)" autocomplete="off" data-form-type="other" data-lpignore="true">
       <div class="form-group">
