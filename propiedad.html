@@ -355,9 +355,9 @@ em{font-style:italic}
 
           <div class="property-agent">
             <p class="property-agent-label">Asesor asignado</p>
-            <p class="property-agent-name">Maricela Arcia</p>
-            <p class="property-agent-role">Directora</p>
-            <a href="tel:+528110448818" class="property-agent-phone">+52 81 1044-8818</a>
+            <p class="property-agent-name">Federico Mecutchen</p>
+            <p class="property-agent-role">Director de Ventas y Marketing</p>
+            <a id="propertyAgentPhone" href="https://wa.me/528123532365" target="_blank" rel="noopener noreferrer" class="property-agent-phone">+52 81 2353 2365</a>
           </div>
         </div>
       </aside>
@@ -375,7 +375,7 @@ em{font-style:italic}
     <div class="property-contact-modal-header">
       <span class="contact-eyebrow">Solicitar información</span>
       <h2 id="propertyContactTitle">Quiero conocer esta <em>propiedad.</em></h2>
-      <p>Completa tus datos y nuestra Directora Maricela Arcia te contactará para agendar una visita o resolver tus dudas.</p>
+      <p>Completa tus datos y Federico Mecutchen, Director de Ventas y Marketing, te contactará para agendar una visita o resolver tus dudas.</p>
     </div>
     <form id="propertyContactForm" onsubmit="submitPropertyContact(event)" autocomplete="off" data-form-type="other" data-lpignore="true">
       <div class="form-group">
@@ -473,7 +473,7 @@ let currentGallery=[];
 let currentGalleryIndex=0;
 let currentProperty=null;
 
-const AGENT={name:'Maricela Arcia',role:'Directora',phone:'528110448818',phoneDisplay:'+52 81 1044-8818'};
+const AGENT={name:'Federico Mecutchen',role:'Director de Ventas y Marketing',phone:'528123532365',phoneDisplay:'+52 81 2353 2365'};
 
 function escapeHtml(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
@@ -707,6 +707,13 @@ function setupWhatsAppButton(p){
   if(price) msg+=` (${price})`;
   msg+=` y me gustaría más información.\n\nEnlace: ${url}\n\n¿Cuándo podemos agendar una visita?`;
   document.getElementById('propertyWhatsapp').href=`https://wa.me/${AGENT.phone}?text=${encodeURIComponent(msg)}`;
+
+  // Update agent phone link (the one in the "Asesor asignado" block) with simple property message
+  const agentPhoneEl=document.getElementById('propertyAgentPhone');
+  if(agentPhoneEl){
+    const shortMsg=`Hola ${AGENT.name.split(' ')[0]}, me interesa la propiedad ${title}`;
+    agentPhoneEl.href=`https://wa.me/${AGENT.phone}?text=${encodeURIComponent(shortMsg)}`;
+  }
 }
 
 // Modal
