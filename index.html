@@ -191,8 +191,8 @@ body{background:var(--black);color:var(--white);font-family:var(--sans);font-wei
 .hero{position:relative;height:200vh}
 .hero-sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:#0a0a0a}
 .hero-bg{position:absolute;inset:0;z-index:0;background:#0a0a0a url('assets/img/fondo-hero.jpg') center/cover no-repeat}
-/* Hero minimalista oscuro: las capas decorativas (nubes/casa/niebla) se ocultan sobre el fondo negro */
-.hero-clouds-bk,.hero-clouds-fr,.hero-house,.hero-fog-wrap{display:none}
+/* Hero minimalista oscuro: nubes y niebla ocultas; la torre (hero-house) se mantiene con su parallax */
+.hero-clouds-bk,.hero-clouds-fr,.hero-fog-wrap{display:none}
 /* Contenedores de nubes */
 .hero-clouds-bk{position:absolute;inset:0;z-index:1;pointer-events:none;will-change:transform}
 .hero-clouds-fr{position:absolute;inset:0;z-index:5;pointer-events:none;will-change:transform}
