@@ -210,9 +210,18 @@ body{background:var(--black);color:var(--white);font-family:var(--sans);font-wei
 @keyframes drift1{0%,100%{transform:translateX(0)}50%{transform:translateX(32px)}}
 @keyframes drift2{0%,100%{transform:translateX(0)}50%{transform:translateX(-38px)}}
 @keyframes drift3{0%,100%{transform:translateX(0)}50%{transform:translateX(22px)}}
-/* Casa */
-.hero-house{position:absolute;bottom:0;left:50%;transform:translateX(-50%) translateY(100%) scale(.85);z-index:3;will-change:transform;width:min(860px,94vw);pointer-events:none}
-.hero-house img{width:100%;height:auto;display:block}
+/* Carril de la torre — rotacion de N torres con crossfade. Lista en const TORRES (script). */
+.hero-house{position:absolute;bottom:0;left:50%;transform:translateX(-50%) translateY(100%) scale(.85);z-index:3;will-change:transform;width:min(860px,94vw);aspect-ratio:682/1024;pointer-events:none}
+.hero-house img{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:100%;height:auto;display:block;opacity:0;transition:opacity 1.2s cubic-bezier(.4,0,.2,1);filter:drop-shadow(0 22px 32px rgba(0,0,0,.55))}
+.hero-house img.active{opacity:1}
+/* Indicadores discretos de la torre activa (solo si hay >1 torre) */
+.hero-dots{position:absolute;left:50%;bottom:170px;transform:translateX(-50%);z-index:7;display:flex;gap:9px;pointer-events:none}
+.hero-dots .dot{width:6px;height:6px;border-radius:50%;background:rgba(232,230,225,.32);transition:width .45s cubic-bezier(.4,0,.2,1),background .45s;opacity:.9}
+.hero-dots .dot.active{background:rgba(232,230,225,.95);width:20px;border-radius:3px}
+@media (prefers-reduced-motion: reduce){
+  .hero-house img{transition:none}
+  .hero-dots{display:none}
+}
 /* Niebla base (colores cielo claro) */
 .hero-fog-wrap{position:absolute;bottom:0;left:0;right:0;height:72%;z-index:4;pointer-events:none;will-change:transform}
 .hero-fog{position:absolute;inset:0;background:linear-gradient(to top,rgba(240,213,200,1) 0%,rgba(240,213,200,.92) 18%,rgba(245,224,208,.62) 38%,rgba(248,232,220,.18) 62%,transparent 100%)}
@@ -1129,10 +1138,8 @@ textarea.fi{min-height:70px;max-height:110px;resize:vertical;line-height:1.5}
     <img class="cloud-img cb3" src="assets/cloud.png" alt="">
   </div>
 
-  <!-- Capa 2: Casa — sube + zoom al scroll -->
-  <div class="hero-house" id="heroHouse">
-    <img src="casa.png" alt="Casa Montana Realty" loading="eager">
-  </div>
+  <!-- Capa 2: Torres en rotacion — suben + zoom al scroll, crossfade entre torres. Lista en const TORRES (script). -->
+  <div class="hero-house" id="heroHouse"></div>
 
   <!-- Capa 3: Niebla base + humo lateral -->
   <div class="hero-fog-wrap" id="heroFog">
@@ -1906,6 +1913,87 @@ function closeMob(){
   },{passive:true});
 
   updateParallax();
+})();
+
+// ── HERO TOWER ROTATION (N torres con crossfade) ──
+(function(){
+  // ⇩ EDITAR AQUI para anadir/quitar torres en la rotacion del hero.
+  //    El orden del array es el orden del loop. Funciona con cualquier N >= 1.
+  //    Cuando 'torre-lbl.png' tenga mejor foto, anadir su ruta a esta lista:
+  const TORRES = [
+    'torre-mr-900.png',
+    'casa.png',
+    // 'torre-lbl.png',   // <- agregar aqui cuando este lista (PNG transparente, vertical, ancho >=900)
+  ];
+  const INTERVAL_MS = 5000;   // tiempo entre cambios
+  // Crossfade real lo controla CSS: .hero-house img { transition: opacity 1.2s cubic-bezier(.4,0,.2,1) }
+
+  const container = document.getElementById('heroHouse');
+  const sticky    = document.getElementById('heroSticky');
+  if(!container || TORRES.length === 0) return;
+
+  // Precarga explicita (paralelo a la inyeccion para evitar parpadeo en el primer cambio)
+  TORRES.forEach(src => { const p = new Image(); p.src = src; });
+
+  // Construir <img> superpuestos a partir del array
+  const imgs = TORRES.map((src, i) => {
+    const im = document.createElement('img');
+    im.src = src;
+    im.alt = '';
+    im.loading = 'eager';
+    im.decoding = 'async';
+    if(i === 0) im.classList.add('active');
+    container.appendChild(im);
+    return im;
+  });
+
+  // Indicadores discretos (solo si hay mas de 1 torre)
+  let dots = [];
+  if(TORRES.length > 1 && sticky){
+    const dotsEl = document.createElement('div');
+    dotsEl.className = 'hero-dots';
+    dotsEl.id = 'heroDots';
+    TORRES.forEach((_, i) => {
+      const d = document.createElement('span');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      dotsEl.appendChild(d);
+      dots.push(d);
+    });
+    sticky.appendChild(dotsEl);
+  }
+
+  // prefers-reduced-motion: una sola torre fija, sin rotacion
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let activeIdx = 0;
+  let timerId   = null;
+
+  function setActive(idx){
+    if(idx === activeIdx) return;
+    imgs[activeIdx].classList.remove('active');
+    if(dots[activeIdx]) dots[activeIdx].classList.remove('active');
+    activeIdx = idx;
+    imgs[activeIdx].classList.add('active');
+    if(dots[activeIdx]) dots[activeIdx].classList.add('active');
+  }
+
+  function next(){ setActive((activeIdx + 1) % TORRES.length); }
+
+  function start(){
+    if(timerId || TORRES.length < 2 || reduced.matches || document.hidden) return;
+    timerId = setInterval(next, INTERVAL_MS);
+  }
+  function stop(){
+    if(timerId){ clearInterval(timerId); timerId = null; }
+  }
+
+  // Pausa cuando la pestana esta inactiva (ahorra recursos)
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden) stop(); else start();
+  });
+  // Si el usuario alterna reduced-motion en runtime, respetar
+  reduced.addEventListener('change', e => { if(e.matches) stop(); else start(); });
+
+  start();
 })();
 
 // ── SVC PARALLAX & TILT ──
