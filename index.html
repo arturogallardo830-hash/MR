@@ -149,7 +149,8 @@ body{background:var(--black);color:var(--white);font-family:var(--sans);font-wei
 /* NAV */
 #nav{position:fixed;top:0;left:0;right:0;z-index:800;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:72px;transition:background .4s,height .4s,backdrop-filter .4s;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
 #nav.scrolled{height:60px;background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
-#nav.dark-hero{background:rgba(20,26,44,.68)!important;backdrop-filter:blur(20px)!important;-webkit-backdrop-filter:blur(20px)!important}
+/* Nav sobre la foto del hero: sin marco navy; la legibilidad la da el gradiente del .hero-bg */
+#nav.dark-hero{background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 .nav-logo{display:flex;flex-direction:column;gap:3px;text-decoration:none}
 .nav-logo-img{height:52px;width:auto;display:block;filter:brightness(0);transition:filter .3s}
 .nav-logo-sub{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:rgba(20,20,20,.45);transition:color .3s}
@@ -190,8 +191,9 @@ body{background:var(--black);color:var(--white);font-family:var(--sans);font-wei
 /* HERO */
 .hero{position:relative;height:200vh}
 .hero-sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:#0a0a0a}
-/* Fondo fijo: foto aerea sunset con Torre LBL. Gradiente oscuro encima para legibilidad de texto y nav. */
-.hero-bg{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(10,14,24,.55) 0%,rgba(10,14,24,.40) 35%,rgba(10,14,24,.40) 65%,rgba(10,14,24,.60) 100%),url('assets/img/hero-torre-lbl.png') center/cover no-repeat #0a0a0a}
+/* Fondo fijo: foto aerea sunset con Torre LBL (1920x1080). Gradiente oscuro encima reforzado: */
+/* (a) ancla la legibilidad del nav transparente; (b) disimula la suavidad por upscaling en pantallas >1920. */
+.hero-bg{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(10,14,24,.62) 0%,rgba(10,14,24,.46) 35%,rgba(10,14,24,.46) 65%,rgba(10,14,24,.68) 100%),url('assets/img/hero-torre-lbl.png') center/cover no-repeat #0a0a0a}
 /* Capas decorativas ocultas: nubes drift (chocan con el cielo real de la foto), niebla cream, y carril .hero-house */
 /* (la rotacion de torres .hero-house esta DESACTIVADA en el script; reactivar = quitar .hero-house de aqui y descomentar el IIFE) */
 .hero-clouds-bk,.hero-clouds-fr,.hero-fog-wrap,.hero-house{display:none}
