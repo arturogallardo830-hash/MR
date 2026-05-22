@@ -190,9 +190,11 @@ body{background:var(--black);color:var(--white);font-family:var(--sans);font-wei
 /* HERO */
 .hero{position:relative;height:200vh}
 .hero-sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:#0a0a0a}
-.hero-bg{position:absolute;inset:0;z-index:0;background:#0a0a0a url('assets/img/fondo-hero.jpg') center/cover no-repeat}
-/* Hero minimalista oscuro: nubes y niebla ocultas; la torre (hero-house) se mantiene con su parallax */
-.hero-clouds-bk,.hero-clouds-fr,.hero-fog-wrap{display:none}
+/* Fondo fijo: foto aerea sunset con Torre LBL. Gradiente oscuro encima para legibilidad de texto y nav. */
+.hero-bg{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(10,14,24,.55) 0%,rgba(10,14,24,.40) 35%,rgba(10,14,24,.40) 65%,rgba(10,14,24,.60) 100%),url('assets/img/hero-torre-lbl.png') center/cover no-repeat #0a0a0a}
+/* Capas decorativas ocultas: nubes drift (chocan con el cielo real de la foto), niebla cream, y carril .hero-house */
+/* (la rotacion de torres .hero-house esta DESACTIVADA en el script; reactivar = quitar .hero-house de aqui y descomentar el IIFE) */
+.hero-clouds-bk,.hero-clouds-fr,.hero-fog-wrap,.hero-house{display:none}
 /* Contenedores de nubes */
 .hero-clouds-bk{position:absolute;inset:0;z-index:1;pointer-events:none;will-change:transform}
 .hero-clouds-fr{position:absolute;inset:0;z-index:5;pointer-events:none;will-change:transform}
@@ -1882,8 +1884,8 @@ function closeMob(){
       heroCnt.style.transform=`translateY(${sy*-0.25}px)`;
     }
 
-    // Nav adaptativo: dark-hero cuando el overlay es visible (y aún estamos en el hero)
-    if(nav) nav.classList.toggle('dark-hero', progress>0.55 && sy<=vh);
+    // Nav adaptativo: dark-hero durante TODO el hero (la foto de fondo tiene zonas claras donde el nav negro no se leeria)
+    if(nav) nav.classList.toggle('dark-hero', sy<=vh);
 
     // Overlay oscurece (progress 0.55→0.75)
     if(heroOverlay) heroOverlay.style.opacity=String(remap(progress,.55,.75)*.85);
@@ -1915,7 +1917,8 @@ function closeMob(){
   updateParallax();
 })();
 
-// ── HERO TOWER ROTATION (N torres con crossfade) ──
+// ── HERO TOWER ROTATION — DESACTIVADO (reactivar: quitar /* */ y remover .hero-house del display:none ~linea 197) ──
+/* DESACTIVADO — codigo conservado para reactivar la rotacion cuando se quiera.
 (function(){
   // ⇩ EDITAR AQUI para anadir/quitar torres en la rotacion del hero.
   //    El orden del array es el orden del loop. Funciona con cualquier N >= 1.
@@ -1995,6 +1998,7 @@ function closeMob(){
 
   start();
 })();
+*/ // ─ fin DESACTIVADO HERO TOWER ROTATION ─
 
 // ── SVC PARALLAX & TILT ──
 document.querySelectorAll('.svc-card').forEach((card,idx)=>{
