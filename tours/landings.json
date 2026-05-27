@@ -30,5 +30,18 @@
     "premium": true,
     "operation": "sale",
     "location": "Torreón, Coahuila"
+  },
+  "eb-wc3038": {
+    "propertyId": "EB-WC3038",
+    "slug": "eb-wc3038",
+    "title": "Showcase EB-WC3038",
+    "path": "/tours/eb-wc3038/",
+    "active": true,
+    "premium": true,
+    "editorial": true,
+    "price": 7430100,
+    "operation": "sale",
+    "location": "Santa María, Monterrey, Nuevo León",
+    "address": "Blvd. Diaz Ordaz"
   }
 }
