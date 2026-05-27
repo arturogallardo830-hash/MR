@@ -20,7 +20,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
 <style>
 /* ──────────────────────────────────────────────
@@ -38,7 +38,7 @@
   --gold-soft: hsl(36 35% 56%);
   --gold-dark: hsl(34 33% 47%);
   --display: 'Cormorant Garamond', 'Times New Roman', serif;
-  --sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --sans: 'Poppins', system-ui, -apple-system, sans-serif;
   --grad: linear-gradient(90deg, #c9a96e 0%, #b89456 100%);
   --maxw: 1440px;
   --pad: clamp(20px, 4vw, 56px);
@@ -664,34 +664,6 @@ body::before {
   background: rgba(0, 0, 0, 0.6);
 }
 
-.marquee {
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  border-top: 1px solid rgba(201, 169, 110, 0.2);
-  border-bottom: 1px solid rgba(201, 169, 110, 0.2);
-  padding: 22px 0;
-  margin-bottom: clamp(60px, 10vw, 120px);
-  white-space: nowrap;
-  mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
-}
-.marquee-track {
-  display: inline-flex;
-  gap: 50px;
-  font-family: var(--display);
-  font-style: italic;
-  font-size: clamp(28px, 4vw, 52px);
-  letter-spacing: -0.01em;
-  will-change: transform;
-}
-.marquee-track span {
-  background: var(--grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.marquee-track i { color: var(--muted); font-style: normal; }
-
 .footer-cta {
   position: relative;
   z-index: 1;
@@ -822,7 +794,6 @@ body::before {
    ════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
   .hero-media img, .hero-media video { animation: none; }
-  .marquee-track { animation: none !important; }
   .reveal { opacity: 1; transform: none; }
   *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
 }
@@ -1002,15 +973,6 @@ body::before {
     <img src="https://assets.easybroker.com/property_images/6013038/106268739/EB-WC3038.png?version=1779751840" alt="" loading="lazy" />
   </div>
 
-  <div class="marquee">
-    <div class="marquee-track" id="marquee">
-      <span>Montana Realty Co</span><i>·</i>
-      <span>Propiedades de Lujo</span><i>·</i>
-      <span>Santa María</span><i>·</i>
-      <span>Monterrey</span><i>·</i>
-    </div>
-  </div>
-
   <div class="footer-cta">
     <h2>Agenda tu visita<br/><em>privada</em></h2>
     <p>
@@ -1110,24 +1072,6 @@ body::before {
       .from('.hero-desc',     { y: 20, opacity: 0, duration: 0.9 }, '-=0.65')
       .from('.hero-ctas',     { y: 20, opacity: 0, duration: 0.9 }, '-=0.65')
       .from('.scroll-indicator', { opacity: 0, duration: 0.6 }, '-=0.3');
-  }
-
-  // ═══════════ Marquee (GSAP) ═══════════
-  function runMarquee() {
-    const track = document.getElementById('marquee');
-    if (!track) return;
-
-    // Duplicate content for seamless loop
-    const items = track.innerHTML;
-    for (let i = 0; i < 9; i++) track.innerHTML += items;
-
-    if (REDUCED || !window.gsap) return;
-    gsap.to(track, {
-      xPercent: -50,
-      duration: 60,
-      ease: 'none',
-      repeat: -1,
-    });
   }
 
   // ═══════════ Lightbox ═══════════
@@ -1292,7 +1236,6 @@ body::before {
     runFeatureRotator();
     runMobileNav();
     runLightbox();
-    runMarquee();
     runHeroEntrance();
     runHeroVideo();
   }
