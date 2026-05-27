@@ -107,14 +107,15 @@ body::before {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  cursor: pointer;
 }
-.nav-pill a:not(.nav-cta) {
+.nav-pill a:not(.nav-cta):not(.nav-logo) {
   padding: 8px 14px;
   color: var(--muted);
   border-radius: 100px;
   transition: color 0.25s ease, background 0.25s ease;
 }
-.nav-pill a:not(.nav-cta):hover { color: var(--text); background: rgba(255, 255, 255, 0.05); }
+.nav-pill a:not(.nav-cta):not(.nav-logo):hover { color: var(--text); background: rgba(255, 255, 255, 0.05); }
 
 .nav-cta {
   padding: 10px 18px;
@@ -804,7 +805,7 @@ body::before {
 <!-- ══════════ NAV ══════════ -->
 <button class="nav-toggle" id="navToggle" aria-label="Menú"><span></span></button>
 <nav class="nav-pill" id="navPill">
-  <div class="nav-logo">MR</div>
+  <a class="nav-logo" href="/propiedades.html" aria-label="Ir a propiedades">MR</a>
   <a href="/propiedades.html">Volver a Propiedades</a>
   <a href="#galeria">Ver más</a>
   <a href="#contacto">Contactar</a>
