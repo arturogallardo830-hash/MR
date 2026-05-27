@@ -297,12 +297,8 @@ body::before {
 }
 .hero-media {
   position: absolute;
-  top: -15%;
-  left: 0;
-  right: 0;
-  bottom: -15%;
+  inset: 0;
   z-index: 0;
-  will-change: transform;
   overflow: hidden;
 }
 .hero-media video,
@@ -315,7 +311,31 @@ body::before {
   min-width: 100%;
   min-height: 100%;
   filter: brightness(0.55) saturate(0.92);
-  transform-origin: center center;
+}
+.video-loader {
+  position: absolute;
+  inset: auto 0 32px 0;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 250ms ease;
+  pointer-events: none;
+}
+.video-loader.is-visible { opacity: 0.7; }
+.video-loader span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: video-load 1.2s ease-in-out infinite;
+}
+.video-loader span:nth-child(2) { animation-delay: 0.15s; }
+.video-loader span:nth-child(3) { animation-delay: 0.30s; }
+@keyframes video-load {
+  0%, 80%, 100% { transform: scale(0.5); opacity: 0.3; }
+  40%           { transform: scale(1);   opacity: 1; }
 }
 .hero-overlay {
   position: absolute;
@@ -1038,8 +1058,11 @@ body::before {
     <video id="hero-video"
            src="hero-video.mp4"
            poster="hero-poster.jpg"
-           autoplay muted loop playsinline preload="auto"
+           muted playsinline preload="auto"
            aria-hidden="true"></video>
+    <div class="video-loader" id="videoLoader" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
   </div>
   <div class="hero-overlay"></div>
 
@@ -1468,44 +1491,118 @@ body::before {
     });
   }
 
-  // ═══════════ Hero video: parallax + Ken Burns ═══════════
+  // ═══════════ Hero video: scroll-scrubbing ═══════════
   function runHeroVideo() {
     const video = document.getElementById('hero-video');
     if (!video) return;
 
-    // iOS / autoplay safety: re-intentar play tras user gesture
-    const tryPlay = () => video.play().catch(() => {});
-    tryPlay();
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') tryPlay();
-    });
-
-    if (REDUCED || !window.gsap || !window.ScrollTrigger) return;
-
+    const loader = document.getElementById('videoLoader');
     const isMobile = window.matchMedia('(max-width: 767px)').matches;
-    const yShift = isMobile ? 15 : 30;
 
-    // Parallax: el video se desplaza más lento que el contenido
-    gsap.to('#hero-video', {
-      yPercent: yShift,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 0.5,
-      },
-    });
+    // Mobile fallback: scrubbing es pesado en móvil → autoplay loop
+    if (isMobile) {
+      video.autoplay = true;
+      video.loop = true;
+      video.muted = true;
+      video.play().catch(() => {});
+      return;
+    }
 
-    // Ken Burns sutil — zoom 1 → 1.1 ida y vuelta
-    gsap.to('#hero-video', {
-      scale: 1.1,
-      duration: 20,
-      ease: 'none',
-      yoyo: true,
-      repeat: -1,
-      transformOrigin: 'center center',
-    });
+    // Reduced motion: deja el video estático en el frame 0, sin pin
+    if (REDUCED) {
+      video.pause();
+      try { video.currentTime = 0; } catch (e) {}
+      return;
+    }
+
+    // Desktop: scrubbing con scroll
+    if (!window.gsap || !window.ScrollTrigger) {
+      // fallback si las deps no cargaron: autoplay loop
+      video.autoplay = true;
+      video.loop = true;
+      video.play().catch(() => {});
+      return;
+    }
+
+    // Loader visible mientras buffereamos
+    let loaderTimer = setTimeout(() => loader && loader.classList.add('is-visible'), 350);
+    let scrubReady = false;
+
+    function setupScrub() {
+      if (scrubReady) return;
+      scrubReady = true;
+      if (loaderTimer) { clearTimeout(loaderTimer); loaderTimer = null; }
+      if (loader) loader.classList.remove('is-visible');
+
+      video.pause();
+      try { video.currentTime = 0; } catch (e) {}
+
+      const duration = isFinite(video.duration) && video.duration > 0 ? video.duration : 8;
+
+      // Wrapper objeto para que GSAP pueda animar currentTime y nosotros
+      // controlemos el seek manualmente (más estable cross-browser)
+      const proxy = { t: 0 };
+      gsap.to(proxy, {
+        t: duration,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: '+=200%',
+          scrub: 0.5,
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: 1,
+        },
+        onUpdate() {
+          try { video.currentTime = proxy.t; } catch (e) {}
+        },
+      });
+
+      // Fade-out del contenido del hero entre 0% y 50% del scroll del scrub
+      gsap.to('.hero-content', {
+        opacity: 0,
+        y: -40,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: '+=100%',
+          scrub: 0.5,
+        },
+      });
+
+      // Fade-out del scroll indicator más rápido aún
+      gsap.to('.scroll-indicator', {
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: '+=40%',
+          scrub: 0.5,
+        },
+      });
+    }
+
+    // Esperar a tener metadata + datos suficientes para hacer seek
+    if (video.readyState >= 1 && isFinite(video.duration)) {
+      // Aseguramos buffering antes de habilitar scrub
+      if (video.readyState >= 3) setupScrub();
+      else video.addEventListener('canplaythrough', setupScrub, { once: true });
+    } else {
+      video.addEventListener('loadedmetadata', () => {
+        if (video.readyState >= 3) setupScrub();
+        else video.addEventListener('canplaythrough', setupScrub, { once: true });
+      }, { once: true });
+    }
+
+    // Failsafe: si canplaythrough no llega en 4s pero hay metadata, arranca igual
+    setTimeout(() => {
+      if (!scrubReady && isFinite(video.duration) && video.duration > 0) {
+        setupScrub();
+      }
+    }, 4000);
   }
 
   // ═══════════ Boot ═══════════
