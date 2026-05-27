@@ -310,7 +310,11 @@ body::before {
   object-fit: cover;
   min-width: 100%;
   min-height: 100%;
-  filter: brightness(0.55) saturate(0.92);
+  filter: brightness(0.92) saturate(1);
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
 }
 .video-loader {
   position: absolute;
@@ -343,11 +347,21 @@ body::before {
   z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.45) 75%),
     linear-gradient(180deg,
-      rgba(0,0,0,0.3) 0%,
-      rgba(0,0,0,0.1) 40%,
-      rgba(10,10,10,0.85) 100%);
+      rgba(0,0,0,0.15) 0%,
+      rgba(0,0,0,0.0)  35%,
+      rgba(0,0,0,0.0)  60%,
+      rgba(10,10,10,0.65) 100%);
+}
+/* Halo radial sutil sólo detrás del texto del hero, mantiene legibilidad
+   sin oscurecer todo el video */
+.hero-content::before {
+  content: '';
+  position: absolute;
+  inset: -10% -20%;
+  z-index: -1;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .hero-content {
@@ -385,6 +399,12 @@ body::before {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 24px rgba(0, 0, 0, 0.55));
+}
+.hero .eyebrow,
+.hero-role,
+.hero-desc {
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
 }
 
 .hero-role {
@@ -1548,8 +1568,8 @@ body::before {
         scrollTrigger: {
           trigger: '.hero',
           start: 'top top',
-          end: '+=200%',
-          scrub: 0.5,
+          end: '+=100%',
+          scrub: 0.3,
           pin: true,
           pinSpacing: true,
           anticipatePin: 1,
@@ -1559,7 +1579,7 @@ body::before {
         },
       });
 
-      // Fade-out del contenido del hero entre 0% y 50% del scroll del scrub
+      // Fade-out del contenido del hero a lo largo del scrub
       gsap.to('.hero-content', {
         opacity: 0,
         y: -40,
@@ -1567,8 +1587,8 @@ body::before {
         scrollTrigger: {
           trigger: '.hero',
           start: 'top top',
-          end: '+=100%',
-          scrub: 0.5,
+          end: '+=70%',
+          scrub: 0.3,
         },
       });
 
@@ -1579,8 +1599,8 @@ body::before {
         scrollTrigger: {
           trigger: '.hero',
           start: 'top top',
-          end: '+=40%',
-          scrub: 0.5,
+          end: '+=25%',
+          scrub: 0.3,
         },
       });
     }
