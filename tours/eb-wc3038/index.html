@@ -707,59 +707,36 @@ body::before {
 }
 
 /* ════════════════════════════════════════════════
-   GALERÍA · PINNED + PARALLAX
+   GALERÍA · GRID 2+1
    ════════════════════════════════════════════════ */
-.gallery-wrap {
-  position: relative;
-  background: var(--bg);
-}
-.gallery-pin {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 var(--pad);
-  text-align: center;
-}
-.gallery-pin .section-title { font-size: clamp(56px, 10vw, 140px); }
-.gallery-pin .section-eyebrow { display: block; margin-bottom: 18px; }
-
-.gallery-columns {
+.photo-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  padding: 0 var(--pad);
-  max-width: var(--maxw);
-  margin: 0 auto;
+  gap: 12px;
 }
-.gallery-col {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.gallery-col.b { padding-top: 80px; }
-.gallery-item {
+.photo {
   position: relative;
+  display: block;
   overflow: hidden;
   border-radius: 4px;
   border: 1px solid var(--stroke);
   cursor: zoom-in;
-  aspect-ratio: 4 / 5;
 }
-.gallery-item:nth-child(2n) { aspect-ratio: 3 / 4; }
-.gallery-item img {
+.photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s ease;
   filter: grayscale(0.1) brightness(0.92);
 }
-.gallery-item:hover img { transform: scale(1.05); filter: grayscale(0) brightness(1); }
+.photo:hover img { transform: scale(1.04); filter: grayscale(0) brightness(1); }
+.photo-half { grid-column: span 1; aspect-ratio: 4 / 3; }
+.photo-full { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
 
 @media (max-width: 720px) {
-  .gallery-columns { grid-template-columns: 1fr; }
-  .gallery-col.b { padding-top: 0; }
+  .photo-grid { grid-template-columns: 1fr; gap: 10px; }
+  .photo-half,
+  .photo-full { grid-column: 1 / -1; aspect-ratio: 4 / 3; }
 }
 
 /* Lightbox */
@@ -1216,27 +1193,34 @@ body::before {
 </section>
 
 <!-- ══════════ GALERÍA ══════════ -->
-<div class="gallery-wrap" id="galeria">
-  <div class="gallery-pin" id="galleryPin">
-    <div>
+<section class="section" id="galeria">
+  <div class="section-head">
+    <div class="reveal">
       <div class="section-eyebrow">03 · Galería</div>
-      <h2 class="section-title">Recorrido<br/><em>visual</em></h2>
     </div>
   </div>
 
-  <div class="gallery-columns">
-    <div class="gallery-col a" data-speed="0.85">
-      <a class="gallery-item" data-lightbox><img src="https://assets.easybroker.com/property_images/6013038/106173545/EB-WC3038.jpeg?version=1779487339" alt="Foto 1" loading="lazy" /></a>
-      <a class="gallery-item" data-lightbox><img src="https://assets.easybroker.com/property_images/6013038/106268728/EB-WC3038.png?version=1779751830" alt="Foto 2" loading="lazy" /></a>
-      <a class="gallery-item" data-lightbox><img src="https://assets.easybroker.com/property_images/6013038/106268729/EB-WC3038.png?version=1779751831" alt="Foto 3" loading="lazy" /></a>
-    </div>
-    <div class="gallery-col b" data-speed="1.15">
-      <a class="gallery-item" data-lightbox><img src="https://assets.easybroker.com/property_images/6013038/106173595/EB-WC3038.jpeg?version=1779487378" alt="Foto 4" loading="lazy" /></a>
-      <a class="gallery-item" data-lightbox><img src="https://assets.easybroker.com/property_images/6013038/106268731/EB-WC3038.png?version=1779751838" alt="Foto 5" loading="lazy" /></a>
-      <a class="gallery-item" data-lightbox><img src="https://assets.easybroker.com/property_images/6013038/106268743/EB-WC3038.png?version=1779751841" alt="Foto 6" loading="lazy" /></a>
-    </div>
+  <div class="photo-grid">
+    <a class="photo photo-half reveal" data-lightbox>
+      <img src="https://assets.easybroker.com/property_images/6013038/106173545/EB-WC3038.jpeg?version=1779487339" alt="Departamento Santa María — foto 1" loading="lazy" />
+    </a>
+    <a class="photo photo-half reveal" data-lightbox>
+      <img src="https://assets.easybroker.com/property_images/6013038/106268728/EB-WC3038.png?version=1779751830" alt="Departamento Santa María — foto 2" loading="lazy" />
+    </a>
+    <a class="photo photo-full reveal" data-lightbox>
+      <img src="https://assets.easybroker.com/property_images/6013038/106173595/EB-WC3038.jpeg?version=1779487378" alt="Departamento Santa María — foto 3" loading="lazy" />
+    </a>
+    <a class="photo photo-half reveal" data-lightbox>
+      <img src="https://assets.easybroker.com/property_images/6013038/106268729/EB-WC3038.png?version=1779751831" alt="Departamento Santa María — foto 4" loading="lazy" />
+    </a>
+    <a class="photo photo-half reveal" data-lightbox>
+      <img src="https://assets.easybroker.com/property_images/6013038/106268731/EB-WC3038.png?version=1779751838" alt="Departamento Santa María — foto 5" loading="lazy" />
+    </a>
+    <a class="photo photo-full reveal" data-lightbox>
+      <img src="https://assets.easybroker.com/property_images/6013038/106268743/EB-WC3038.png?version=1779751841" alt="Departamento Santa María — foto 6" loading="lazy" />
+    </a>
   </div>
-</div>
+</section>
 
 <!-- ══════════ STATS ══════════ -->
 <section class="section" id="datos">
@@ -1425,35 +1409,6 @@ body::before {
       .from('.scroll-indicator', { opacity: 0, duration: 0.6 }, '-=0.3');
   }
 
-  // ═══════════ Gallery parallax + pin ═══════════
-  function runGalleryAnimations() {
-    if (REDUCED || !window.gsap || !window.ScrollTrigger) return;
-    gsap.registerPlugin(ScrollTrigger);
-
-    ScrollTrigger.create({
-      trigger: '#galleryPin',
-      start: 'top top',
-      end: '+=60%',
-      pin: true,
-      pinSpacing: true,
-    });
-
-    document.querySelectorAll('.gallery-col').forEach((col) => {
-      const speed = parseFloat(col.dataset.speed || '1');
-      const shift = (speed - 1) * 120;
-      gsap.fromTo(col, { y: 0 }, {
-        y: shift,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.gallery-columns',
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true,
-        },
-      });
-    });
-  }
-
   // ═══════════ Marquee (GSAP) ═══════════
   function runMarquee() {
     const track = document.getElementById('marquee');
@@ -1627,13 +1582,15 @@ body::before {
 
   // ═══════════ Boot ═══════════
   function boot() {
+    if (window.gsap && window.ScrollTrigger) {
+      try { gsap.registerPlugin(ScrollTrigger); } catch (e) {}
+    }
     runReveals();
     runFeatureRotator();
     runMobileNav();
     runLightbox();
     runMarquee();
     runHeroEntrance();
-    runGalleryAnimations();
     runHeroVideo();
   }
 
