@@ -60,8 +60,6 @@ img, svg { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
 
-.font-display { font-family: var(--display); }
-
 /* Grain overlay */
 body::before {
   content: '';
@@ -72,117 +70,6 @@ body::before {
   opacity: 0.04;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   mix-blend-mode: overlay;
-}
-
-/* ════════════════════════════════════════════════
-   LOADING SCREEN
-   ════════════════════════════════════════════════ */
-.loader {
-  position: fixed;
-  inset: 0;
-  background: var(--bg);
-  z-index: 99999;
-  display: flex;
-  flex-direction: column;
-  transition: opacity 400ms ease;
-}
-.loader.fade-out { opacity: 0; pointer-events: none; }
-
-.loader-tl {
-  position: absolute;
-  top: 28px;
-  left: var(--pad);
-  font-size: 13px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.loader-tl strong { color: var(--text); font-weight: 500; }
-
-.loader-center {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.loader-rotator {
-  font-family: var(--display);
-  font-size: clamp(48px, 8vw, 96px);
-  font-weight: 300;
-  font-style: italic;
-  letter-spacing: -0.02em;
-  position: relative;
-  height: 1.1em;
-  overflow: hidden;
-}
-.loader-rotator span {
-  display: inline-block;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 100%);
-  opacity: 0;
-  white-space: nowrap;
-  animation: role-fade-in 600ms ease forwards;
-  background: var(--grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.loader-rotator span.is-active { animation: role-fade-in 600ms ease forwards; }
-.loader-rotator span.is-out { animation: role-fade-out 500ms ease forwards; }
-
-@keyframes role-fade-in {
-  0%   { transform: translate(-50%, 80%); opacity: 0; filter: blur(8px); }
-  100% { transform: translate(-50%, 0);   opacity: 1; filter: blur(0); }
-}
-@keyframes role-fade-out {
-  0%   { transform: translate(-50%, 0);    opacity: 1; filter: blur(0); }
-  100% { transform: translate(-50%, -80%); opacity: 0; filter: blur(8px); }
-}
-
-.loader-br {
-  position: absolute;
-  bottom: 28px;
-  right: var(--pad);
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-}
-.loader-count {
-  font-family: var(--display);
-  font-size: clamp(56px, 10vw, 110px);
-  font-weight: 300;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  background: var(--grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.loader-count-suffix {
-  color: var(--muted);
-  font-size: 14px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-.loader-bar {
-  position: absolute;
-  left: var(--pad);
-  right: var(--pad);
-  bottom: 0;
-  height: 2px;
-  background: var(--stroke);
-  overflow: hidden;
-}
-.loader-bar::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  width: var(--p, 0%);
-  background: var(--grad);
-  box-shadow: 0 0 14px rgba(201, 169, 110, 0.6);
-  transition: width 60ms linear;
 }
 
 /* ════════════════════════════════════════════════
@@ -560,6 +447,11 @@ body::before {
   flex-direction: column;
   gap: 14px;
 }
+.stats + .spec-pills {
+  margin-top: clamp(40px, 6vw, 64px);
+  padding-top: clamp(40px, 6vw, 64px);
+  border-top: 1px solid var(--stroke);
+}
 .spec-pill {
   display: grid;
   grid-template-columns: 80px 1fr auto auto;
@@ -698,11 +590,6 @@ body::before {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  padding: clamp(60px, 10vw, 120px) var(--pad);
-  max-width: var(--maxw);
-  margin: 0 auto;
-  border-top: 1px solid var(--stroke);
-  border-bottom: 1px solid var(--stroke);
 }
 .stat {
   display: flex;
@@ -934,7 +821,6 @@ body::before {
    REDUCED MOTION
    ════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
-  .loader { display: none !important; }
   .hero-media img, .hero-media video { animation: none; }
   .marquee-track { animation: none !important; }
   .reveal { opacity: 1; transform: none; }
@@ -943,21 +829,6 @@ body::before {
 </style>
 </head>
 <body>
-
-<!-- ══════════ LOADER ══════════ -->
-<div class="loader" id="loader" aria-hidden="true">
-  <div class="loader-tl">Montana Realty <strong>Co</strong></div>
-  <div class="loader-center">
-    <div class="loader-rotator" id="rotator">
-      <span class="is-active">Diseño</span>
-    </div>
-  </div>
-  <div class="loader-br">
-    <div class="loader-count font-display" id="loaderCount">000</div>
-    <div class="loader-count-suffix">/ 100</div>
-  </div>
-  <div class="loader-bar" id="loaderBar"></div>
-</div>
 
 <!-- ══════════ NAV ══════════ -->
 <button class="nav-toggle" id="navToggle" aria-label="Menú"><span></span></button>
@@ -1031,11 +902,41 @@ body::before {
   </div>
 </section>
 
-<!-- ══════════ ESPECIFICACIONES ══════════ -->
+<!-- ══════════ GALERÍA ══════════ -->
+<section class="section" id="galeria">
+  <div class="section-head">
+    <div class="reveal">
+      <div class="section-eyebrow">02 · Galería</div>
+    </div>
+  </div>
+
+  <div class="photo-grid">
+    <a class="photo photo-half reveal" data-lightbox>
+      <img src="https://assets.easybroker.com/property_images/6013038/106173545/EB-WC3038.jpeg?version=1779487339" alt="Departamento Santa María — foto 1" loading="lazy" />
+    </a>
+    <a class="photo photo-half reveal" data-lightbox>
+      <img src="https://assets.easybroker.com/property_images/6013038/106268728/EB-WC3038.png?version=1779751830" alt="Departamento Santa María — foto 2" loading="lazy" />
+    </a>
+    <a class="photo photo-full reveal" data-lightbox>
+      <img src="https://assets.easybroker.com/property_images/6013038/106173595/EB-WC3038.jpeg?version=1779487378" alt="Departamento Santa María — foto 3" loading="lazy" />
+    </a>
+    <a class="photo photo-half reveal" data-lightbox>
+      <img src="https://assets.easybroker.com/property_images/6013038/106268729/EB-WC3038.png?version=1779751831" alt="Departamento Santa María — foto 4" loading="lazy" />
+    </a>
+    <a class="photo photo-half reveal" data-lightbox>
+      <img src="https://assets.easybroker.com/property_images/6013038/106268731/EB-WC3038.png?version=1779751838" alt="Departamento Santa María — foto 5" loading="lazy" />
+    </a>
+    <a class="photo photo-full reveal" data-lightbox>
+      <img src="https://assets.easybroker.com/property_images/6013038/106268743/EB-WC3038.png?version=1779751841" alt="Departamento Santa María — foto 6" loading="lazy" />
+    </a>
+  </div>
+</section>
+
+<!-- ══════════ METRICAS UNIFICADAS ══════════ -->
 <section class="section" id="especificaciones">
   <div class="section-head">
     <div class="reveal">
-      <div class="section-eyebrow">02 · Especificaciones</div>
+      <div class="section-eyebrow">03 · Especificaciones</div>
       <h2 class="section-title">Las Métricas</h2>
     </div>
     <p class="section-sub reveal">
@@ -1043,18 +944,22 @@ body::before {
     </p>
   </div>
 
-  <div class="spec-pills">
-    <div class="spec-pill reveal">
-      <div class="spec-num">85</div>
-      <div class="spec-label">
-        <strong>Superficie construida</strong>
-        <span>Metros cuadrados</span>
-      </div>
-      <div class="spec-unit">m²</div>
-      <div class="spec-icon">
-        <svg viewBox="0 0 24 24"><path d="M3 3h18v18H3z M3 12h18 M12 3v18"/></svg>
-      </div>
+  <div class="stats">
+    <div class="stat reveal">
+      <div class="stat-num">2025</div>
+      <div class="stat-label">Año · Obra nueva</div>
     </div>
+    <div class="stat reveal">
+      <div class="stat-num">85 <small>m²</small></div>
+      <div class="stat-label">Superficie construida</div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num">$7.43<small>M MXN</small></div>
+      <div class="stat-label">Precio · Venta</div>
+    </div>
+  </div>
+
+  <div class="spec-pills">
     <div class="spec-pill reveal">
       <div class="spec-num">2</div>
       <div class="spec-label">
@@ -1087,61 +992,6 @@ body::before {
       <div class="spec-icon">
         <svg viewBox="0 0 24 24"><path d="M5 17h14 M6 17V9a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8 M8 17v2 M16 17v2 M9 13h6"/></svg>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════ GALERÍA ══════════ -->
-<section class="section" id="galeria">
-  <div class="section-head">
-    <div class="reveal">
-      <div class="section-eyebrow">03 · Galería</div>
-    </div>
-  </div>
-
-  <div class="photo-grid">
-    <a class="photo photo-half reveal" data-lightbox>
-      <img src="https://assets.easybroker.com/property_images/6013038/106173545/EB-WC3038.jpeg?version=1779487339" alt="Departamento Santa María — foto 1" loading="lazy" />
-    </a>
-    <a class="photo photo-half reveal" data-lightbox>
-      <img src="https://assets.easybroker.com/property_images/6013038/106268728/EB-WC3038.png?version=1779751830" alt="Departamento Santa María — foto 2" loading="lazy" />
-    </a>
-    <a class="photo photo-full reveal" data-lightbox>
-      <img src="https://assets.easybroker.com/property_images/6013038/106173595/EB-WC3038.jpeg?version=1779487378" alt="Departamento Santa María — foto 3" loading="lazy" />
-    </a>
-    <a class="photo photo-half reveal" data-lightbox>
-      <img src="https://assets.easybroker.com/property_images/6013038/106268729/EB-WC3038.png?version=1779751831" alt="Departamento Santa María — foto 4" loading="lazy" />
-    </a>
-    <a class="photo photo-half reveal" data-lightbox>
-      <img src="https://assets.easybroker.com/property_images/6013038/106268731/EB-WC3038.png?version=1779751838" alt="Departamento Santa María — foto 5" loading="lazy" />
-    </a>
-    <a class="photo photo-full reveal" data-lightbox>
-      <img src="https://assets.easybroker.com/property_images/6013038/106268743/EB-WC3038.png?version=1779751841" alt="Departamento Santa María — foto 6" loading="lazy" />
-    </a>
-  </div>
-</section>
-
-<!-- ══════════ STATS ══════════ -->
-<section class="section" id="datos">
-  <div class="section-head">
-    <div class="reveal">
-      <div class="section-eyebrow">04 · Datos clave</div>
-      <h2 class="section-title">En cifras</h2>
-    </div>
-  </div>
-
-  <div class="stats">
-    <div class="stat reveal">
-      <div class="stat-num">2025</div>
-      <div class="stat-label">Año · Obra nueva</div>
-    </div>
-    <div class="stat reveal">
-      <div class="stat-num">85 <small>m²</small></div>
-      <div class="stat-label">Superficie construida</div>
-    </div>
-    <div class="stat reveal">
-      <div class="stat-num">$7.43<small>M MXN</small></div>
-      <div class="stat-label">Precio · Venta</div>
     </div>
   </div>
 </section>
@@ -1220,52 +1070,6 @@ body::before {
     'Hola Montana Realty, me gustaría agendar una visita para conocer la propiedad EB-WC3038 (Departamento en Santa María). ' + propUrl
   );
 
-  // ═══════════ Loading screen ═══════════
-  const loader = document.getElementById('loader');
-  const countEl = document.getElementById('loaderCount');
-  const barEl = document.getElementById('loaderBar');
-  const rotator = document.getElementById('rotator');
-
-  function pad3(n) { return ('00' + n).slice(-3); }
-
-  function runLoader() {
-    if (REDUCED) { loader.remove(); return Promise.resolve(); }
-    return new Promise((resolve) => {
-      const words = ['Diseño', 'Lujo', 'Hogar'];
-      let wi = 0;
-      const wordTimer = setInterval(() => {
-        wi = (wi + 1) % words.length;
-        const outgoing = rotator.querySelector('span');
-        const incoming = document.createElement('span');
-        incoming.textContent = words[wi];
-        incoming.classList.add('is-active');
-        rotator.appendChild(incoming);
-        if (outgoing) {
-          outgoing.classList.add('is-out');
-          setTimeout(() => outgoing.remove(), 600);
-        }
-      }, 900);
-
-      const start = performance.now();
-      const dur = 2700;
-      function tick(now) {
-        const t = Math.min(1, (now - start) / dur);
-        const eased = 1 - Math.pow(1 - t, 3);
-        const pct = Math.round(eased * 100);
-        countEl.textContent = pad3(pct);
-        barEl.style.setProperty('--p', pct + '%');
-        if (t < 1) requestAnimationFrame(tick);
-        else {
-          clearInterval(wordTimer);
-          setTimeout(() => {
-            loader.classList.add('fade-out');
-            setTimeout(() => { loader.remove(); resolve(); }, 400);
-          }, 200);
-        }
-      }
-      requestAnimationFrame(tick);
-    });
-  }
 
   // ═══════════ Hero feature rotator ═══════════
   function runFeatureRotator() {
@@ -1501,13 +1305,11 @@ body::before {
     setTimeout(() => waitForDeps(cb, tries + 1), 80);
   }
 
-  runLoader().then(() => {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => waitForDeps(boot));
-    } else {
-      waitForDeps(boot);
-    }
-  });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => waitForDeps(boot));
+  } else {
+    waitForDeps(boot);
+  }
 })();
 </script>
 
